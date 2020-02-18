@@ -3,3 +3,28 @@ $primaryColor: rgb(135, 223, 95);
 .App {
   background-color: $primaryColor;
 }
+
+html {
+  font-size: 10px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 2rem;
+}
+
+div,
+p,
+a {
+  font-size: 1.6rem;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
