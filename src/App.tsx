@@ -3,7 +3,11 @@ import classes from './App.module.scss';
 
 function App() {
   return (
-    <h1 className={classes.HelloWorld}>Hello World</h1>
+    <div className={classes.App}>
+      <div>
+        <a href={process.env.REACT_APP_LOGIN_URL}>Click to Login</a>
+      </div>
+    </div>
   );
 }
 

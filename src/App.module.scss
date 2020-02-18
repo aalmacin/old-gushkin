@@ -1,3 +1,5 @@
-.HelloWorld {
-  background-color: salmon;
+$primaryColor: rgb(135, 223, 95);
+
+.App {
+  background-color: $primaryColor;
 }
