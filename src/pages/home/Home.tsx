@@ -9,7 +9,7 @@ function Home() {
       <UserContext.Consumer>
         {({ user, isLoggedIn }) => <div>
           <p>{isLoggedIn ? 'Logged in' : 'Not logged in'}</p>
-          <p>{user && user.email}</p>
+          <p>Welcome {user && user.email}!</p>
         </div>}
       </UserContext.Consumer>
     </div>
