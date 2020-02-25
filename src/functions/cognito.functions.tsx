@@ -30,12 +30,12 @@ export function getTokenUsingCode(code: string): Observable<Token | TokenError> 
 
   const data = {
     grant_type: 'authorization_code',
-    client_id: process.env.REACT_APP_CLIENT_ID,
+    client_id: process.env.REACT_APP_COGNITO_CLIENT_ID,
     code,
-    redirect_uri: process.env.REACT_APP_REDIRECT_URL
+    redirect_uri: process.env.REACT_APP_COGNITO_REDIRECT_URL
   };
 
-  const tokenUrl: any = process.env.REACT_APP_TOKEN_URL;
+  const tokenUrl: any = process.env.REACT_APP_COGNITO_TOKEN_URL;
 
   return from(
     axios
@@ -59,11 +59,12 @@ export function getTokenUsingCode(code: string): Observable<Token | TokenError> 
 export function getAccessTokenUsingRefreshToken(refreshToken: string): Observable<Token | TokenError> {
   const data = {
     grant_type: 'refresh_token',
-    client_id: process.env.REACT_APP_CLIENT_ID,
+    client_id: process.env.REACT_APP_COGNITO_CLIENT_ID,
     refresh_token: refreshToken
   };
 
-  const tokenUrl: any = process.env.REACT_TOKEN_URL;
+
+  const tokenUrl: any = process.env.REACT_APP_COGNITO_TOKEN_URL;
 
   return from(
     axios

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './Callback.module.scss';
 import { UserContext, AuthState } from '../../App';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 import { getTokenUsingCode, isToken, getAccessTokenUsingRefreshToken, getUserDataFromAccessToken, isUser } from '../../functions/cognito.functions';
 import { useCookies } from 'react-cookie'
 import { first } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { getCurrentTimestamp } from '../../functions/utils.functions';
 
 export const Callback = () => {
   const [cookies, setCookie] = useCookies(['gushkinTokens']);
+  const [error, setError] = useState<boolean>(false);
   const [authState, setAuthState] = useState<AuthState>({
     isLoggedIn: false
   });
@@ -43,6 +44,8 @@ export const Callback = () => {
           if (isToken(tokenData)) {
             setCookie('gushkinTokens', { ...tokenData, refreshToken, expireTime: currTimestamp + 3600 })
             updateAuthFromAccessToken(tokenData.accessToken)
+          } else {
+            setError(true);
           }
         });
       } else {
@@ -57,16 +60,13 @@ export const Callback = () => {
       });
     }
 
-
-    return <p>Loading...</p>
+    return <p>{error ? 'Error loading token' : 'Loading...'}</p>
   }
 
   return (
     <div className={classes.Callback}>
       <UserContext.Provider value={authState}>
-        <p>{authState.user?.email}</p>
-        <p>{authState.user?.verified}</p>
-        <p>{authState.user?.id}</p>
+        <Redirect to="/" />
       </UserContext.Provider>
     </div>
   );
