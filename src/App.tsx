@@ -6,9 +6,10 @@ import {
 import Main from './pages/main/Main';
 import Home from './pages/home/Home';
 import Callback from './pages/callback/Callback';
-import { getUserDataFromAccessToken, isUser } from './functions/cognito.functions';
+import { getUserDataFromAccessToken, isUser, getAccessTokenUsingRefreshToken, isToken } from './functions/cognito.functions';
 import { first } from 'rxjs/operators';
 import { useCookies } from 'react-cookie';
+import { getCurrentTimestamp } from './functions/utils.functions';
 
 export interface User {
   id: string,
@@ -25,12 +26,12 @@ const defaultAuth: AuthState = { isLoggedIn: false }
 export const UserContext = createContext(defaultAuth)
 
 function App() {
-  const [cookies] = useCookies(['gushkinTokens']);
+  const [cookies, setCookie] = useCookies(['gushkinTokens']);
   const [authState, setAuthState] = useState<AuthState>({
     isLoggedIn: false
   });
 
-  if (!authState.isLoggedIn && cookies.gushkinTokens && cookies.gushkinTokens.accessToken)
+  const setUserDataFromAccessToken = () => {
     getUserDataFromAccessToken(cookies.gushkinTokens.accessToken).pipe(first()).subscribe(
       (userData) => {
         if (isUser(userData)) {
@@ -41,6 +42,22 @@ function App() {
         }
       }
     )
+  }
+
+  const currTimestamp = getCurrentTimestamp();
+  if (!authState.isLoggedIn && cookies.gushkinTokens && cookies.gushkinTokens.accessToken) {
+    if (cookies.gushkinTokens.expireTime <= currTimestamp) {
+      const refreshToken = cookies.gushkinTokens.refreshToken;
+      getAccessTokenUsingRefreshToken(refreshToken).pipe(first()).subscribe(tokenData => {
+        if (isToken(tokenData)) {
+          setCookie('gushkinTokens', { ...tokenData, refreshToken, expireTime: currTimestamp + 3600 })
+          setUserDataFromAccessToken()
+        }
+      });
+    } else {
+      setUserDataFromAccessToken()
+    }
+  }
 
   return (
     <div className={classes.App}>
@@ -57,6 +74,7 @@ function App() {
                 </li>
               }
             </ul>
+            {authState.user && <p>Welcome {authState.user?.email}</p>}
             <Switch>
               <Route path="/callback">
                 <Callback />

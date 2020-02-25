@@ -18,8 +18,6 @@ export const Callback = () => {
 
   const currTimestamp = getCurrentTimestamp();
 
-
-
   if (cookies && cookies.gushkinTokens) {
     if (cookies.gushkinTokens.expireTime <= currTimestamp) {
       const refreshToken = cookies.gushkinTokens.refreshToken;
