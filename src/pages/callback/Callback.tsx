@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './Callback.module.scss';
 import { useLocation, Redirect } from 'react-router-dom';
-import { getTokenUsingCode, isToken, getAccessTokenUsingRefreshToken, getUserDataFromAccessToken, isUser } from '../../functions/cognito.functions';
+import { getTokenUsingCode, isToken, getAccessTokenUsingRefreshToken } from '../../functions/cognito.functions';
 import { useCookies } from 'react-cookie'
 import { first } from 'rxjs/operators';
 import { getCurrentTimestamp } from '../../functions/utils.functions';

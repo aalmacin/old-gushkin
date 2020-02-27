@@ -6,9 +6,10 @@ import { useCookies } from 'react-cookie';
 function Main() {
   const [cookies] = useCookies(['gushkinTokens']);
 
-  const url: any = process.env.REACT_APP_APP_SYNC_URL;
-  axios.post(url, {
-    query: `
+  if (cookies && cookies.gushkinTokens && cookies.gushkinTokens.accessToken) {
+    const url: any = process.env.REACT_APP_APP_SYNC_URL;
+    axios.post(url, {
+      query: `
       query WishItems {
         getWishItemsForUser(userId: "1") {
           id
@@ -16,15 +17,16 @@ function Main() {
         }
       }
     `
-  }, {
-    headers: {
-      authorization: cookies.gushkinTokens.accessToken
-    }
-  }).then(r => {
-    console.log(r);
-  }).catch(err => {
-    console.log(err);
-  })
+    }, {
+      headers: {
+        authorization: cookies.gushkinTokens.accessToken
+      }
+    }).then(r => {
+      console.log('here', r);
+    }).catch(err => {
+      console.log('err', err);
+    })
+  }
 
   return (
     <div className={classes.Main}>
