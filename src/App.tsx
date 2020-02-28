@@ -26,7 +26,7 @@ const defaultAuth: AuthState = { isLoggedIn: false }
 export const UserContext = createContext(defaultAuth)
 
 function App() {
-  const [cookies, setCookie] = useCookies(['gushkinTokens']);
+  const [cookies, setCookie, removeCookie] = useCookies(['gushkinTokens']);
   const [authState, setAuthState] = useState<AuthState>({
     isLoggedIn: false
   });
@@ -59,6 +59,12 @@ function App() {
     }
   }
 
+  const logout = (e: any) => {
+    removeCookie('gushkinTokens')
+    setAuthState(defaultAuth)
+    e.preventDefault();
+  }
+
   return (
     <div className={classes.App}>
       <UserContext.Provider value={authState}>
@@ -71,6 +77,12 @@ function App() {
                 !authState.isLoggedIn &&
                 <li>
                   <a href={process.env.REACT_APP_LOGIN_URL}>Login</a>
+                </li>
+              }
+              {
+                authState.isLoggedIn &&
+                <li>
+                  <a href="#" onClick={logout}>Logout</a>
                 </li>
               }
             </ul>
