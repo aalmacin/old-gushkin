@@ -23,22 +23,17 @@ const GetWishItems = `
   }
 `
 
-export const getAllWishItems = (accessToken: string, userId: string, filter?: string): Promise<ApiResult<WishItem[]>> => {
-  let data: any = { accessToken, userId }
-  if (filter) {
-    data.filter = filter;
-  }
-
+const query = (data: any, queryInstance: string, queryTypeName: string) => {
   return from(axios.post(appSyncUrl, {
-    query: GetWishItems,
+    query: queryInstance,
     variables: data
   }, {
     headers: {
-      authorization: accessToken
+      authorization: data.accessToken
     }
   })).pipe(
     map((res) => {
-      const result = res.data.data.getWishItemsForUser;
+      const result = res.data.data[queryTypeName];
       if (result.success) {
         return { success: true, data: result.data }
       }
@@ -48,4 +43,14 @@ export const getAllWishItems = (accessToken: string, userId: string, filter?: st
       return of({ success: false, error: "An error occured" })
     })
   ).toPromise()
+}
+
+export const getAllWishItems = (accessToken: string, userId: string, filter?: string): Promise<ApiResult<WishItem[]>> => {
+  let data: any = { accessToken, userId }
+  if (filter) {
+    data.filter = filter;
+  }
+
+  return query(data, GetWishItems, 'getWishItemsForUser')
+
 }

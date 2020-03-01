@@ -5,12 +5,13 @@ import { selectIsWishItemsLoaded, selectWishItems } from '../../store/wish-item/
 import { getWishItems } from '../../store/wish-item/wish-item.actions';
 import { useCookies } from 'react-cookie';
 import { WishItem } from '../../graphql/graphql.types';
+import WishItemForm from './wish-item-form/WishItemForm';
 
 function Main() {
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
-  const wishItems = useSelector(selectWishItems)
+  const wishItems = useSelector(selectWishItems);
 
   if (!isWishItemsLoaded) {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken))
@@ -44,6 +45,9 @@ function Main() {
             )
           }
         </div>
+      </div>
+      <div>
+        <WishItemForm />
       </div>
     </div>
   );
