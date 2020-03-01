@@ -6,6 +6,7 @@ import { getWishItems } from '../../store/wish-item/wish-item.actions';
 import { useCookies } from 'react-cookie';
 import { WishItem } from '../../graphql/graphql.types';
 import WishItemForm from './wish-item-form/WishItemForm';
+import { MICRO_AMOUNT } from '../../functions/global.constants';
 
 function Main() {
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
@@ -30,7 +31,7 @@ function Main() {
                   {wishItem.description}
                 </div>
                 <div>
-                  {wishItem.price}
+                  {wishItem.price / MICRO_AMOUNT}
                 </div>
                 <div>
                   {wishItem.source}

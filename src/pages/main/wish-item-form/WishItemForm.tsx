@@ -5,6 +5,7 @@ import ErrorList from '../../error/ErrorList';
 import { useDispatch } from 'react-redux';
 import { createWishItem } from '../../../store/wish-item/wish-item.actions';
 import { useCookies } from 'react-cookie';
+import { MICRO_AMOUNT } from '../../../functions/global.constants'
 
 function WishItemForm() {
   const [wishItem, setWishItem] = useState<{ description: string, price: number, source?: string, priority: Priority, status: Status }>({
@@ -55,7 +56,8 @@ function WishItemForm() {
     setErrors(errorList)
 
     if (errorList.length === 0) {
-      dispatch(createWishItem({ ...wishItem, accessToken: cookies.gushkinTokens.accessToken }))
+      const price = parseFloat(`${wishItem.price}`) * MICRO_AMOUNT
+      dispatch(createWishItem({ ...wishItem, price, accessToken: cookies.gushkinTokens.accessToken }))
     }
     event.preventDefault();
   }

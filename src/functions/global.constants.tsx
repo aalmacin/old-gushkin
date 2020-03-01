@@ -1,0 +1,1 @@
+export const MICRO_AMOUNT = 1000000;
