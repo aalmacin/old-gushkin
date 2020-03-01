@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { of, Observable, from } from 'rxjs';
+import { of, from } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ApiResult, WishItem } from './graphql.types';
 
@@ -23,7 +23,7 @@ const GetWishItems = `
   }
 `
 
-export const getAllWishItems = (accessToken: string, userId: string, filter?: string): Observable<ApiResult<WishItem[]>> => {
+export const getAllWishItems = (accessToken: string, userId: string, filter?: string): Promise<ApiResult<WishItem[]>> => {
   let data: any = { accessToken, userId }
   if (filter) {
     data.filter = filter;
@@ -47,5 +47,5 @@ export const getAllWishItems = (accessToken: string, userId: string, filter?: st
     catchError(() => {
       return of({ success: false, error: "An error occured" })
     })
-  )
+  ).toPromise()
 }
