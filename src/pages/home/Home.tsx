@@ -11,7 +11,6 @@ function Home() {
     <div className={classes.Home}>
       <h2>Home</h2>
       <p>{authData.isLoggedIn ? 'Logged in' : 'Not logged in'}</p>
-      <p>Welcome {authData.user && authData.user.email}!</p>
     </div>
   )
 }

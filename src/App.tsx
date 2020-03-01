@@ -20,7 +20,6 @@ function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['gushkinTokens']);
 
   if (!authState.isLoggedIn && cookies.gushkinTokens && cookies.gushkinTokens.accessToken) {
-    console.log(authState, cookies)
     const currTimestamp = getCurrentTimestamp();
     if (cookies.gushkinTokens.expireTime <= currTimestamp) {
       const refreshToken = cookies.gushkinTokens.refreshToken;
