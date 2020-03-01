@@ -1,8 +1,7 @@
 import React from 'react';
 import classes from './Home.module.scss';
 import { useSelector } from 'react-redux';
-import { selectAuth } from '../../store/user/auth.selectors';
-// import { UserContext } from '../../App';
+import { selectAuth } from '../../store/auth/auth.selectors';
 
 function Home() {
   const authData = useSelector(selectAuth)

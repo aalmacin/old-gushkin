@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import AWS from 'aws-sdk'
-import { User } from '../store/user/auth.reducer';
+import { User } from '../store/auth/auth.reducer';
 // import { User } from '../App';
 
 export interface Token {
