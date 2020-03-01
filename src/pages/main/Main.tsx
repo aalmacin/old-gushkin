@@ -1,18 +1,20 @@
 import React from 'react';
 import classes from './Main.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectIsWishItemsLoaded, selectWishItems } from '../../store/wish-item/wish-item.selectors';
+import { selectIsWishItemsLoaded, selectWishItems, selectTotalWishItemPrice } from '../../store/wish-item/wish-item.selectors';
 import { getWishItems } from '../../store/wish-item/wish-item.actions';
 import { useCookies } from 'react-cookie';
 import { WishItem } from '../../graphql/graphql.types';
 import WishItemForm from './wish-item-form/WishItemForm';
 import { MICRO_AMOUNT } from '../../functions/global.constants';
+import { displayNormalMoney } from '../../functions/utils.functions';
 
 function Main() {
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
   const wishItems = useSelector(selectWishItems);
+  const totalPrice = useSelector(selectTotalWishItemPrice);
 
   if (!isWishItemsLoaded) {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken))
@@ -31,7 +33,7 @@ function Main() {
                   {wishItem.description}
                 </div>
                 <div>
-                  {wishItem.price / MICRO_AMOUNT}
+                  {displayNormalMoney(wishItem.price)}
                 </div>
                 <div>
                   {wishItem.source}
@@ -45,6 +47,9 @@ function Main() {
               </div>
             )
           }
+        </div>
+        <div>
+          {displayNormalMoney(totalPrice)}
         </div>
       </div>
       <div>
