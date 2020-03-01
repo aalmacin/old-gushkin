@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import classes from './App.module.scss';
 import {
   BrowserRouter, Switch, Route, Link,
@@ -6,102 +6,76 @@ import {
 import Main from './pages/main/Main';
 import Home from './pages/home/Home';
 import Callback from './pages/callback/Callback';
-import { getUserDataFromAccessToken, isUser, getAccessTokenUsingRefreshToken, isToken } from './functions/cognito.functions';
-import { first } from 'rxjs/operators';
 import { useCookies } from 'react-cookie';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAuth } from './store/user/auth.selectors';
+import { getUserData, logoutUser } from './store/user/auth.actions';
 import { getCurrentTimestamp } from './functions/utils.functions';
-
-export interface User {
-  id: string,
-  verified: boolean,
-  email: string
-}
-
-export interface AuthState {
-  isLoggedIn: boolean,
-  user?: User
-}
-
-const defaultAuth: AuthState = { isLoggedIn: false }
-export const UserContext = createContext(defaultAuth)
+import { getAccessTokenUsingRefreshToken, isToken } from './functions/cognito.functions';
+import { first } from 'rxjs/operators';
 
 function App() {
+  const authState = useSelector(selectAuth);
+  const dispatch = useDispatch()
   const [cookies, setCookie, removeCookie] = useCookies(['gushkinTokens']);
-  const [authState, setAuthState] = useState<AuthState>({
-    isLoggedIn: false
-  });
 
-  const setUserDataFromAccessToken = () => {
-    getUserDataFromAccessToken(cookies.gushkinTokens.accessToken).pipe(first()).subscribe(
-      (userData) => {
-        if (isUser(userData)) {
-          setAuthState({
-            isLoggedIn: true,
-            user: userData
-          })
-        }
-      }
-    )
-  }
-
-  const currTimestamp = getCurrentTimestamp();
   if (!authState.isLoggedIn && cookies.gushkinTokens && cookies.gushkinTokens.accessToken) {
+    console.log(authState, cookies)
+    const currTimestamp = getCurrentTimestamp();
     if (cookies.gushkinTokens.expireTime <= currTimestamp) {
       const refreshToken = cookies.gushkinTokens.refreshToken;
       getAccessTokenUsingRefreshToken(refreshToken).pipe(first()).subscribe(tokenData => {
         if (isToken(tokenData)) {
           setCookie('gushkinTokens', { ...tokenData, refreshToken, expireTime: currTimestamp + 3600 })
-          setUserDataFromAccessToken()
+          dispatch(getUserData(cookies.gushkinTokens.accessToken))
         }
       });
     } else {
-      setUserDataFromAccessToken()
+      dispatch(getUserData(cookies.gushkinTokens.accessToken))
     }
   }
 
   const logout = (e: any) => {
     removeCookie('gushkinTokens')
-    setAuthState(defaultAuth)
+    dispatch(logoutUser())
     e.preventDefault();
   }
 
   return (
     <div className={classes.App}>
-      <UserContext.Provider value={authState}>
-        <>
-          <BrowserRouter>
-            <ul>
-              <li><Link to="/home">Home</Link></li>
-              <li><Link to="/main">App</Link></li>
-              {
-                !authState.isLoggedIn &&
-                <li>
-                  <a href={process.env.REACT_APP_LOGIN_URL}>Login</a>
-                </li>
-              }
-              {
-                authState.isLoggedIn &&
-                <li>
-                  <a href="#" onClick={logout}>Logout</a>
-                </li>
-              }
-            </ul>
-            {authState.user && <p>Welcome {authState.user?.email}</p>}
-            <Switch>
-              <Route path="/callback">
-                <Callback />
-              </Route>
-              <Route path="/main">
-                <Main />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </BrowserRouter>
-        </>
-      </UserContext.Provider>
-    </div >
+      <>
+        <BrowserRouter>
+          <ul>
+            <li><Link to="/home">Home</Link></li>
+            <li><Link to="/main">App</Link></li>
+            {
+              !authState.isLoggedIn &&
+              <li>
+                <a href={process.env.REACT_APP_LOGIN_URL}>Login</a>
+              </li>
+            }
+            {
+              authState.isLoggedIn &&
+              <li>
+                <a href="/logout" onClick={logout}>Logout</a>
+              </li>
+            }
+          </ul>
+          {authState.user && <p>Welcome {authState.user?.email}</p>}
+          <Switch>
+            <Route path="/callback">
+              <Callback />
+            </Route>
+            <Route path="/main">
+              <Main />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </>
+    </div>
   );
 }
 

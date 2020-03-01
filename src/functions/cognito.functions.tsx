@@ -2,7 +2,8 @@ import axios from 'axios';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import AWS from 'aws-sdk'
-import { User } from '../App';
+import { User } from '../store/user/auth.reducer';
+// import { User } from '../App';
 
 export interface Token {
   idToken: string;
@@ -85,11 +86,11 @@ export function getAccessTokenUsingRefreshToken(refreshToken: string): Observabl
       )
 }
 
-export function getUserDataFromAccessToken(accessToken: string): Observable<User | AccessTokenError> {
+export function getUserDataFromAccessToken(accessToken: string): Promise<User | AccessTokenError> {
   AWS.config.region = 'us-east-1';
   const cisp = new AWS.CognitoIdentityServiceProvider()
 
-  return from(new Promise<User | AccessTokenError>((resolve, reject) => {
+  return new Promise<User | AccessTokenError>((resolve, reject) => {
     cisp.getUser({ AccessToken: accessToken }, (err, data) => {
       if (!err) {
         const user: any = data.UserAttributes.reduce((acc, c) => ({ ...acc, [c.Name]: c.Value }), {})
@@ -102,5 +103,5 @@ export function getUserDataFromAccessToken(accessToken: string): Observable<User
         reject({ error: 'Error getting user data from access token' })
       }
     })
-  }));
+  });
 }
