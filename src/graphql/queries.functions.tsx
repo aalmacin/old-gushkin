@@ -23,6 +23,21 @@ const GetWishItems = `
   }
 `
 
+const GetActivities = `
+  query Activities($accessToken: String!, $userId: String!) {
+    getActivitiesForUser(accessToken: $accessToken, userId: $userId) {
+      success
+      error
+      data {
+        id
+        description
+        positive
+        fundAmt
+      }
+    }
+  }
+`
+
 const query = (data: any, queryInstance: string, queryTypeName: string) => {
   return from(axios.post(appSyncUrl, {
     query: queryInstance,
@@ -52,5 +67,10 @@ export const getAllWishItems = (accessToken: string, userId: string, filter?: st
   }
 
   return query(data, GetWishItems, 'getWishItemsForUser')
+}
 
+export const getAllActivities = (accessToken: string, userId: string): Promise<ApiResult<WishItem[]>> => {
+  let data: any = { accessToken, userId }
+
+  return query(data, GetActivities, 'getActivitiesForUser')
 }

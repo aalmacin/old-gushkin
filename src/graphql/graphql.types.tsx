@@ -24,3 +24,11 @@ export interface WishItem {
   readonly priority: string,
   readonly status: string
 }
+
+export interface Activity {
+  readonly id: string,
+  readonly description: string,
+  readonly fundAmt: number,
+  readonly positive: boolean,
+  readonly userId: string
+}

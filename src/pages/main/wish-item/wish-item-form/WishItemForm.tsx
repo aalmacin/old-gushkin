@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import classes from './WishItemForm.module.scss';
-import { Priority, Status } from '../../../graphql/graphql.types';
-import ErrorList from '../../error/ErrorList';
+import { Priority, Status } from '../../../../graphql/graphql.types';
+import ErrorList from '../../../error/ErrorList';
 import { useDispatch } from 'react-redux';
-import { createWishItem } from '../../../store/wish-item/wish-item.actions';
+import { createWishItem } from '../../../../store/wish-item/wish-item.actions';
 import { useCookies } from 'react-cookie';
-import { MICRO_AMOUNT } from '../../../functions/global.constants'
+import { MICRO_AMOUNT } from '../../../../functions/global.constants'
 
+interface WishItemFormState {
+  description: string,
+  price: number,
+  source?: string,
+  priority: Priority,
+  status: Status
+}
 function WishItemForm() {
-  const [wishItem, setWishItem] = useState<{ description: string, price: number, source?: string, priority: Priority, status: Status }>({
+  const [wishItem, setWishItem] = useState<WishItemFormState>({
     description: '',
     price: 0,
     source: '',
