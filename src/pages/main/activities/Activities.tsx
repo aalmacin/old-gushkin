@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Activity.module.scss';
+import classes from './Activities.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIsActivitiesLoaded, selectActivities } from '../../../store/activity/activity.selectors';
 import { useCookies } from 'react-cookie';
@@ -20,7 +20,7 @@ function Activity() {
 
   return (
     <div className={classes.Activity}>
-      <h3>Wish Items</h3>
+      <h3>Activities</h3>
       <div>
         {
           activities.map(

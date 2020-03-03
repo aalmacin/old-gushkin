@@ -69,11 +69,8 @@ export const getAllWishItems = (accessToken: string, userId: string, filter?: st
   return query(data, GetWishItems, 'getWishItemsForUser')
 }
 
-export const getAllActivities = (accessToken: string, userId: string, filter?: string): Promise<ApiResult<WishItem[]>> => {
+export const getAllActivities = (accessToken: string, userId: string): Promise<ApiResult<WishItem[]>> => {
   let data: any = { accessToken, userId }
-  if (filter) {
-    data.filter = filter;
-  }
 
-  return query(data, GetWishItems, 'getActivities')
+  return query(data, GetActivities, 'getActivitiesForUser')
 }

@@ -7,8 +7,15 @@ import { createWishItem } from '../../../../store/wish-item/wish-item.actions';
 import { useCookies } from 'react-cookie';
 import { MICRO_AMOUNT } from '../../../../functions/global.constants'
 
+interface WishItemFormState {
+  description: string,
+  price: number,
+  source?: string,
+  priority: Priority,
+  status: Status
+}
 function WishItemForm() {
-  const [wishItem, setWishItem] = useState<{ description: string, price: number, source?: string, priority: Priority, status: Status }>({
+  const [wishItem, setWishItem] = useState<WishItemFormState>({
     description: '',
     price: 0,
     source: '',
