@@ -18,6 +18,10 @@ function Activity() {
     dispatch(getActivities(cookies.gushkinTokens.accessToken))
   }
 
+  const addActivity = () => {
+    alert('add')
+  }
+
   return (
     <div className={classes.Activity}>
       <h3>Activities</h3>
@@ -33,6 +37,9 @@ function Activity() {
               </div>
               <div>
                 {activity.positive ? 'Positive' : 'Negative'}
+              </div>
+              <div>
+                <button onClick={addActivity}>+</button>
               </div>
             </div>
           )

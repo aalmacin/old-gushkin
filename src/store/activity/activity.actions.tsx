@@ -8,6 +8,10 @@ export const CREATE_ACTIVITY = '[Activity] Create Activity';
 export const CREATE_ACTIVITY_SUCCESS = '[Activity] Create Activity Success';
 export const CREATE_ACTIVITY_FAILURE = '[Activity] Create Activity Failure';
 
+export const PERFORM_ACTIVITY = '[Activity] Perform Activity';
+export const PERFORM_ACTIVITY_SUCCESS = '[Activity] Perform Activity Success';
+export const PERFORM_ACTIVITY_FAILURE = '[Activity] Perform Activity Failure';
+
 export const getActivities = (accessToken: string) => ({
   type: GET_ACTIVITIES,
   payload: accessToken
@@ -42,5 +46,19 @@ export const createActivitySuccess = (activities: Activity[]) => ({
 
 export const createActivityFailure = (error: string) => ({
   type: CREATE_ACTIVITY_FAILURE,
+  payload: error
+})
+
+export const performActivity = (payload: string) => ({
+  type: PERFORM_ACTIVITY,
+  payload
+})
+
+export const performActivitySuccess = () => ({
+  type: PERFORM_ACTIVITY_SUCCESS
+})
+
+export const performActivityFailure = (error: string) => ({
+  type: PERFORM_ACTIVITY_FAILURE,
   payload: error
 })

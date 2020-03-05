@@ -38,6 +38,16 @@ const GetActivities = `
   }
 `
 
+const GetCurrentFunds = `
+  query GetCurrentFunds($accessToken: String!, $userId: String!) {
+    getCurrentFunds(accessToken: $accessToken, userId: $userId) {
+      success
+      error
+      data
+    }
+  }
+`
+
 const query = (data: any, queryInstance: string, queryTypeName: string) => {
   return from(axios.post(appSyncUrl, {
     query: queryInstance,
@@ -73,4 +83,10 @@ export const getAllActivities = (accessToken: string, userId: string): Promise<A
   let data: any = { accessToken, userId }
 
   return query(data, GetActivities, 'getActivitiesForUser')
+}
+
+export const getCurrentFunds = (accessToken: string, userId: string): Promise<ApiResult<number>> => {
+  let data: any = { accessToken, userId }
+
+  return query(data, GetCurrentFunds, 'getCurrentFunds')
 }
