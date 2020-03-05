@@ -3,7 +3,7 @@ import classes from './Activities.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIsActivitiesLoaded, selectActivities } from '../../../store/activity/activity.selectors';
 import { useCookies } from 'react-cookie';
-import { getActivities } from '../../../store/activity/activity.actions';
+import { getActivities, performActivity } from '../../../store/activity/activity.actions';
 import { displayNormalMoney } from '../../../functions/utils.functions';
 import ActivityForm from './activity-form/ActivityForm';
 import { Activity as ActivityType } from '../../../graphql/graphql.types';
@@ -18,8 +18,8 @@ function Activity() {
     dispatch(getActivities(cookies.gushkinTokens.accessToken))
   }
 
-  const addActivity = () => {
-    alert('add')
+  const addActivity = (activityId: string) => () => {
+    dispatch(performActivity(activityId))
   }
 
   return (
@@ -39,7 +39,7 @@ function Activity() {
                 {activity.positive ? 'Positive' : 'Negative'}
               </div>
               <div>
-                <button onClick={addActivity}>+</button>
+                <button onClick={addActivity(activity.id)}>+</button>
               </div>
             </div>
           )
