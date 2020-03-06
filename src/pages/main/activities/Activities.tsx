@@ -19,7 +19,7 @@ function Activity() {
   }
 
   const addActivity = (activityId: string) => () => {
-    dispatch(performActivity(activityId))
+    dispatch(performActivity({ accessToken: cookies.gushkinTokens.accessToken, activityId: parseInt(`${activityId}`) }))
   }
 
   return (
@@ -36,10 +36,7 @@ function Activity() {
                 {displayNormalMoney(activity.fundAmt)}
               </div>
               <div>
-                {activity.positive ? 'Positive' : 'Negative'}
-              </div>
-              <div>
-                <button onClick={addActivity(activity.id)}>+</button>
+                <button onClick={addActivity(activity.id)}>{activity.positive ? '+' : '-'}</button>
               </div>
             </div>
           )

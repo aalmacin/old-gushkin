@@ -38,10 +38,18 @@ function ActivityForm() {
     return errorList;
   }
 
-  const updateFormControl = (key: 'description' | 'fundAmt' | 'positive') => (event: any) => {
+  const updateFormControl = (key: 'description' | 'fundAmt') => (event: any) => {
     setActivity({
       ...activity,
       [key]: event.target.value
+    })
+    setErrors(getErrors())
+  }
+
+  const updatePositive = () => {
+    setActivity({
+      ...activity,
+      positive: !activity.positive
     })
     setErrors(getErrors())
   }
@@ -71,7 +79,7 @@ function ActivityForm() {
         </div>
         <div>
           <label>Positive</label>
-          <input type="checkbox" value={activity.positive as any} onChange={updateFormControl('positive')} />
+          <input type="checkbox" checked={activity.positive} onChange={updatePositive} />
         </div>
         <div>
           <button>Submit</button>

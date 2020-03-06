@@ -34,6 +34,11 @@ interface CreateActivityPayload {
   positive: boolean
 }
 
+interface PerformActivityPayload {
+  accessToken: any,
+  activityId: number
+}
+
 export const createActivity = (payload: CreateActivityPayload) => ({
   type: CREATE_ACTIVITY,
   payload
@@ -49,7 +54,7 @@ export const createActivityFailure = (error: string) => ({
   payload: error
 })
 
-export const performActivity = (payload: string) => ({
+export const performActivity = (payload: PerformActivityPayload) => ({
   type: PERFORM_ACTIVITY,
   payload
 })

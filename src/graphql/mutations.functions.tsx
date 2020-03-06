@@ -36,12 +36,24 @@ const CreateActivity = `mutation CreateActivity(
     $fundAmt: Int!,
     $positive: Boolean
   ) {
-    createWishItem(
+    createActivity(
       accessToken: $accessToken, 
       userId: $userId,
       description: $description,
       fundAmt: $fundAmt,
       positive: $positive
+    ) {
+      success
+      error
+    }
+  }
+`
+
+const PerformActivity = `mutation PerformActivity($accessToken: String!, $userId: String!, $activityId: Int!) {
+    performActivity(
+      accessToken: $accessToken, 
+      userId: $userId,
+      activityId: $activityId
     ) {
       success
       error
@@ -63,6 +75,11 @@ interface CreateActivityParams {
   description: string,
   fundAmt: number,
   positive: boolean
+}
+
+interface PerformActivityParams {
+  accessToken: any,
+  activityId: number
 }
 
 const mutation = (data: any, mutationInstance: string, mutationTypeName: string) => {
@@ -97,4 +114,10 @@ export const createActivity = (params: CreateActivityParams) => {
   let data: any = { ...params };
 
   return mutation(data, CreateActivity, 'createActivity')
+}
+
+export const performActivity = (params: PerformActivityParams) => {
+  let data: any = { ...params };
+
+  return mutation(data, PerformActivity, 'performActivity')
 }
