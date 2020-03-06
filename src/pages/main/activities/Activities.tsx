@@ -7,10 +7,8 @@ import { getActivities, performActivity } from '../../../store/activity/activity
 import { displayNormalMoney } from '../../../functions/utils.functions';
 import ActivityForm from './activity-form/ActivityForm';
 import { Activity as ActivityType } from '../../../graphql/graphql.types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-
-
+import Button from '../../../component-lib/Button/Button';
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
@@ -34,10 +32,11 @@ function Activity() {
           {
             activities.map(
               (activity: ActivityType) => <li key={activity.id} className={classes.Activity}>
-                <button onClick={addActivity(activity.id)} className={classes.ActivityButton}>
-                  {activity.positive ? <FontAwesomeIcon icon={faPlus} /> : <FontAwesomeIcon icon={faMinus} />}
-                  <span className={classes.ActivityAmt}>$ {displayNormalMoney(activity.fundAmt)}</span>
-                </button>
+                <Button clickHandler={addActivity(activity.id)} icon={activity.positive ? faPlus : faMinus}>
+                  <span className={classes.ActivityAmt}>
+                    $ {displayNormalMoney(activity.fundAmt)}
+                  </span>
+                </Button>
                 <span className={classes.ActivityText}>{activity.description}</span>
               </li>
             )
