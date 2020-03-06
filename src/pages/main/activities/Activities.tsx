@@ -7,6 +7,10 @@ import { getActivities, performActivity } from '../../../store/activity/activity
 import { displayNormalMoney } from '../../../functions/utils.functions';
 import ActivityForm from './activity-form/ActivityForm';
 import { Activity as ActivityType } from '../../../graphql/graphql.types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+
+
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
@@ -23,29 +27,58 @@ function Activity() {
   }
 
   return (
-    <div className={classes.Activity}>
-      <h3>Activities</h3>
-      <div>
-        {
-          activities.map(
-            (activity: ActivityType) => <div key={activity.id}>
-              <div>
-                {activity.description}
-              </div>
-              <div>
-                {displayNormalMoney(activity.fundAmt)}
-              </div>
-              <div>
-                <button onClick={addActivity(activity.id)}>{activity.positive ? '+' : '-'}</button>
-              </div>
-            </div>
-          )
-        }
-      </div>
-      <div>
+    <div className={classes.ActivityPage}>
+      <div className={classes.ActivitiesSection}>
+        <h2>Activities</h2>
+        <ul className={classes.ActivityList}>
+          {
+            activities.map(
+              (activity: ActivityType) => <li key={activity.id} className={classes.Activity}>
+                <button onClick={addActivity(activity.id)} className={classes.ActivityButton}>
+                  {activity.positive ? <FontAwesomeIcon icon={faPlus} /> : <FontAwesomeIcon icon={faMinus} />}
+                  <span className={classes.ActivityAmt}>$ {displayNormalMoney(activity.fundAmt)}</span>
+                </button>
+                <span className={classes.ActivityText}>{activity.description}</span>
+              </li>
+            )
+          }
+        </ul>
         <ActivityForm />
       </div>
-    </div>
+      <div className={classes.ActivityHistorySection}>
+        <h2>Today's Activities</h2>
+        <ul className={classes.ActivityHistoryList}>
+          <li className={classes.ActivityHistoryItem}>
+            <span>Activity 1</span>
+            <span>Mar 6, 2020</span>
+            <span>+ $3.00</span>
+          </li>
+          <li className={classes.ActivityHistoryItem}>
+            <span>Activity 1</span>
+            <span>Mar 6, 2020</span>
+            <span>+ $3.00</span>
+          </li>
+          <li className={classes.ActivityHistoryItem}>
+            <span>Activity 1</span>
+            <span>Mar 6, 2020</span>
+            <span>+ $3.00</span>
+          </li>
+          <li className={classes.ActivityHistoryItem}>
+            <span>Activity 2</span>
+            <span>Mar 6, 2020</span>
+            <span>+ $3.00</span>
+          </li>
+          <li className={classes.ActivityHistoryItem}>
+            <span>Activity 4</span>
+            <span>Mar 6, 2020</span>
+            <span>- $30.00</span>
+          </li>
+        </ul>
+        <div className={classes.FundChange}>
+          Fund Change: + $20.00
+        </div>
+      </div>
+    </div >
   );
 }
 

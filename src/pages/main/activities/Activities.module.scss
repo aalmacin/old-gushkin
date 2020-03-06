@@ -1,0 +1,96 @@
+.ActivityPage {
+  display: flex;
+  max-width: 120rem;
+  min-height: 72rem;
+  margin: 0 auto;
+  background-color: lime;
+  
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .ActivitiesSection {
+    flex-grow: 3;
+    background-color: salmon;
+    padding: 1rem;
+    
+    .ActivityList {
+      display: flex;
+      flex-direction: column;
+           
+      .Activity {
+        font-size: 2rem;
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid hotpink;
+        padding-bottom: 1rem;
+        
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+        
+        .ActivityButton {
+          border: none; 
+          font-size: 2rem;
+          padding: .5rem 2rem;
+          border-radius: 0;
+          background-color: khaki;
+          flex: 1;
+          flex-shrink: 1;
+          display: flex;
+          align-items: center;
+          
+          .ActivityAmt {
+            margin-left: 1rem;
+          }
+        }
+        
+        .ActivityText {
+          flex-grow: 3;
+          margin-left: 2rem;
+        }
+      }
+    }
+  }
+  
+  .ActivityHistorySection {
+    flex-shrink: 1;
+    background-color: firebrick;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .ActivityHistoryList {
+      flex-basis: 80%;
+      .ActivityHistoryItem {
+        list-style-type: none;
+        
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+    
+    .FundChange {
+      margin-top: 1rem;
+      background-color: #FFF;
+      display: flex;
+      flex-grow: 1;
+    }
+  }
+}
