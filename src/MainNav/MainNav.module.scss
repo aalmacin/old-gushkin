@@ -1,0 +1,11 @@
+@import '../component-lib/variables.scss';
+
+.MainNav {
+  background-color: getColor(primary, tint-7);
+
+  .LinkList {
+    .LinkListItem {
+      list-style-type: none;
+    }
+  }
+}

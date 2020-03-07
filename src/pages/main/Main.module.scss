@@ -1,3 +1,23 @@
 .Main {
-  padding: 2rem;
+  display: flex;
+  flex-direction: row-reverse;
+
+  .SubNavSection {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
+    background-color: firebrick;
+
+    padding: 1rem 2rem 0;
+
+    .SubNavItem {
+      list-style-type: none;
+    }
+  }
+
+  .SubPages {
+    flex: 9;
+  }
 }

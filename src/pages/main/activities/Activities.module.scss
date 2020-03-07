@@ -39,24 +39,8 @@
           margin-bottom: 1rem;
         }
 
-        .ActivityButton {
-          border: none;
-          font-size: 2rem;
-          padding: .5rem 2rem;
-          border-radius: 0;
-          background-color: khaki;
-          flex: 1;
-          flex-shrink: 1;
-          display: flex;
-          align-items: center;
-
-          .ActivityAmt {
-            margin-left: 1rem;
-          }
-        }
-
         .ActivityText {
-          flex: 3;
+          flex: 6;
           margin-left: 2rem;
         }
       }

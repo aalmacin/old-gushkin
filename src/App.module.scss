@@ -1,11 +1,13 @@
 @import './component-lib/variables.scss';
+@import './component-lib/fonts.scss';
 
-App {
+.App {
   background-color: getColor(white);
 }
 
 html {
   font-size: 10px;
+  font-family: Raleway;
 }
 
 h1,
