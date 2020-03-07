@@ -2,18 +2,30 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "./Button.module.scss";
 
-interface ButtonProps {
-  clickHandler: () => void,
-  icon: any
+export enum ButtonType {
+  primary = 'Primary',
+  secondary = 'Secondary',
+  tertiary = 'Tertiary',
 }
 
-const Button: React.FC<ButtonProps> = ({ clickHandler, icon, children }) => {
+interface ButtonProps {
+  clickHandler: () => void,
+  icon?: any,
+  isSquare?: boolean,
+  buttonType: ButtonType
+}
+
+const Button: React.FC<ButtonProps> = ({ clickHandler, icon, buttonType, isSquare, children }) => {
   return (
-    <button onClick={clickHandler} className={classes.Button}>
+    <button onClick={clickHandler} className={`${classes.Button} ${classes[buttonType]} ${isSquare && classes.Square}`}>
       <span className={classes.Icon}>
         {icon && <FontAwesomeIcon icon={icon} />}
       </span>
-      {children}
+      {icon && children && <span className={classes.IconChildrenMargin}></span>}
+      {children && <span className={classes.Children}>
+        {children}
+      </span>
+      }
     </button>
   );
 }

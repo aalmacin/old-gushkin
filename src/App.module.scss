@@ -1,7 +1,7 @@
-$primaryColor: rgb(168, 219, 145);
+@import './component-lib/variables.scss';
 
-.App {
-  background-color: $primaryColor;
+App {
+  background-color: getColor(white);
 }
 
 html {

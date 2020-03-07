@@ -1,15 +1,60 @@
+@import 'component-lib/variables.scss';
+
 .Button {
   border: none;
   font-size: 2rem;
-  padding: .5rem 2rem;
-  border-radius: 0;
-  background-color: khaki;
+  padding: 1rem 2rem;
   flex: 1;
   flex-shrink: 1;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
-  .Icon {
-    margin-right: 1rem;
+  &.Square {
+    border-radius: 0;
+  }
+
+  &:not(.Square) {
+    border-radius: 2rem;
+  }
+
+  .IconChildrenMargin {
+    margin-left: 1rem;
+  }
+
+  &.Primary {
+    background-color: getColor(primary, shade-3);
+    color: getColor(white);
+    border: 1px solid getColor(primary, tint-9);
+
+    &:hover {
+      background-color: getColor(primary, shade-4);
+      color: getColor(primary, tint-9);
+      border: 1px solid getColor(primary, tint-9);
+    }
+  }
+
+  &.Secondary {
+    background-color: getColor(secondary, shade-3);
+    color: getColor(white);
+    border: 1px solid getColor(secondary, tint-9);
+
+    &:hover {
+      background-color: getColor(secondary, shade-4);
+      color: getColor(secondary, tint-9);
+      border: 1px solid getColor(secondary, tint-9);
+    }
+  }
+
+  &.Tertiary {
+    background-color: getColor(tertiary, shade-3);
+    color: getColor(white);
+    border: 1px solid getColor(tertiary, tint-9);
+
+    &:hover {
+      background-color: getColor(tertiary, shade-4);
+      color: getColor(tertiary, tint-9);
+      border: 1px solid getColor(tertiary, tint-9);
+    }
   }
 }
