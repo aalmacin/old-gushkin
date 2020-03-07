@@ -1,26 +1,29 @@
+@import '../../../component-lib/variables.scss';
+
 .ActivityPage {
   display: flex;
   max-width: 120rem;
   min-height: 72rem;
   margin: 0 auto;
-  background-color: lime;
+  margin-top: 1rem;
+  flex-direction: row-reverse;
 
   * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-size: 2rem;
   }
 
   h2 {
-    font-size: 2rem;
     margin-bottom: 1rem;
   }
 
   .ActivitiesSection {
     flex-grow: 3;
-    background-color: salmon;
-    padding: 1rem;
+    background-color: getColor(secondary, tint-8);
+    margin-left: 1rem;
+
+    padding: 3rem;
 
     .ActivityList {
       display: flex;
@@ -32,7 +35,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid hotpink;
+        border-bottom: 1px solid getColor(primary-invert, tint-7);
         padding-bottom: 1rem;
 
         &:not(:last-child) {
@@ -49,13 +52,12 @@
 
   .ActivityHistorySection {
     flex-shrink: 1;
-    background-color: firebrick;
-    padding: 1rem;
+    background-color: getColor(secondary, tint-8);
+    padding: 3rem;
     display: flex;
     flex-direction: column;
 
     h2 {
-      font-size: 2rem;
       margin-bottom: 1rem;
     }
 

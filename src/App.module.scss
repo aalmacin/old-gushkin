@@ -1,13 +1,12 @@
 @import './component-lib/variables.scss';
 @import './component-lib/fonts.scss';
 
-.App {
-  background-color: getColor(white);
-}
 
 html {
   font-size: 10px;
   font-family: Raleway;
+  color: getColor(black);
+  background-color: getColor(secondary, tint-9);
 }
 
 h1,
@@ -16,7 +15,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 div,
@@ -29,4 +28,5 @@ a {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  letter-spacing: .1rem;
 }

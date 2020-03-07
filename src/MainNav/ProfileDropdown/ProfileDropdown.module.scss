@@ -1,0 +1,57 @@
+@import '../../component-lib/variables.scss';
+
+.Profile {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  align-items: flex-end;
+  cursor: pointer;
+  position: relative;
+
+  .Email {
+    margin-right: 1rem;
+  }
+
+  .CurrentUser {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    @include unselectable;
+
+    // &.IsShowList {
+    //   border: 1px solid getColor(primary, shade-9);
+    //   background-color: getColor(primary, tint-8);
+    // }
+  }
+}
+
+.LinkList {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: absolute;
+  top: 3rem;
+  width: 100%;
+
+  .LinkListItem {
+    border: 1px solid getColor(secondary, shade-9);
+    background-color: getColor(secondary, tint-9);
+    list-style-type: none;
+    text-transform: uppercase;
+    padding: 2rem 0.5rem;
+    display: flex;
+    text-align: center;
+
+    a {
+      width: 100%;
+      color: getColor(secondary, shade-7);
+      @include unselectable;
+    }
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}

@@ -7,8 +7,7 @@ import { selectIsFundsLoaded, selectFunds } from '../../store/funds/funds.select
 import { useCookies } from 'react-cookie';
 import { getCurrentFunds } from '../../store/funds/funds.actions';
 import { displayNormalMoney } from '../../functions/utils.functions';
-import { Switch, Route, Link, useRouteMatch, Router } from 'react-router-dom';
-import MainNav from '../../MainNav/MainNav';
+import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 
 function Main() {
   const isActivitiesLoaded = useSelector(selectIsFundsLoaded);
@@ -17,7 +16,7 @@ function Main() {
   const dispatch = useDispatch();
   const match = useRouteMatch();
 
-  if (!isActivitiesLoaded) {
+  if (!isActivitiesLoaded && cookies.gushkinTokens) {
     dispatch(getCurrentFunds(cookies.gushkinTokens.accessToken))
   }
 
@@ -32,7 +31,6 @@ function Main() {
         </ul>
       </div>
       <div className={classes.SubPages}>
-        <MainNav />
         <Switch>
           <Route path={`${match.path}/store`}>
             <WishItem />

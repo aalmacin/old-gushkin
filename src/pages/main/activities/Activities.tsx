@@ -16,7 +16,7 @@ function Activity() {
   const dispatch = useDispatch();
   const activities = useSelector(selectActivities);
 
-  if (!isActivitiesLoaded) {
+  if (!isActivitiesLoaded && cookies.gushkinTokens) {
     dispatch(getActivities(cookies.gushkinTokens.accessToken))
   }
 

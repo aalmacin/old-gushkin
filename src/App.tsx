@@ -13,6 +13,7 @@ import { getUserData } from './store/auth/auth.actions';
 import { getCurrentTimestamp } from './functions/utils.functions';
 import { getAccessTokenUsingRefreshToken, isToken } from './functions/cognito.functions';
 import { first } from 'rxjs/operators';
+import MainNav from './MainNav/MainNav';
 
 function App() {
   const authState = useSelector(selectAuth);
@@ -37,6 +38,7 @@ function App() {
   return (
     <div className={classes.App}>
       <BrowserRouter>
+        <MainNav />
         <Switch>
           <Route path="/callback">
             <Callback />
