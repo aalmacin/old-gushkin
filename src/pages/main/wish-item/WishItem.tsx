@@ -9,8 +9,7 @@ import WishItemForm from './wish-item-form/WishItemForm';
 import { WishItem as WishItemType } from '../../../graphql/graphql.types';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faCoins } from '@fortawesome/free-solid-svg-icons'
-import Button, { ButtonType } from '../../../component-lib/Button/Button';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { selectFunds } from '../../../store/funds/funds.selectors';
 import Funds from '../shared/Funds';
 
@@ -20,9 +19,8 @@ function WishItem() {
   const dispatch = useDispatch();
   const wishItems = useSelector(selectWishItems);
   const totalPrice = useSelector(selectTotalWishItemPrice);
-  const funds = useSelector(selectFunds);
 
-  if (!isWishItemsLoaded) {
+  if (!isWishItemsLoaded && cookies.gushkinTokens) {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken))
   }
 
