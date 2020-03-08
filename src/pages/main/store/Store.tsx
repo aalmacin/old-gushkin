@@ -9,7 +9,7 @@ import WishItemForm from './wish-item-form/WishItemForm';
 import { WishItem as WishItemType } from '../../../graphql/graphql.types';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingCart, faCartPlus } from '@fortawesome/free-solid-svg-icons'
 import Funds from '../shared/Funds';
 
 function Store() {
@@ -25,33 +25,39 @@ function Store() {
   return (
     <div className={classes.Store}>
       <WishItemForm />
-      <div className={classes.StoreItemList}>
+      <div className={classes.StoreItemSection}>
         <h2>Wish Items</h2>
-        {
-          wishItems.map(
-            (wishItem: WishItemType) => <div key={wishItem.id}>
-              <div>
-                {wishItem.description}
+        <div className={classes.StoreItemList}>
+          {
+            wishItems.map(
+              (wishItem: WishItemType) => <div className={classes.WishItem} key={wishItem.id}>
+                <div className={classes.Description}>
+                  {wishItem.description}
+                </div>
+                {/* <div className={classes.Source}>
+                  {wishItem.source}
+                </div> */}
+                {/* <div className={classes.Priority}>
+                  {wishItem.priority}
+                </div>
+                <div className={classes.Status}>
+                  {wishItem.status}
+                </div> */}
+                <div className={classes.Price}>
+                  $ {displayNormalMoney(wishItem.price)}
+                  <div className={classes.AddCart}>
+                    <FontAwesomeIcon icon={faCartPlus} />
+                  </div>
+                </div>
               </div>
-              <div>
-                {displayNormalMoney(wishItem.price)}
-              </div>
-              <div>
-                {wishItem.source}
-              </div>
-              <div>
-                {wishItem.priority}
-              </div>
-              <div>
-                {wishItem.status}
-              </div>
-            </div>
-          )
-        }
+            )
+          }
+        </div>
       </div>
       <div className={classes.Cart}>
         <h2><FontAwesomeIcon icon={faShoppingCart} /> Cart</h2>
-        <p>Funds: <Funds /></p>
+        <h3>Your Funds</h3>
+        <p><Funds /></p>
       </div>
     </div>
   );
