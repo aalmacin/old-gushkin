@@ -6,6 +6,7 @@ import { getCurrentFunds } from '../../../store/funds/funds.actions';
 import Button, { ButtonType } from '../../../component-lib/Button/Button';
 import { displayNormalMoney } from '../../../functions/utils.functions';
 import { faCoins } from '@fortawesome/free-solid-svg-icons'
+import Loading from '../../../component-lib/Loading/Loading';
 
 function Funds() {
   const [cookies] = useCookies(['gushkinTokens'])
@@ -16,7 +17,7 @@ function Funds() {
     dispatch(getCurrentFunds(cookies.gushkinTokens.accessToken))
   }
 
-  return <Button clickHandler={() => { }} icon={faCoins} buttonType={ButtonType.gold}>${displayNormalMoney(funds)}</Button>
+  return isFundsLoaded ? <Button clickHandler={() => { }} icon={faCoins} buttonType={ButtonType.gold} > ${displayNormalMoney(funds)}</Button > : <Loading isLoading />
 }
 
 export default Funds;

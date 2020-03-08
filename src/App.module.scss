@@ -7,7 +7,7 @@ html {
   font-family: Raleway;
   color: getColor(black);
   background-color: getColor(secondary);
-  background: linear-gradient(90deg, getColor(secondary, tint-6) 15%, getColor(secondary, tint-7) 100%);
+  background: linear-gradient(90deg, getColor(primary, tint-6) 15%, getColor(primary, tint-7) 100%);
 }
 
 h1,

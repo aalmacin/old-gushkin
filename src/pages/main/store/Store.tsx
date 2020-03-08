@@ -9,14 +9,20 @@ import WishItemForm from './wish-item-form/WishItemForm';
 import { WishItem as WishItemType } from '../../../graphql/graphql.types';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingCart, faCartPlus, faStore } from '@fortawesome/free-solid-svg-icons'
 import Funds from '../shared/Funds';
+import { Redirect } from 'react-router-dom';
+import Loading from '../../../component-lib/Loading/Loading';
 
 function Store() {
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
   const wishItems = useSelector(selectWishItems);
+
+  if (!cookies.gushkinTokens) {
+    return <Redirect to="/" />
+  }
 
   if (!isWishItemsLoaded && cookies.gushkinTokens) {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken))
@@ -26,8 +32,8 @@ function Store() {
     <div className={classes.Store}>
       <WishItemForm />
       <div className={classes.StoreItemSection}>
-        <h2>Wish Items</h2>
-        <div className={classes.StoreItemList}>
+        <h2><span className={classes.Icon}><FontAwesomeIcon icon={faStore} /></span> Store</h2>
+        {isWishItemsLoaded ? <div className={classes.StoreItemList}>
           {
             wishItems.map(
               (wishItem: WishItemType) => <div className={classes.WishItem} key={wishItem.id}>
@@ -53,6 +59,8 @@ function Store() {
             )
           }
         </div>
+          : <Loading isLoading />
+        }
       </div>
       <div className={classes.Cart}>
         <h2><FontAwesomeIcon icon={faShoppingCart} /> Cart</h2>

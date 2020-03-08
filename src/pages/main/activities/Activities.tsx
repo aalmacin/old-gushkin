@@ -13,6 +13,8 @@ import Button, { ButtonType } from '../../../component-lib/Button/Button';
 import Funds from '../shared/Funds';
 import { selectTotalWishItemPrice, selectIsWishItemsLoaded } from '../../../store/wish-item/wish-item.selectors';
 import { getWishItems } from '../../../store/wish-item/wish-item.actions';
+import { Redirect } from 'react-router-dom';
+import Loading from '../../../component-lib/Loading/Loading';
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
@@ -22,6 +24,10 @@ function Activity() {
   const activities = useSelector(selectActivities);
   const [isShowActivityForm, setShowActivityForm] = useState(false);
   const totalPrice = useSelector(selectTotalWishItemPrice);
+
+  if (!cookies.gushkinTokens) {
+    return <Redirect to="/" />
+  }
 
   if (!isActivitiesLoaded && cookies.gushkinTokens) {
     dispatch(getActivities(cookies.gushkinTokens.accessToken))
@@ -49,7 +55,7 @@ function Activity() {
             <Button clickHandler={showActivityForm} buttonType={ButtonType.secondary} icon={faPlus} />
           </div>
         </div>
-        <ul className={classes.ActivityList}>
+        {isActivitiesLoaded ? <ul className={classes.ActivityList}>
           {
             activities.map(
               (activity: ActivityType) => <li key={activity.id} className={classes.Activity}>
@@ -62,7 +68,7 @@ function Activity() {
               </li>
             )
           }
-        </ul>
+        </ul> : <Loading isLoading />}
       </div>
       <div className={classes.ActivityDetailsSection}>
         <div className={classes.Funds}>
@@ -72,10 +78,16 @@ function Activity() {
         <div className={classes.TotalPrice}>
           <h2>Total Funds Needed</h2>
 
-          <p className={classes.Description}>Total Funds needed to buy all wish items:</p>
+          {isWishItemsLoaded ?
 
-          <p className={classes.Money}>$ {displayNormalMoney(totalPrice)}</p>
+            <>
+              <p className={classes.Description}>Total Funds needed to buy all wish items:</p>
 
+              <p className={classes.Money}>$ {displayNormalMoney(totalPrice)}</p>
+
+            </>
+            : <Loading isLoading />
+          }
         </div>
         <div className={classes.TodaysActivities}>
           <h2><span className={classes.Icon}><FontAwesomeIcon icon={faListAlt} /></span> Today's Activities</h2>

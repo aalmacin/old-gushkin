@@ -6,6 +6,7 @@ import { faAngleDown, faAngleUp, faHistory, faSignInAlt, faSignOutAlt } from '@f
 import { selectAuth } from '../../store/auth/auth.selectors';
 import { useCookies } from 'react-cookie';
 import { logoutUser } from '../../store/auth/auth.actions';
+import IconLink from '../../component-lib/IconLink/IconLink';
 
 function ProfileDropdown() {
   const [isShowList, setIsShowList] = useState(false);
@@ -25,46 +26,33 @@ function ProfileDropdown() {
 
   return (
     <div className={classes.Profile} >
-      <div className={`${classes.CurrentUser}  ${isShowList && classes.IsShowList}`} onClick={toggleIsShowList}>
-        <span className={classes.Email}>
-          {<p>{authState.user ? authState.user?.email : 'Not logged in'}</p>}
-        </span>
-        <FontAwesomeIcon icon={isShowList ? faAngleUp : faAngleDown} />
-      </div>
       {
-        isShowList &&
-        <ul className={classes.LinkList}>
-          <li className={classes.LinkListItem}>
-            <a>
-              <span className={classes.Icon}>
-                <FontAwesomeIcon icon={faHistory} />
+        !authState.isLoggedIn ?
+          <IconLink icon={faSignInAlt} isExternal to={process.env.REACT_APP_LOGIN_URL as string}>
+            Login
+          </IconLink>
+          :
+          <>
+            <div className={`${classes.CurrentUser}  ${isShowList && classes.IsShowList}`} onClick={toggleIsShowList}>
+              <span className={classes.Email}>
+                {<p>{authState.user ? authState.user?.email : 'Not logged in'}</p>}
               </span>
-              History
-              </a>
-          </li>
-          {
-            !authState.isLoggedIn &&
-            <li className={classes.LinkListItem}>
-              <a href={process.env.REACT_APP_LOGIN_URL}>
-                <span className={classes.Icon}>
-                  <FontAwesomeIcon icon={faSignInAlt} />
-                </span>
-                Login
-                </a>
-            </li>
-          }
-          {
-            authState.isLoggedIn &&
-            <li className={classes.LinkListItem}>
-              <a href="/logout" onClick={logout}>
-                <span className={classes.Icon}>
-                  <FontAwesomeIcon icon={faSignOutAlt} />
-                </span>
-                Logout
-                </a>
-            </li>
-          }
-        </ul>
+              <FontAwesomeIcon icon={isShowList ? faAngleUp : faAngleDown} />
+            </div>
+            {
+              isShowList &&
+              <ul className={classes.LinkList}>
+                <li className={classes.LinkListItem}>
+                  <IconLink to="/history" icon={faHistory}>History</IconLink>
+                </li>
+                <li className={classes.LinkListItem}>
+                  <IconLink icon={faSignOutAlt} to="/logout" onClick={logout}>
+                    Logout
+                  </IconLink>
+                </li>
+              </ul>
+            }
+          </>
       }
     </ div>
   );

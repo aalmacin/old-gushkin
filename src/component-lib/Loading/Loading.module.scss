@@ -1,0 +1,22 @@
+@import '../variables.scss';
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.LoadingContainer {
+  display: inline-block;
+}
+
+.Loading {
+  display: inline-block;
+  animation: spin 2s infinite linear;
+  font-size: 4rem;
+  color: getColor(primary, shade-6);
+}
