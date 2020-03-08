@@ -2,13 +2,8 @@
 
 .ActivityPage {
   display: flex;
-  max-width: 95%;
-  min-height: 85vh;
   margin: 3rem auto;
   flex-direction: row;
-  background-color: getColor(white, light);
-  box-shadow: 1.2rem 1rem 5rem -.1rem getColor(secondary, shade-4);
-  border-radius: 1rem;
 
   h2 {
     margin-bottom: 1rem;
@@ -16,8 +11,7 @@
 
   .ActivitiesSection {
     flex: 9;
-
-    padding: 3rem;
+    padding-right: 3rem;
 
     .ActivityList {
       display: flex;
@@ -30,7 +24,7 @@
         flex-direction: row-reverse;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px dotted getColor(primary-invert, tint-7);
+        border-bottom: 1px dotted getColor(tertiary, tint-7);
         padding-bottom: 1rem;
 
         &:not(:last-child) {
@@ -44,9 +38,9 @@
     }
   }
 
-  .ActivityHistorySection {
+  .ActivityDetailsSection {
     flex: 3;
-    padding: 3rem;
+    padding: 0 3rem;
     display: flex;
     flex-direction: column;
 
@@ -54,6 +48,14 @@
 
     h2 {
       margin-bottom: 1rem;
+
+      .Icon {
+        margin-right: 1rem;
+      }
+    }
+
+    .Funds {
+      margin-bottom: 5rem;
     }
 
     .ActivityHistoryList {
@@ -78,4 +80,5 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
 }

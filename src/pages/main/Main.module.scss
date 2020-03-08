@@ -1,1 +1,11 @@
 @import '../../component-lib/variables.scss';
+
+.Main {
+  max-width: 95%;
+  min-height: 85vh;
+  margin: 3rem auto;
+  background-color: getColor(white, light);
+  box-shadow: 1.2rem 1rem 5rem -.1rem getColor(secondary, shade-4);
+  border-radius: 1rem;
+  padding: 3rem;
+}

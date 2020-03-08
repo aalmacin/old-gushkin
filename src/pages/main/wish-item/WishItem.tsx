@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faCoins } from '@fortawesome/free-solid-svg-icons'
 import Button, { ButtonType } from '../../../component-lib/Button/Button';
 import { selectFunds } from '../../../store/funds/funds.selectors';
+import Funds from '../shared/Funds';
 
 function WishItem() {
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
@@ -27,8 +28,11 @@ function WishItem() {
 
   return (
     <div className={classes.WishItem}>
-      <h3>Wish Items</h3>
       <div>
+        <h3>Wish Items</h3>
+        <div>
+          <WishItemForm />
+        </div>
         {
           wishItems.map(
             (wishItem: WishItemType) => <div key={wishItem.id}>
@@ -56,10 +60,7 @@ function WishItem() {
       </div>
       <div className={classes.Cart}>
         <h2><FontAwesomeIcon icon={faShoppingCart} /> Cart</h2>
-        <p>Funds: <Button clickHandler={() => { }} icon={faCoins} buttonType={ButtonType.gold}>${displayNormalMoney(funds)}</Button></p>
-      </div>
-      <div>
-        <WishItemForm />
+        <p>Funds: <Funds /></p>
       </div>
     </div>
   );

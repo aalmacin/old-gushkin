@@ -47,26 +47,26 @@
   }
 
   &.Tertiary {
-    background-color: getColor(tertiary, shade-3);
+    background-color: getColor(tertiary, tint-4);
     color: getColor(white);
     border: 1px solid getColor(tertiary, tint-9);
 
     &:hover {
-      background-color: getColor(tertiary, shade-4);
+      background-color: getColor(tertiary, tint-3);
       color: getColor(tertiary, tint-9);
       border: 1px solid getColor(tertiary, tint-9);
     }
   }
 
   &.Gold {
-    background-color: getColor(tertiary-invert, tint-3);
+    background-color: getColor(gold, tint-3);
     color: getColor(black);
-    border: 1px solid getColor(tertiary-invert, shade-9);
+    border: 1px solid getColor(gold, shade-9);
 
     &:hover {
-      background-color: getColor(tertiary-invert, tint-4);
+      background-color: getColor(gold, tint-4);
       color: getColor(tertiary, shade-9);
-      border: 1px solid getColor(tertiary-invert, shade-9);
+      border: 1px solid getColor(gold, shade-9);
     }
   }
 }

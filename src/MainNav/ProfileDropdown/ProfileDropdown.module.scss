@@ -43,6 +43,10 @@
       border-top: 1px solid getColor(secondary, shade-9);
     }
 
+    .Icon {
+      padding-right: 1rem;
+    }
+
     background-color: getColor(white, light);
     list-style-type: none;
     text-transform: uppercase;

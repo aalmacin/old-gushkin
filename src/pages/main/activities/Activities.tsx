@@ -7,8 +7,10 @@ import { getActivities, performActivity } from '../../../store/activity/activity
 import { displayNormalMoney } from '../../../functions/utils.functions';
 import ActivityForm from './activity-form/ActivityForm';
 import { Activity as ActivityType } from '../../../graphql/graphql.types';
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus, faRunning, faListAlt } from '@fortawesome/free-solid-svg-icons'
 import Button, { ButtonType } from '../../../component-lib/Button/Button';
+import Funds from '../shared/Funds';
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
@@ -34,7 +36,7 @@ function Activity() {
       <div className={classes.ActivitiesSection}>
         {isShowActivityForm && <ActivityForm />}
         <div className={classes.Heading}>
-          <h2>Activities</h2>
+          <h2><FontAwesomeIcon icon={faRunning} /> Activities</h2>
           <div>
             <Button clickHandler={showActivityForm} buttonType={ButtonType.secondary} icon={faPlus} />
           </div>
@@ -54,37 +56,43 @@ function Activity() {
           }
         </ul>
       </div>
-      <div className={classes.ActivityHistorySection}>
-        <h2>Today's Activities</h2>
-        <ul className={classes.ActivityHistoryList}>
-          <li className={classes.ActivityHistoryItem}>
-            <span>Activity 1</span>
-            <span>Mar 6, 2020</span>
-            <span>+ $3.00</span>
-          </li>
-          <li className={classes.ActivityHistoryItem}>
-            <span>Activity 1</span>
-            <span>Mar 6, 2020</span>
-            <span>+ $3.00</span>
-          </li>
-          <li className={classes.ActivityHistoryItem}>
-            <span>Activity 1</span>
-            <span>Mar 6, 2020</span>
-            <span>+ $3.00</span>
-          </li>
-          <li className={classes.ActivityHistoryItem}>
-            <span>Activity 2</span>
-            <span>Mar 6, 2020</span>
-            <span>+ $3.00</span>
-          </li>
-          <li className={classes.ActivityHistoryItem}>
-            <span>Activity 4</span>
-            <span>Mar 6, 2020</span>
-            <span>- $30.00</span>
-          </li>
-        </ul>
-        <div className={classes.FundChange}>
-          Fund Change: + $20.00
+      <div className={classes.ActivityDetailsSection}>
+        <div className={classes.Funds}>
+          <h2>Current Funds</h2>
+          <Funds />
+        </div>
+        <div className={classes.TodaysActivities}>
+          <h2><span className={classes.Icon}><FontAwesomeIcon icon={faListAlt} /></span> Today's Activities</h2>
+          <ul className={classes.ActivityHistoryList}>
+            <li className={classes.ActivityHistoryItem}>
+              <span>Activity 1</span>
+              <span>Mar 6, 2020</span>
+              <span>+ $3.00</span>
+            </li>
+            <li className={classes.ActivityHistoryItem}>
+              <span>Activity 1</span>
+              <span>Mar 6, 2020</span>
+              <span>+ $3.00</span>
+            </li>
+            <li className={classes.ActivityHistoryItem}>
+              <span>Activity 1</span>
+              <span>Mar 6, 2020</span>
+              <span>+ $3.00</span>
+            </li>
+            <li className={classes.ActivityHistoryItem}>
+              <span>Activity 2</span>
+              <span>Mar 6, 2020</span>
+              <span>+ $3.00</span>
+            </li>
+            <li className={classes.ActivityHistoryItem}>
+              <span>Activity 4</span>
+              <span>Mar 6, 2020</span>
+              <span>- $30.00</span>
+            </li>
+          </ul>
+          <div className={classes.FundChange}>
+            Fund Change: + $20.00
+        </div>
         </div>
       </div>
     </div >

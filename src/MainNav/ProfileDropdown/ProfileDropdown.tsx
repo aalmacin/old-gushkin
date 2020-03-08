@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classes from './ProfileDropdown.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faHistory, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { selectAuth } from '../../store/auth/auth.selectors';
 import { useCookies } from 'react-cookie';
 import { logoutUser } from '../../store/auth/auth.actions';
@@ -34,17 +34,34 @@ function ProfileDropdown() {
       {
         isShowList &&
         <ul className={classes.LinkList}>
-          <li className={classes.LinkListItem}><a>History</a></li>
+          <li className={classes.LinkListItem}>
+            <a>
+              <span className={classes.Icon}>
+                <FontAwesomeIcon icon={faHistory} />
+              </span>
+              History
+              </a>
+          </li>
           {
             !authState.isLoggedIn &&
             <li className={classes.LinkListItem}>
-              <a href={process.env.REACT_APP_LOGIN_URL}>Login</a>
+              <a href={process.env.REACT_APP_LOGIN_URL}>
+                <span className={classes.Icon}>
+                  <FontAwesomeIcon icon={faSignInAlt} />
+                </span>
+                Login
+                </a>
             </li>
           }
           {
             authState.isLoggedIn &&
             <li className={classes.LinkListItem}>
-              <a href="/logout" onClick={logout}>Logout</a>
+              <a href="/logout" onClick={logout}>
+                <span className={classes.Icon}>
+                  <FontAwesomeIcon icon={faSignOutAlt} />
+                </span>
+                Logout
+                </a>
             </li>
           }
         </ul>
