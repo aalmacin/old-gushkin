@@ -34,6 +34,7 @@ function ProfileDropdown() {
       {
         isShowList &&
         <ul className={classes.LinkList}>
+          <li className={classes.LinkListItem}><a>History</a></li>
           {
             !authState.isLoggedIn &&
             <li className={classes.LinkListItem}>

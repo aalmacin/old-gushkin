@@ -16,7 +16,8 @@ export default {
 const buttonTypeOptions = {
   Primary: ButtonType.primary,
   Secondary: ButtonType.secondary,
-  Tertiary: ButtonType.tertiary
+  Tertiary: ButtonType.tertiary,
+  Gold: ButtonType.gold
 }
 
 export const Text = () => <Button clickHandler={() => { }} isSquare={boolean('Is Square', false)} buttonType={options('Button Type', buttonTypeOptions, buttonTypeOptions.Primary, { display: 'inline-radio' })}>Hello Button</Button>;
@@ -33,6 +34,7 @@ cartesian(storiesOf('Button/Cartesian', module))
       ButtonType.primary,
       ButtonType.secondary,
       ButtonType.tertiary,
+      ButtonType.gold,
     ],
     icon: [faCoffee, faMinus, faPlus],
     text: ['Click Me', '', '👨‍💻👨‍💻👨‍💻👨‍💻'],

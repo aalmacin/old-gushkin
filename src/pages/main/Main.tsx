@@ -6,8 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectIsFundsLoaded, selectFunds } from '../../store/funds/funds.selectors';
 import { useCookies } from 'react-cookie';
 import { getCurrentFunds } from '../../store/funds/funds.actions';
-import { displayNormalMoney } from '../../functions/utils.functions';
-import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 function Main() {
   const isActivitiesLoaded = useSelector(selectIsFundsLoaded);
@@ -22,24 +21,14 @@ function Main() {
 
   return (
     <div className={classes.Main}>
-      <div className={classes.SubNavSection}>
-        <h2>Main</h2>
-        <p>Funds: ${displayNormalMoney(funds)}</p>
-        <ul className={classes.SubNav}>
-          <li className={classes.SubNavItem}><Link to={`${match.url}`}>Activities</Link></li>
-          <li className={classes.SubNavItem}><Link to={`${match.url}/store`}>Store</Link></li>
-        </ul>
-      </div>
-      <div className={classes.SubPages}>
-        <Switch>
-          <Route path={`${match.path}/store`}>
-            <WishItem />
-          </Route>
-          <Route path={`${match.path}`}>
-            <Activities />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route path={`${match.path}/store`}>
+          <WishItem />
+        </Route>
+        <Route path={`${match.path}`}>
+          <Activities />
+        </Route>
+      </Switch>
     </div>
   );
 }

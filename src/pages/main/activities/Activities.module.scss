@@ -2,26 +2,20 @@
 
 .ActivityPage {
   display: flex;
-  max-width: 120rem;
-  min-height: 72rem;
-  margin: 0 auto;
-  margin-top: 1rem;
-  flex-direction: row-reverse;
-
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+  max-width: 95%;
+  min-height: 85vh;
+  margin: 3rem auto;
+  flex-direction: row;
+  background-color: getColor(white, light);
+  box-shadow: 1.2rem 1rem 5rem -.1rem getColor(secondary, shade-4);
+  border-radius: 1rem;
 
   h2 {
     margin-bottom: 1rem;
   }
 
   .ActivitiesSection {
-    flex-grow: 3;
-    background-color: getColor(secondary, tint-8);
-    margin-left: 1rem;
+    flex: 9;
 
     padding: 3rem;
 
@@ -33,9 +27,10 @@
         font-size: 2rem;
         list-style-type: none;
         display: flex;
+        flex-direction: row-reverse;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid getColor(primary-invert, tint-7);
+        border-bottom: 1px dotted getColor(primary-invert, tint-7);
         padding-bottom: 1rem;
 
         &:not(:last-child) {
@@ -44,26 +39,24 @@
 
         .ActivityText {
           flex: 6;
-          margin-left: 2rem;
         }
       }
     }
   }
 
   .ActivityHistorySection {
-    flex-shrink: 1;
-    background-color: getColor(secondary, tint-8);
+    flex: 3;
     padding: 3rem;
     display: flex;
     flex-direction: column;
+
+    border-left: 1px solid getColor(secondary, tint-7);
 
     h2 {
       margin-bottom: 1rem;
     }
 
     .ActivityHistoryList {
-      flex-basis: 80%;
-
       .ActivityHistoryItem {
         list-style-type: none;
 
@@ -75,9 +68,14 @@
 
     .FundChange {
       margin-top: 1rem;
-      background-color: #FFF;
       display: flex;
       flex-grow: 1;
     }
   }
+}
+
+.Heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

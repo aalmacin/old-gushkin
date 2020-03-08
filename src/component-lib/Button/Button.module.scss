@@ -57,4 +57,16 @@
       border: 1px solid getColor(tertiary, tint-9);
     }
   }
+
+  &.Gold {
+    background-color: getColor(tertiary-invert, tint-3);
+    color: getColor(black);
+    border: 1px solid getColor(tertiary-invert, shade-9);
+
+    &:hover {
+      background-color: getColor(tertiary-invert, tint-4);
+      color: getColor(tertiary, shade-9);
+      border: 1px solid getColor(tertiary-invert, shade-9);
+    }
+  }
 }

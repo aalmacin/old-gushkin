@@ -13,7 +13,8 @@ function MainNav() {
       </div>
       <ul className={classes.LinkList}>
         <li className={classes.LinkListItem}><Link to="/home">Home</Link></li>
-        <li className={classes.LinkListItem}><Link to="/main">App</Link></li>
+        <li className={classes.LinkListItem}><Link to="/main">Activities</Link></li>
+        <li className={classes.LinkListItem}><Link to="/main/store">Store</Link></li>
       </ul>
       <div className={classes.ProfileSection}>
         <ProfileDropdown />

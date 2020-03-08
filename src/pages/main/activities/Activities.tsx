@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './Activities.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIsActivitiesLoaded, selectActivities } from '../../../store/activity/activity.selectors';
@@ -15,6 +15,7 @@ function Activity() {
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
   const activities = useSelector(selectActivities);
+  const [isShowActivityForm, setShowActivityForm] = useState(false);
 
   if (!isActivitiesLoaded && cookies.gushkinTokens) {
     dispatch(getActivities(cookies.gushkinTokens.accessToken))
@@ -24,10 +25,20 @@ function Activity() {
     dispatch(performActivity({ accessToken: cookies.gushkinTokens.accessToken, activityId: parseInt(`${activityId}`) }))
   }
 
+  const showActivityForm = () => {
+    setShowActivityForm(true);
+  }
+
   return (
     <div className={classes.ActivityPage}>
       <div className={classes.ActivitiesSection}>
-        <h2>Activities</h2>
+        {isShowActivityForm && <ActivityForm />}
+        <div className={classes.Heading}>
+          <h2>Activities</h2>
+          <div>
+            <Button clickHandler={showActivityForm} buttonType={ButtonType.secondary} icon={faPlus} />
+          </div>
+        </div>
         <ul className={classes.ActivityList}>
           {
             activities.map(
@@ -42,7 +53,6 @@ function Activity() {
             )
           }
         </ul>
-        <ActivityForm />
       </div>
       <div className={classes.ActivityHistorySection}>
         <h2>Today's Activities</h2>

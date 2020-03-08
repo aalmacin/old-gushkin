@@ -8,12 +8,18 @@ import { displayNormalMoney } from '../../../functions/utils.functions';
 import WishItemForm from './wish-item-form/WishItemForm';
 import { WishItem as WishItemType } from '../../../graphql/graphql.types';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart, faCoins } from '@fortawesome/free-solid-svg-icons'
+import Button, { ButtonType } from '../../../component-lib/Button/Button';
+import { selectFunds } from '../../../store/funds/funds.selectors';
+
 function WishItem() {
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
   const wishItems = useSelector(selectWishItems);
   const totalPrice = useSelector(selectTotalWishItemPrice);
+  const funds = useSelector(selectFunds);
 
   if (!isWishItemsLoaded) {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken))
@@ -47,6 +53,10 @@ function WishItem() {
       </div>
       <div>
         {displayNormalMoney(totalPrice)}
+      </div>
+      <div className={classes.Cart}>
+        <h2><FontAwesomeIcon icon={faShoppingCart} /> Cart</h2>
+        <p>Funds: <Button clickHandler={() => { }} icon={faCoins} buttonType={ButtonType.gold}>${displayNormalMoney(funds)}</Button></p>
       </div>
       <div>
         <WishItemForm />

@@ -169,7 +169,7 @@ $colors: (primary: (base: #A7DB91,
     shade-9: #131000,
   ),
   black: (base: #10150e),
-  white: (base: #f6fbf4));
+  white: (base: #f6fbf4, light: #ffffff));
 
 @function secureMapGet($map, $key) {
   $item: map-get($map, $key);

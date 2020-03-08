@@ -37,15 +37,22 @@
 
   .LinkListItem {
     border: 1px solid getColor(secondary, shade-9);
-    background-color: getColor(secondary, tint-9);
+    border-top: none;
+
+    &:first-child {
+      border-top: 1px solid getColor(secondary, shade-9);
+    }
+
+    background-color: getColor(white, light);
     list-style-type: none;
     text-transform: uppercase;
-    padding: 2rem 0.5rem;
     display: flex;
     text-align: center;
+    width: 100%;
 
     a {
       width: 100%;
+      padding: 2rem 0.5rem;
       color: getColor(secondary, shade-7);
       @include unselectable;
     }

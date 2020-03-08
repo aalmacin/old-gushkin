@@ -5,12 +5,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid getColor(primary-invert, tint-7);
+  background-color: getColor(white, light);
 
   .LogoSection {
     flex: 1;
     margin-right: 1rem;
-    border-right: 1px solid getColor(primary-invert, tint-7);
+    border-right: 1px solid getColor(secondary, tint-7);
 
     .Logo {
       width: 6rem;

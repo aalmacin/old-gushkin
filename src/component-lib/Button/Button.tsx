@@ -6,6 +6,7 @@ export enum ButtonType {
   primary = 'Primary',
   secondary = 'Secondary',
   tertiary = 'Tertiary',
+  gold = 'Gold'
 }
 
 interface ButtonProps {
