@@ -5,6 +5,7 @@ import { getTokenUsingCode, isToken, getAccessTokenUsingRefreshToken } from '../
 import { useCookies } from 'react-cookie'
 import { first } from 'rxjs/operators';
 import { getCurrentTimestamp } from '../../functions/utils.functions';
+import { from } from 'rxjs';
 
 export const Callback = () => {
   const [cookies, setCookie] = useCookies(['gushkinTokens']);
@@ -21,7 +22,7 @@ export const Callback = () => {
   if (cookies && cookies.gushkinTokens) {
     if (cookies.gushkinTokens.expireTime <= currTimestamp) {
       const refreshToken = cookies.gushkinTokens.refreshToken;
-      getAccessTokenUsingRefreshToken(refreshToken).pipe(first()).subscribe(tokenData => {
+      from(getAccessTokenUsingRefreshToken(refreshToken)).pipe(first()).subscribe(tokenData => {
         if (isToken(tokenData)) {
           setCookie('gushkinTokens', { ...tokenData, refreshToken, expireTime: currTimestamp + 3600 })
         } else {

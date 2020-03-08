@@ -10,28 +10,29 @@ import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAuth } from './store/auth/auth.selectors';
 import { getUserData } from './store/auth/auth.actions';
-import { getCurrentTimestamp } from './functions/utils.functions';
-import { getAccessTokenUsingRefreshToken, isToken } from './functions/cognito.functions';
-import { first } from 'rxjs/operators';
 import MainNav from './MainNav/MainNav';
+import { selectIsExpired, selectAccessToken } from './store/tokens/tokens.selectors';
+import { refreshAccessToken } from './store/tokens/tokens.actions';
 
 function App() {
+  const isExpired = useSelector(selectIsExpired);
+  const accessToken = useSelector(selectAccessToken);
+
   const authState = useSelector(selectAuth);
   const dispatch = useDispatch()
-  const [cookies, setCookie] = useCookies(['gushkinTokens']);
+  const [cookies] = useCookies(['gushkinTokens']);
 
-  if (!authState.isLoggedIn && cookies.gushkinTokens && cookies.gushkinTokens.accessToken) {
-    const currTimestamp = getCurrentTimestamp();
-    if (cookies.gushkinTokens.expireTime <= currTimestamp) {
-      const refreshToken = cookies.gushkinTokens.refreshToken;
-      getAccessTokenUsingRefreshToken(refreshToken).pipe(first()).subscribe(tokenData => {
-        if (isToken(tokenData)) {
-          setCookie('gushkinTokens', { ...tokenData, refreshToken, expireTime: currTimestamp + 3600 })
-          dispatch(getUserData(cookies.gushkinTokens.accessToken))
-        }
-      });
-    } else {
-      dispatch(getUserData(cookies.gushkinTokens.accessToken))
+  if (!authState.isLoggedIn && cookies.gushkinTokens.refreshToken) {
+    console.log('here 2')
+    if (accessToken) {
+      console.log('here 3')
+      if (!isExpired) {
+        console.log('here 4')
+        dispatch(getUserData(accessToken))
+      } else {
+        console.log('here 5')
+        dispatch(refreshAccessToken(cookies.gushkinTokens.refreshToken))
+      }
     }
   }
 

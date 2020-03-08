@@ -57,7 +57,7 @@ export function getTokenUsingCode(code: string): Observable<Token | TokenError> 
       )
 }
 
-export function getAccessTokenUsingRefreshToken(refreshToken: string): Observable<Token | TokenError> {
+export function getAccessTokenUsingRefreshToken(refreshToken: string): Promise<Token | TokenError> {
   const data = {
     grant_type: 'refresh_token',
     client_id: process.env.REACT_APP_COGNITO_CLIENT_ID,
@@ -83,7 +83,7 @@ export function getAccessTokenUsingRefreshToken(refreshToken: string): Observabl
           idToken: res.data.id_token
         })),
         catchError((): Observable<TokenError> => of({ error: 'Failed to refresh access token' }))
-      )
+      ).toPromise()
 }
 
 export function getUserDataFromAccessToken(accessToken: string): Promise<User | AccessTokenError> {
