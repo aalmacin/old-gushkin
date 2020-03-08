@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Main.module.scss';
-import WishItem from './wish-item/WishItem';
+import Store from './store/Store';
 import Activities from './activities/Activities';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ function Main() {
     <div className={classes.Main}>
       <Switch>
         <Route path={`${match.path}/store`}>
-          <WishItem />
+          <Store />
         </Route>
         <Route path={`${match.path}`}>
           <Activities />

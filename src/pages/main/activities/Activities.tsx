@@ -11,16 +11,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus, faRunning, faListAlt } from '@fortawesome/free-solid-svg-icons'
 import Button, { ButtonType } from '../../../component-lib/Button/Button';
 import Funds from '../shared/Funds';
+import { selectTotalWishItemPrice, selectIsWishItemsLoaded } from '../../../store/wish-item/wish-item.selectors';
+import { getWishItems } from '../../../store/wish-item/wish-item.actions';
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
+  const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
   const activities = useSelector(selectActivities);
   const [isShowActivityForm, setShowActivityForm] = useState(false);
+  const totalPrice = useSelector(selectTotalWishItemPrice);
 
   if (!isActivitiesLoaded && cookies.gushkinTokens) {
     dispatch(getActivities(cookies.gushkinTokens.accessToken))
+  }
+
+  if (!isWishItemsLoaded && cookies.gushkinTokens) {
+    dispatch(getWishItems(cookies.gushkinTokens.accessToken))
   }
 
   const addActivity = (activityId: string) => () => {
@@ -60,6 +68,14 @@ function Activity() {
         <div className={classes.Funds}>
           <h2>Current Funds</h2>
           <Funds />
+        </div>
+        <div className={classes.TotalPrice}>
+          <h2>Total Funds Needed</h2>
+
+          <p className={classes.Description}>Total Funds needed to buy all wish items:</p>
+
+          <p className={classes.Money}>$ {displayNormalMoney(totalPrice)}</p>
+
         </div>
         <div className={classes.TodaysActivities}>
           <h2><span className={classes.Icon}><FontAwesomeIcon icon={faListAlt} /></span> Today's Activities</h2>

@@ -1,7 +1,7 @@
 import React from 'react';
-import classes from './WishItem.module.scss';
+import classes from './Store.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectIsWishItemsLoaded, selectWishItems, selectTotalWishItemPrice } from '../../../store/wish-item/wish-item.selectors';
+import { selectIsWishItemsLoaded, selectWishItems } from '../../../store/wish-item/wish-item.selectors';
 import { useCookies } from 'react-cookie';
 import { getWishItems } from '../../../store/wish-item/wish-item.actions';
 import { displayNormalMoney } from '../../../functions/utils.functions';
@@ -10,27 +10,23 @@ import { WishItem as WishItemType } from '../../../graphql/graphql.types';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
-import { selectFunds } from '../../../store/funds/funds.selectors';
 import Funds from '../shared/Funds';
 
-function WishItem() {
+function Store() {
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
   const wishItems = useSelector(selectWishItems);
-  const totalPrice = useSelector(selectTotalWishItemPrice);
 
   if (!isWishItemsLoaded && cookies.gushkinTokens) {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken))
   }
 
   return (
-    <div className={classes.WishItem}>
-      <div>
-        <h3>Wish Items</h3>
-        <div>
-          <WishItemForm />
-        </div>
+    <div className={classes.Store}>
+      <WishItemForm />
+      <div className={classes.StoreItemList}>
+        <h2>Wish Items</h2>
         {
           wishItems.map(
             (wishItem: WishItemType) => <div key={wishItem.id}>
@@ -53,9 +49,6 @@ function WishItem() {
           )
         }
       </div>
-      <div>
-        {displayNormalMoney(totalPrice)}
-      </div>
       <div className={classes.Cart}>
         <h2><FontAwesomeIcon icon={faShoppingCart} /> Cart</h2>
         <p>Funds: <Funds /></p>
@@ -64,4 +57,4 @@ function WishItem() {
   );
 }
 
-export default WishItem;
+export default Store;
