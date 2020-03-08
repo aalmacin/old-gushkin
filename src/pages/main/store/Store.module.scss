@@ -69,6 +69,7 @@
   .Cart {
     display: flex;
     flex-direction: column;
+    border-left: 1px solid getColor(secondary, tint-7);
 
     flex: 2;
 
