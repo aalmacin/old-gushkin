@@ -13,8 +13,11 @@ import { faShoppingCart, faCartPlus, faStore } from '@fortawesome/free-solid-svg
 import Funds from '../shared/Funds';
 import { Redirect } from 'react-router-dom';
 import Loading from '../../../component-lib/Loading/Loading';
+import Button, { ButtonType } from '../../../component-lib/Button/Button';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 function Store() {
+  const [isShowForm, setIsShowForm] = useState(false);
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
@@ -28,11 +31,18 @@ function Store() {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken))
   }
 
+  const showForm = () => {
+    setIsShowForm(!isShowForm)
+  }
+
   return (
     <div className={classes.Store}>
-      <WishItemForm />
+      {isShowForm && <WishItemForm />}
       <div className={classes.StoreItemSection}>
         <h2><span className={classes.Icon}><FontAwesomeIcon icon={faStore} /></span> Store</h2>
+        <div>
+          <Button clickHandler={showForm} buttonType={ButtonType.secondary} icon={faPlus} />
+        </div>
         {isWishItemsLoaded ? <div className={classes.StoreItemList}>
           {
             wishItems.map(
