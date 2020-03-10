@@ -29,6 +29,32 @@ const CreateWishItem = `mutation CreateWishItem(
   }
 `
 
+const UpdateWishItem = `mutation UpdateWishItem(
+    $accessToken: String!
+    $id: String!,
+    $userId: String!,
+    $description: String!,
+    $price: Int!,
+    $source: String,
+    $priority: Priority!,
+    $status: Status!
+  ) {
+    createWishItem(
+      id: $id,
+      accessToken: $accessToken, 
+      userId: $userId,
+      description: $description,
+      price: $price,
+      source: $source,
+      priority: $priority,
+      status: $status
+    ) {
+      success
+      error
+    }
+  }
+`
+
 const CreateActivity = `mutation CreateActivity(
     $accessToken: String!
     $userId: String!,
@@ -70,6 +96,17 @@ interface CreateWishItemParams {
   status: Status
 }
 
+interface UpdateWishItemParams {
+  accessToken: any,
+  id: any,
+  userId: any,
+  description?: string,
+  price?: number,
+  source?: string,
+  priority?: Priority,
+  status?: Status
+}
+
 interface CreateActivityParams {
   accessToken: any,
   description: string,
@@ -108,6 +145,12 @@ export const createWishItem = (params: CreateWishItemParams) => {
   let data: any = { ...params };
 
   return mutation(data, CreateWishItem, 'createWishItem')
+}
+
+export const updateWishItem = (params: UpdateWishItemParams) => {
+  let data: any = { ...params };
+
+  return mutation(data, UpdateWishItem, 'updateWishItem')
 }
 
 export const createActivity = (params: CreateActivityParams) => {
