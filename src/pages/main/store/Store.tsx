@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './Store.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIsWishItemsLoaded, selectWishItems } from '../../../store/wish-item/wish-item.selectors';
