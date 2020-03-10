@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './App.module.scss';
 import {
   BrowserRouter, Switch, Route,
@@ -14,8 +14,10 @@ import { getCurrentTimestamp } from './functions/utils.functions';
 import { getAccessTokenUsingRefreshToken, isToken } from './functions/cognito.functions';
 import { first } from 'rxjs/operators';
 import MainNav from './MainNav/MainNav';
+import ExpiredMessage from './component-lib/ExpiredMessage/ExpiredMessage';
 
 function App() {
+  const [expired, setExpired] = useState(false);
   const authState = useSelector(selectAuth);
   const dispatch = useDispatch()
   const [cookies, setCookie] = useCookies(['gushkinTokens']);
@@ -23,6 +25,7 @@ function App() {
   if (!authState.isLoggedIn && cookies.gushkinTokens && cookies.gushkinTokens.accessToken) {
     const currTimestamp = getCurrentTimestamp();
     if (cookies.gushkinTokens.expireTime <= currTimestamp) {
+      setExpired(true);
       const refreshToken = cookies.gushkinTokens.refreshToken;
       getAccessTokenUsingRefreshToken(refreshToken).pipe(first()).subscribe(tokenData => {
         if (isToken(tokenData)) {
@@ -35,9 +38,11 @@ function App() {
     }
   }
 
+
   return (
     <div className={classes.App}>
       <BrowserRouter>
+        <ExpiredMessage isExpired={expired} />
         <MainNav />
         <Switch>
           <Route path="/callback">

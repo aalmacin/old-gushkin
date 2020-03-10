@@ -1,0 +1,16 @@
+@import 'component-lib/variables.scss';
+
+.ExpiredMessage {
+  position: fixed;
+  top: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: getColor(primary);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  color: getColor(black);
+
+  .Message {
+    margin-right: 1rem;
+  }
+}
