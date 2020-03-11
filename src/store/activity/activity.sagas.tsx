@@ -1,7 +1,7 @@
 import { put, takeLatest, select, all } from 'redux-saga/effects'
 import { getAllActivities } from '../../graphql/queries.functions';
 import { selectUserId } from '../auth/auth.selectors';
-import { getActivitiesSuccess, getActivitiesFailure, GET_ACTIVITIES, CREATE_ACTIVITY, createActivityFailure, createActivitySuccess, performActivitySuccess, performActivityFailure, PERFORM_ACTIVITY } from './activity.actions';
+import { getActivitiesSuccess, getActivitiesFailure, GET_ACTIVITIES, CREATE_ACTIVITY, createActivityFailure, createActivitySuccess, performActivityFailure, PERFORM_ACTIVITY, performActivitySuccess } from './activity.actions';
 import { createActivity, performActivity } from '../../graphql/mutations.functions';
 import { getCurrentFunds } from '../funds/funds.actions';
 
@@ -51,6 +51,7 @@ function* performActivitySaga(action: any) {
         action.payload.accessToken,
         userId
       )
+      yield put(performActivitySuccess())
       yield put(getCurrentFunds(action.payload.accessToken))
     } else {
       yield put(performActivityFailure('Something went wrong while performing activity'))
