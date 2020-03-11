@@ -16,7 +16,7 @@ import Loading from '../../../component-lib/Loading/Loading';
 import Button, { ButtonType } from '../../../component-lib/Button/Button';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { addItemToCart, removeItemFromCart } from '../../../store/cart/cart.actions';
-import { selectCart } from '../../../store/cart/cart.selectors';
+import { selectCart, selectGetCartTotal } from '../../../store/cart/cart.selectors';
 
 function Store() {
   const [isShowForm, setIsShowForm] = useState(false);
@@ -25,6 +25,7 @@ function Store() {
   const dispatch = useDispatch();
   const wishItems = useSelector(selectWishItems);
   const cartItems = useSelector(selectCart);
+  const cartTotal = useSelector(selectGetCartTotal)
 
 
   if (!cookies.gushkinTokens) {
@@ -47,6 +48,10 @@ function Store() {
 
   const removeFromCart = (wishItem: WishItem) => () => {
     dispatch(removeItemFromCart(wishItem.id))
+  }
+
+  const checkout = () => {
+    alert('checkout')
   }
 
   return (
@@ -96,6 +101,8 @@ function Store() {
         {cartItems.map(item =>
           <div key={item.id} className={classes.CartItem}>{item.description} <span className={classes.Dot}></span> ${displayNormalMoney(item.price)}</div>
         )}
+        <p>Cart Total: ${displayNormalMoney(cartTotal)}</p>
+        <button onClick={checkout}>Checkout</button>
         <h3>Your Funds</h3>
         <p><Funds /></p>
       </div>
