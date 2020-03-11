@@ -1,7 +1,7 @@
 import { put, takeLatest, select, all } from 'redux-saga/effects'
 import { getAllWishItems } from '../../graphql/queries.functions';
 import { selectUserId } from '../auth/auth.selectors';
-import { getWishItemsSuccess, getWishItemsFailure, GET_WISH_ITEMS, CREATE_WISH_ITEM, createWishItemFailure, createWishItemSuccess, purchaseWishItem, purchaseWishItemSuccess, purchaseWishItemFailure, PURCHASE_WISH_ITEM } from './wish-item.actions';
+import { getWishItemsSuccess, getWishItemsFailure, GET_WISH_ITEMS, CREATE_WISH_ITEM, createWishItemFailure, createWishItemSuccess, purchaseWishItemSuccess, purchaseWishItemFailure, PURCHASE_WISH_ITEM } from './wish-item.actions';
 import { createWishItem, updateWishItem } from '../../graphql/mutations.functions';
 import { Status } from '../../graphql/graphql.types';
 

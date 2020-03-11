@@ -6,15 +6,17 @@ import { useCookies } from 'react-cookie';
 import { getWishItems } from '../../../store/wish-item/wish-item.actions';
 import { displayNormalMoney } from '../../../functions/utils.functions';
 import WishItemForm from './wish-item-form/WishItemForm';
-import { WishItem as WishItemType } from '../../../graphql/graphql.types';
+import { WishItem as WishItemType, WishItem } from '../../../graphql/graphql.types';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faCartPlus, faStore } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingCart, faCartPlus, faMinus, faStore } from '@fortawesome/free-solid-svg-icons'
 import Funds from '../shared/Funds';
 import { Redirect } from 'react-router-dom';
 import Loading from '../../../component-lib/Loading/Loading';
 import Button, { ButtonType } from '../../../component-lib/Button/Button';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { addItemToCart, removeItemFromCart } from '../../../store/cart/cart.actions';
+import { selectCart } from '../../../store/cart/cart.selectors';
 
 function Store() {
   const [isShowForm, setIsShowForm] = useState(false);
@@ -22,6 +24,8 @@ function Store() {
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
   const wishItems = useSelector(selectWishItems);
+  const cartItems = useSelector(selectCart);
+
 
   if (!cookies.gushkinTokens) {
     return <Redirect to="/" />
@@ -31,8 +35,18 @@ function Store() {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken))
   }
 
+  const isItemInCart = (item: WishItem) => cartItems.find(cartItem => cartItem.id === item.id)
+
   const showForm = () => {
     setIsShowForm(!isShowForm)
+  }
+
+  const addToCart = (wishItem: WishItem) => () => {
+    dispatch(addItemToCart(wishItem))
+  }
+
+  const removeFromCart = (wishItem: WishItem) => () => {
+    dispatch(removeItemFromCart(wishItem.id))
   }
 
   return (
@@ -46,7 +60,7 @@ function Store() {
         {isWishItemsLoaded ? <div className={classes.StoreItemList}>
           {
             wishItems.map(
-              (wishItem: WishItemType) => <div className={classes.WishItem} key={wishItem.id}>
+              (wishItem: WishItemType) => <div className={classes.WishItem} key={wishItem.id} onClick={isItemInCart(wishItem) ? removeFromCart(wishItem) : addToCart(wishItem)}>
                 <div className={classes.Description}>
                   {wishItem.description}
                 </div>
@@ -61,9 +75,14 @@ function Store() {
                 </div> */}
                 <div className={classes.Price}>
                   $ {displayNormalMoney(wishItem.price)}
-                  <div className={classes.AddCart}>
+                  {!isItemInCart(wishItem) ? <div className={classes.AddCart}>
                     <FontAwesomeIcon icon={faCartPlus} />
                   </div>
+                    :
+                    <div className={classes.AddedCart}>
+                      <FontAwesomeIcon icon={faMinus} />
+                    </div>
+                  }
                 </div>
               </div>
             )
@@ -74,6 +93,9 @@ function Store() {
       </div>
       <div className={classes.Cart}>
         <h2><FontAwesomeIcon icon={faShoppingCart} /> Cart</h2>
+        {cartItems.map(item =>
+          <div key={item.id} className={classes.CartItem}>{item.description} <span className={classes.Dot}></span> ${displayNormalMoney(item.price)}</div>
+        )}
         <h3>Your Funds</h3>
         <p><Funds /></p>
       </div>
