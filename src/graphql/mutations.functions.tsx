@@ -33,13 +33,13 @@ const UpdateWishItem = `mutation UpdateWishItem(
     $accessToken: String!
     $id: String!,
     $userId: String!,
-    $description: String!,
-    $price: Int!,
+    $description: String,
+    $price: Int,
     $source: String,
-    $priority: Priority!,
-    $status: Status!
+    $priority: Priority,
+    $status: Status
   ) {
-    createWishItem(
+    updateWishItem(
       id: $id,
       accessToken: $accessToken, 
       userId: $userId,

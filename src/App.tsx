@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './App.module.scss';
 import {
-  BrowserRouter, Switch, Route,
+  Switch, Route, BrowserRouter as Router,
 } from "react-router-dom";
 import Main from './pages/main/Main';
 import Home from './pages/home/Home';
@@ -11,6 +11,7 @@ import { selectAuth } from './store/auth/auth.selectors';
 import { getUserData } from './store/auth/auth.actions';
 import MainNav from './MainNav/MainNav';
 import useAccessToken from './hooks/useAccessToken';
+
 
 function App() {
   const authState = useSelector(selectAuth);
@@ -23,7 +24,7 @@ function App() {
   }
   return (
     <div className={classes.App}>
-      <BrowserRouter>
+      <Router>
         <MainNav />
         <Switch>
           <Route path="/callback">
@@ -36,7 +37,7 @@ function App() {
             <Home />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }

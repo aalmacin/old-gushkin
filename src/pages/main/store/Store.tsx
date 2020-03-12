@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './Store.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectIsWishItemsLoaded, selectWishItems } from '../../../store/wish-item/wish-item.selectors';
+import { selectIsWishItemsLoaded, selectStoreItems, selectStoreArchiveItems } from '../../../store/wish-item/wish-item.selectors';
 import { useCookies } from 'react-cookie';
 import { getWishItems } from '../../../store/wish-item/wish-item.actions';
 import { displayNormalMoney } from '../../../functions/utils.functions';
@@ -15,17 +15,20 @@ import { Redirect } from 'react-router-dom';
 import Loading from '../../../component-lib/Loading/Loading';
 import Button, { ButtonType } from '../../../component-lib/Button/Button';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { addItemToCart, removeItemFromCart } from '../../../store/cart/cart.actions';
+import { addItemToCart, removeItemFromCart, checkoutCart } from '../../../store/cart/cart.actions';
 import { selectCart, selectGetCartTotal } from '../../../store/cart/cart.selectors';
+import useAccessToken from '../../../hooks/useAccessToken';
 
 function Store() {
   const [isShowForm, setIsShowForm] = useState(false);
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const [cookies] = useCookies(['gushkinTokens'])
   const dispatch = useDispatch();
-  const wishItems = useSelector(selectWishItems);
+  const storeItems = useSelector(selectStoreItems);
+  const storeArchiveItems = useSelector(selectStoreArchiveItems);
   const cartItems = useSelector(selectCart);
   const cartTotal = useSelector(selectGetCartTotal)
+  const accessToken = useAccessToken();
 
 
   if (!cookies.gushkinTokens) {
@@ -51,7 +54,9 @@ function Store() {
   }
 
   const checkout = () => {
-    alert('checkout')
+    if (accessToken) {
+      dispatch(checkoutCart(accessToken))
+    }
   }
 
   return (
@@ -62,44 +67,54 @@ function Store() {
         <div>
           <Button clickHandler={showForm} buttonType={ButtonType.secondary} icon={faPlus} />
         </div>
-        {isWishItemsLoaded ? <div className={classes.StoreItemList}>
-          {
-            wishItems.map(
-              (wishItem: WishItemType) => <div className={classes.WishItem} key={wishItem.id} onClick={isItemInCart(wishItem) ? removeFromCart(wishItem) : addToCart(wishItem)}>
-                <div className={classes.Description}>
-                  {wishItem.description}
-                </div>
-                {/* <div className={classes.Source}>
+        {isWishItemsLoaded ?
+
+          <>
+            <div className={classes.StoreItemList}>
+              {
+                storeItems.map(
+                  (wishItem: WishItemType) => <div className={classes.WishItem} key={wishItem.id} onClick={isItemInCart(wishItem) ? removeFromCart(wishItem) : addToCart(wishItem)}>
+                    <div className={classes.Description}>
+                      {wishItem.description}
+                    </div>
+                    {/* <div className={classes.Source}>
                   {wishItem.source}
                 </div> */}
-                {/* <div className={classes.Priority}>
+                    {/* <div className={classes.Priority}>
                   {wishItem.priority}
                 </div>
                 <div className={classes.Status}>
                   {wishItem.status}
                 </div> */}
-                <div className={classes.Price}>
-                  $ {displayNormalMoney(wishItem.price)}
-                  {!isItemInCart(wishItem) ? <div className={classes.AddCart}>
-                    <FontAwesomeIcon icon={faCartPlus} />
-                  </div>
-                    :
-                    <div className={classes.AddedCart}>
-                      <FontAwesomeIcon icon={faMinus} />
+                    <div className={classes.Price}>
+                      $ {displayNormalMoney(wishItem.price)}
+                      {!isItemInCart(wishItem) ? <div className={classes.AddCart}>
+                        <FontAwesomeIcon icon={faCartPlus} />
+                      </div>
+                        :
+                        <div className={classes.AddedCart}>
+                          <FontAwesomeIcon icon={faMinus} />
+                        </div>
+                      }
                     </div>
-                  }
-                </div>
-              </div>
-            )
-          }
-        </div>
+                  </div>
+                )
+              }
+            </div>
+            <div>
+              <h2>Bought</h2>
+              {
+                storeArchiveItems.map(wishItem => <p key={wishItem.id}>{wishItem.description}</p>)
+              }
+            </div>
+          </>
           : <Loading isLoading />
         }
       </div>
       <div className={classes.Cart}>
         <h2><FontAwesomeIcon icon={faShoppingCart} /> Cart</h2>
         {cartItems.map(item =>
-          <div key={item.id} className={classes.CartItem}>{item.description} <span className={classes.Dot}></span> ${displayNormalMoney(item.price)}</div>
+          <div key={item.id} className={classes.CartItem}>{item.description} {item.id}<span className={classes.Dot}></span> ${displayNormalMoney(item.price)}</div>
         )}
         <p>Cart Total: ${displayNormalMoney(cartTotal)}</p>
         <button onClick={checkout}>Checkout</button>
