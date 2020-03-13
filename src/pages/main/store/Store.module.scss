@@ -1,8 +1,17 @@
-@import '../../../component-lib/variables.scss';
+@import "../../../component-lib/variables.scss";
 
 .Store {
   display: flex;
   flex-direction: row;
+
+  .Head {
+    display: flex;
+    justify-content: space-between;
+
+    .ButtonContainer {
+      padding-right: 1rem;
+    }
+  }
 
   .StoreItemSection {
     flex: 10;
@@ -10,8 +19,7 @@
     .StoreItemList {
       display: flex;
       flex-flow: row wrap;
-      justify-content: space-between;
-
+      justify-content: flex-start;
       h2 {
         margin-bottom: 2rem;
 
@@ -50,7 +58,6 @@
         }
 
         &:hover {
-
           & .AddCart {
             z-index: 10;
             font-weight: 900;

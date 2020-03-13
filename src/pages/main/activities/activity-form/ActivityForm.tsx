@@ -1,23 +1,29 @@
-import React, { useState } from 'react';
-import classes from './ActivityForm.module.scss';
-import ErrorList from '../../../error/ErrorList';
-import { useDispatch } from 'react-redux';
-import { createActivity } from '../../../../store/activity/activity.actions';
-import { useCookies } from 'react-cookie';
-import { MICRO_AMOUNT } from '../../../../functions/global.constants'
+import React, { useState } from "react";
+import classes from "./ActivityForm.module.scss";
+import ErrorList from "../../../error/ErrorList";
+import { useDispatch } from "react-redux";
+import { createActivity } from "../../../../store/activity/activity.actions";
+import { useCookies } from "react-cookie";
+import { MICRO_AMOUNT } from "../../../../functions/global.constants";
+import Button, { ButtonType } from "../../../../component-lib/Button/Button";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface ActivityFormState {
-  description: string,
-  fundAmt: number,
-  positive: boolean
+  description: string;
+  fundAmt: number;
+  positive: boolean;
 }
 
-function ActivityForm() {
+interface ActivityFormProps {
+  closeHandler: () => void;
+}
+
+const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
   const [activity, setActivity] = useState<ActivityFormState>({
-    description: '',
+    description: "",
     fundAmt: 0,
     positive: true
-  })
+  });
 
   const [errors, setErrors] = useState<string[]>([]);
   const [cookies] = useCookies();
@@ -28,65 +34,101 @@ function ActivityForm() {
     const errorList = [];
 
     if (!activity.description) {
-      errorList.push('Description is required.')
+      errorList.push("Description is required.");
     }
 
     if (!activity.fundAmt) {
-      errorList.push('Price is required.')
+      errorList.push("Price is required.");
     }
 
     return errorList;
-  }
+  };
 
-  const updateFormControl = (key: 'description' | 'fundAmt') => (event: any) => {
+  const updateFormControl = (key: "description" | "fundAmt") => (
+    event: any
+  ) => {
     setActivity({
       ...activity,
       [key]: event.target.value
-    })
-    setErrors(getErrors())
-  }
+    });
+    setErrors(getErrors());
+  };
 
   const updatePositive = () => {
     setActivity({
       ...activity,
       positive: !activity.positive
-    })
-    setErrors(getErrors())
-  }
+    });
+    setErrors(getErrors());
+  };
 
-  const submitFormHandler = (event: any) => {
+  const submitFormHandler = () => {
     const errorList = getErrors();
-    setErrors(errorList)
+    setErrors(errorList);
 
     if (errorList.length === 0) {
-      const fundAmt = parseFloat(`${activity.fundAmt}`) * MICRO_AMOUNT
-      dispatch(createActivity({ ...activity, fundAmt, accessToken: cookies.gushkinTokens.accessToken }))
+      const fundAmt = parseFloat(`${activity.fundAmt}`) * MICRO_AMOUNT;
+      dispatch(
+        createActivity({
+          ...activity,
+          fundAmt,
+          accessToken: cookies.gushkinTokens.accessToken
+        })
+      );
     }
-    event.preventDefault();
-  }
+  };
 
   return (
     <div className={classes.ActivityForm}>
       <ErrorList errors={errors} />
-      <form onSubmit={submitFormHandler}>
-        <div>
-          <label>Description</label>
-          <input value={activity.description} onChange={updateFormControl('description')} />
+      <div className={classes.FormContainer}>
+        <div className={classes.Head}>
+          <Button
+            buttonType={ButtonType.secondary}
+            clickHandler={closeHandler}
+            icon={faTimes}
+          />
         </div>
-        <div>
-          <label>Fund Weight</label>
-          <input value={activity.fundAmt} type="number" onChange={updateFormControl('fundAmt')} />
-        </div>
-        <div>
-          <label>Positive</label>
-          <input type="checkbox" checked={activity.positive} onChange={updatePositive} />
-        </div>
-        <div>
-          <button>Submit</button>
-        </div>
-      </form>
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+          }}
+        >
+          <div className={classes.FormGroup}>
+            <label>Description</label>
+            <input
+              value={activity.description}
+              onChange={updateFormControl("description")}
+            />
+          </div>
+          <div className={classes.FormGroup}>
+            <label>Fund Weight</label>
+            <input
+              value={activity.fundAmt}
+              type="number"
+              onChange={updateFormControl("fundAmt")}
+            />
+          </div>
+          <div className={classes.FormGroup}>
+            <label>Positive</label>
+            <input
+              type="checkbox"
+              checked={activity.positive}
+              onChange={updatePositive}
+            />
+          </div>
+          <div className={classes.ButtonContainer}>
+            <Button
+              buttonType={ButtonType.primary}
+              clickHandler={submitFormHandler}
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default ActivityForm;
