@@ -7,6 +7,8 @@ import { useCookies } from "react-cookie";
 import { MICRO_AMOUNT } from "../../../../functions/global.constants";
 import Button, { ButtonType } from "../../../../component-lib/Button/Button";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import TextField from "../../../../component-lib/TextField/TextField";
+import NumberField from "../../../../component-lib/NumberField/NumberField";
 
 interface ActivityFormState {
   description: string;
@@ -95,17 +97,16 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
           }}
         >
           <div className={classes.FormGroup}>
-            <label>Description</label>
-            <input
+            <TextField
+              label="Description"
               value={activity.description}
               onChange={updateFormControl("description")}
             />
           </div>
           <div className={classes.FormGroup}>
-            <label>Fund Weight</label>
-            <input
+            <NumberField
+              label="Fund Amount"
               value={activity.fundAmt}
-              type="number"
               onChange={updateFormControl("fundAmt")}
             />
           </div>

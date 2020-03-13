@@ -26,21 +26,6 @@
     }
 
     form {
-      .FormGroup {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-
-        label {
-          font-size: 2rem;
-        }
-        input {
-          padding: 1rem;
-          margin: 1rem 0;
-          font-size: 2rem;
-        }
-      }
-
       .ButtonContainer {
         display: flex;
         justify-content: center;
