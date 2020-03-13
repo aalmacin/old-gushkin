@@ -11,7 +11,8 @@
     position: fixed;
     display: inline-block;
     padding: 3rem;
-    background-color: getColor(white);
+    background-color: getColor(white, light);
+    min-width: 60rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
