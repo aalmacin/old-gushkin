@@ -6,9 +6,9 @@ import { createActivity } from "../../../../store/activity/activity.actions";
 import { useCookies } from "react-cookie";
 import { MICRO_AMOUNT } from "../../../../functions/global.constants";
 import Button, { ButtonType } from "../../../../component-lib/Button/Button";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import TextField from "../../../../component-lib/TextField/TextField";
 import NumberField from "../../../../component-lib/NumberField/NumberField";
+import FormClose from "../../shared/FormClose/FormClose";
 
 interface ActivityFormState {
   description: string;
@@ -84,13 +84,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
     <div className={classes.ActivityForm}>
       <ErrorList errors={errors} />
       <div className={classes.FormContainer}>
-        <div className={classes.Head}>
-          <Button
-            buttonType={ButtonType.secondary}
-            clickHandler={closeHandler}
-            icon={faTimes}
-          />
-        </div>
+        <FormClose onClose={closeHandler} />
         <form
           onSubmit={e => {
             e.preventDefault();

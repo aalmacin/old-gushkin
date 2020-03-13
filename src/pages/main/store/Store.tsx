@@ -37,6 +37,8 @@ import {
   selectGetCartTotal
 } from "../../../store/cart/cart.selectors";
 import useAccessToken from "../../../hooks/useAccessToken";
+import Modal from "../../../component-lib/Modal/Modal";
+import FormClose from "../shared/FormClose/FormClose";
 
 function Store() {
   const [isShowForm, setIsShowForm] = useState(false);
@@ -78,9 +80,18 @@ function Store() {
     }
   };
 
+  const closeHandler = () => {
+    setIsShowForm(false);
+  };
+
   return (
     <div className={classes.Store}>
-      {isShowForm && <WishItemForm />}
+      {isShowForm && (
+        <Modal>
+          <FormClose onClose={closeHandler} />
+          <WishItemForm />
+        </Modal>
+      )}
       <div className={classes.StoreItemSection}>
         <div className={classes.Head}>
           <h2>
