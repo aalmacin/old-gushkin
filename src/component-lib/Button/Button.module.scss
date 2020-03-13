@@ -1,4 +1,4 @@
-@import 'component-lib/variables.scss';
+@import "../variables.scss";
 
 .Button {
   border: none;
@@ -8,6 +8,7 @@
   flex-shrink: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
 
   &.Square {

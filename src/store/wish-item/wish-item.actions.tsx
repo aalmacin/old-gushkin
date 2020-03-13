@@ -8,6 +8,10 @@ export const CREATE_WISH_ITEM = '[Wish Item] Create Wish Item';
 export const CREATE_WISH_ITEM_SUCCESS = '[Wish Item] Create Wish Item Success';
 export const CREATE_WISH_ITEM_FAILURE = '[Wish Item] Create Wish Item Failure';
 
+export const PURCHASE_WISH_ITEM = '[Wish Item] Purchase Wish Item'
+export const PURCHASE_WISH_ITEM_SUCCESS = '[Wish Item] Purchase Wish Item Success';
+export const PURCHASE_WISH_ITEM_FAILURE = '[Wish Item] Purchase Wish Item Failure';
+
 export const getWishItems = (accessToken: string) => ({
   type: GET_WISH_ITEMS,
   payload: accessToken
@@ -32,6 +36,11 @@ interface CreateWishItemPayload {
   status: Status
 }
 
+interface PurchaseWishItemPayload {
+  accessToken: any,
+  id: any,
+}
+
 export const createWishItem = (payload: CreateWishItemPayload) => ({
   type: CREATE_WISH_ITEM,
   payload
@@ -44,5 +53,20 @@ export const createWishItemSuccess = (wishItems: WishItem[]) => ({
 
 export const createWishItemFailure = (error: string) => ({
   type: CREATE_WISH_ITEM_FAILURE,
+  payload: error
+})
+
+export const purchaseWishItem = (payload: PurchaseWishItemPayload) => ({
+  type: PURCHASE_WISH_ITEM,
+  payload
+})
+
+export const purchaseWishItemSuccess = (wishItems: WishItem[]) => ({
+  type: PURCHASE_WISH_ITEM_SUCCESS,
+  payload: wishItems
+})
+
+export const purchaseWishItemFailure = (error: string) => ({
+  type: PURCHASE_WISH_ITEM_FAILURE,
   payload: error
 })

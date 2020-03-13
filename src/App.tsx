@@ -1,48 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './App.module.scss';
 import {
-  BrowserRouter, Switch, Route,
+  Switch, Route, BrowserRouter as Router,
 } from "react-router-dom";
 import Main from './pages/main/Main';
 import Home from './pages/home/Home';
 import Callback from './pages/callback/Callback';
-import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAuth } from './store/auth/auth.selectors';
 import { getUserData } from './store/auth/auth.actions';
-import { getCurrentTimestamp } from './functions/utils.functions';
-import { getAccessTokenUsingRefreshToken, isToken } from './functions/cognito.functions';
-import { first } from 'rxjs/operators';
 import MainNav from './MainNav/MainNav';
-import ExpiredMessage from './component-lib/ExpiredMessage/ExpiredMessage';
+import useAccessToken from './hooks/useAccessToken';
+
 
 function App() {
-  const [expired, setExpired] = useState(false);
   const authState = useSelector(selectAuth);
   const dispatch = useDispatch()
-  const [cookies, setCookie] = useCookies(['gushkinTokens']);
 
-  if (!authState.isLoggedIn && cookies.gushkinTokens && cookies.gushkinTokens.accessToken) {
-    const currTimestamp = getCurrentTimestamp();
-    if (cookies.gushkinTokens.expireTime <= currTimestamp) {
-      setExpired(true);
-      const refreshToken = cookies.gushkinTokens.refreshToken;
-      getAccessTokenUsingRefreshToken(refreshToken).pipe(first()).subscribe(tokenData => {
-        if (isToken(tokenData)) {
-          setCookie('gushkinTokens', { ...tokenData, refreshToken, expireTime: currTimestamp + 3600 })
-          dispatch(getUserData(cookies.gushkinTokens.accessToken))
-        }
-      });
-    } else {
-      dispatch(getUserData(cookies.gushkinTokens.accessToken))
-    }
+  const accessToken = useAccessToken();
+
+  if (!authState.isLoggedIn && accessToken) {
+    dispatch(getUserData(accessToken))
   }
-
-
   return (
     <div className={classes.App}>
-      <BrowserRouter>
-        <ExpiredMessage isExpired={expired} />
+      <Router>
         <MainNav />
         <Switch>
           <Route path="/callback">
@@ -55,7 +37,7 @@ function App() {
             <Home />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }
