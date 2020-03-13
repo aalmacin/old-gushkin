@@ -29,6 +29,7 @@ import {
 import { getWishItems } from "../../../store/wish-item/wish-item.actions";
 import { Redirect } from "react-router-dom";
 import Loading from "../../../component-lib/Loading/Loading";
+import Modal from "../../../component-lib/Modal/Modal";
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
@@ -71,7 +72,11 @@ function Activity() {
   return (
     <div className={classes.ActivityPage}>
       <div className={classes.ActivitiesSection}>
-        {isShowActivityForm && <ActivityForm closeHandler={closeForm} />}
+        {isShowActivityForm && (
+          <Modal>
+            <ActivityForm closeHandler={closeForm} />
+          </Modal>
+        )}
         <div className={classes.Heading}>
           <h2>
             <FontAwesomeIcon icon={faRunning} /> Activities
