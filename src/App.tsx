@@ -7,7 +7,7 @@ import Main from './pages/main/Main';
 import Home from './pages/home/Home';
 import Callback from './pages/callback/Callback';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAuth } from './store/auth/auth.selectors';
+import { selectAuth, selectIsLoading } from './store/auth/auth.selectors';
 import { getUserData } from './store/auth/auth.actions';
 import MainNav from './MainNav/MainNav';
 import useAccessToken from './hooks/useAccessToken';
@@ -16,10 +16,11 @@ import useAccessToken from './hooks/useAccessToken';
 function App() {
   const authState = useSelector(selectAuth);
   const dispatch = useDispatch()
+  const isLoading = useSelector(selectIsLoading);
 
   const accessToken = useAccessToken();
 
-  if (!authState.isLoggedIn && accessToken) {
+  if (!authState.isLoggedIn && accessToken && !isLoading) {
     dispatch(getUserData(accessToken))
   }
   return (

@@ -90,17 +90,21 @@ export function getUserDataFromAccessToken(accessToken: string): Promise<User | 
   AWS.config.region = 'us-east-1';
   const cisp = new AWS.CognitoIdentityServiceProvider()
 
-  return new Promise<User | AccessTokenError>((resolve, reject) => {
+  return new Promise<User | AccessTokenError>((resolve) => {
     cisp.getUser({ AccessToken: accessToken }, (err, data) => {
-      if (!err) {
-        const user: any = data.UserAttributes.reduce((acc, c) => ({ ...acc, [c.Name]: c.Value }), {})
-        resolve({
-          id: user.sub,
-          verified: user.email_verified,
-          email: user.email
-        })
-      } else {
-        reject({ error: 'Error getting user data from access token' })
+      try {
+        if (!err) {
+          const user: any = data.UserAttributes.reduce((acc, c) => ({ ...acc, [c.Name]: c.Value }), {})
+          resolve({
+            id: user.sub,
+            verified: user.email_verified,
+            email: user.email
+          })
+        } else {
+          resolve({ error: 'Error getting user data from access token' })
+        }
+      } catch (e) {
+        resolve({ error: 'Error getting user data from access token' })
       }
     })
   });
