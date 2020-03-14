@@ -96,7 +96,7 @@ function Activity() {
               <li key={activity.id} className={classes.Activity}>
                 <Button
                   isSquare
-                  buttonType={ButtonType.secondary}
+                  buttonType={activity.positive ? ButtonType.secondary : ButtonType.red}
                   clickHandler={addActivity(activity.id)}
                   icon={activity.positive ? faPlus : faMinus}
                 >

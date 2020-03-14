@@ -70,4 +70,16 @@
       border: 1px solid getColor(gold, shade-9);
     }
   }
+
+  &.Red {
+    background-color: getColor(red, tint-3);
+    color: getColor(black);
+    border: 1px solid getColor(red, tint-4);
+
+    &:hover {
+      background-color: getColor(red, tint-4);
+      color: getColor(tertiary, shade-9);
+      border: 1px solid getColor(red, tint-4);
+    }
+  }
 }

@@ -107,7 +107,29 @@ $colors: (primary: (base: #71d998,
     tint-6: #efefef,
     tint-7: #f3f3f3,
     tint-8: #f7f7f7,
-    tint-9: #fbfbfb));
+    tint-9: #fbfbfb),
+  red: (base: #d97671,
+    shade-1: #c36a65,
+    shade-2: #ad5e5a,
+    shade-3: #97524f,
+    shade-4: #824643,
+    shade-5: #6c3b38,
+    shade-6: #562f2d,
+    shade-7: #412321,
+    shade-8: #2b1716,
+    shade-9: #150b0b,
+
+    tint-1: #dc837f,
+    tint-2: #e0918d,
+    tint-3: #e49f9b,
+    tint-4: #e8aca9,
+    tint-5: #ecbab8,
+    tint-6: #efc8c6,
+    tint-7: #f3d5d4,
+    tint-8: #f7e3e2,
+    tint-9: #fbf1f0,
+
+  ));
 
 @function secureMapGet($map, $key) {
   $item: map-get($map, $key);
