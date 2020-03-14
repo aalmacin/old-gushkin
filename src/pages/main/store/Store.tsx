@@ -20,7 +20,9 @@ import {
   faShoppingCart,
   faCartPlus,
   faMinus,
-  faStore
+  faStore,
+  faCoins,
+  faShoppingBag
 } from "@fortawesome/free-solid-svg-icons";
 import Funds from "../shared/Funds";
 import { Redirect } from "react-router-dom";
@@ -39,6 +41,7 @@ import {
 import useAccessToken from "../../../hooks/useAccessToken";
 import Modal from "../../../component-lib/Modal/Modal";
 import FormClose from "../shared/FormClose/FormClose";
+import HeaderIcon from "../shared/HeaderIcon";
 
 function Store() {
   const [isShowForm, setIsShowForm] = useState(false);
@@ -94,12 +97,7 @@ function Store() {
       )}
       <div className={classes.StoreItemSection}>
         <div className={classes.Head}>
-          <h2>
-            <span className={classes.Icon}>
-              <FontAwesomeIcon icon={faStore} />
-            </span>{" "}
-            Store
-          </h2>
+          <HeaderIcon text="Store" icon={faStore} />
           <div className={classes.ButtonContainer}>
             <Button
               clickHandler={showForm}
@@ -140,29 +138,27 @@ function Store() {
                         <FontAwesomeIcon icon={faCartPlus} />
                       </div>
                     ) : (
-                      <div className={classes.AddedCart}>
-                        <FontAwesomeIcon icon={faMinus} />
-                      </div>
-                    )}
+                        <div className={classes.AddedCart}>
+                          <FontAwesomeIcon icon={faMinus} />
+                        </div>
+                      )}
                   </div>
                 </div>
               ))}
             </div>
             <div>
-              <h2>Bought</h2>
+              <HeaderIcon text="Your Funds" icon={faShoppingBag} />
               {storeArchiveItems.map(wishItem => (
                 <p key={wishItem.id}>{wishItem.description}</p>
               ))}
             </div>
           </>
         ) : (
-          <Loading isLoading />
-        )}
+            <Loading isLoading />
+          )}
       </div>
       <div className={classes.Cart}>
-        <h2>
-          <FontAwesomeIcon icon={faShoppingCart} /> Cart
-        </h2>
+        <HeaderIcon text="Cart" icon={faShoppingCart} />
         {cartItems.map(item => (
           <div key={item.id} className={classes.CartItem}>
             {item.description} {item.id}
@@ -176,7 +172,7 @@ function Store() {
             Checkout
           </Button>
         </div>
-        <h3>Your Funds</h3>
+        <HeaderIcon text="Your Funds" icon={faCoins} />
         <p>
           <Funds />
         </p>

@@ -84,7 +84,7 @@ function Activity() {
           <div>
             <Button
               clickHandler={showActivityForm}
-              buttonType={ButtonType.secondary}
+              buttonType={ButtonType.primary}
               icon={faPlus}
             />
           </div>
@@ -95,7 +95,7 @@ function Activity() {
               <li key={activity.id} className={classes.Activity}>
                 <Button
                   isSquare
-                  buttonType={ButtonType.tertiary}
+                  buttonType={ButtonType.secondary}
                   clickHandler={addActivity(activity.id)}
                   icon={activity.positive ? faPlus : faMinus}
                 >
@@ -110,8 +110,8 @@ function Activity() {
             ))}
           </ul>
         ) : (
-          <Loading isLoading />
-        )}
+            <Loading isLoading />
+          )}
       </div>
       <div className={classes.ActivityDetailsSection}>
         <div className={classes.Funds}>
@@ -132,8 +132,8 @@ function Activity() {
               </p>
             </>
           ) : (
-            <Loading isLoading />
-          )}
+              <Loading isLoading />
+            )}
         </div>
         <div className={classes.TodaysActivities}>
           <h2>
