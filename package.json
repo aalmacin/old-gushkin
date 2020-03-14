@@ -10,6 +10,7 @@
     "amazon-cognito-identity-js": "^3.2.4",
     "aws-sdk": "^2.622.0",
     "axios": "^0.19.2",
+    "moment": "^2.24.0",
     "query-string": "^6.11.0",
     "react": "^16.12.0",
     "react-cookie": "^4.0.3",
@@ -46,11 +47,8 @@
     ]
   },
   "devDependencies": {
-    "redux-devtools-extension": "^2.13.8",
-    "@storybook/addon-knobs": "^5.3.14",
-    "node-sass": "^4.13.1",
-    "typescript": "~3.7.2",
     "@storybook/addon-actions": "^5.3.14",
+    "@storybook/addon-knobs": "^5.3.14",
     "@storybook/addon-links": "^5.3.14",
     "@storybook/addons": "^5.3.14",
     "@storybook/preset-create-react-app": "^2.0.0",
@@ -61,6 +59,7 @@
     "@types/amazon-cognito-auth-js": "^1.2.2",
     "@types/axios": "^0.14.0",
     "@types/jest": "^24.0.0",
+    "@types/moment": "^2.13.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
@@ -72,6 +71,9 @@
     "@types/redux-saga": "^0.10.5",
     "@types/reselect": "^2.2.0",
     "@types/storybook__addon-knobs": "^5.2.1",
-    "storybook-cartesian": "^2.1.1"
+    "node-sass": "^4.13.1",
+    "redux-devtools-extension": "^2.13.8",
+    "storybook-cartesian": "^2.1.1",
+    "typescript": "~3.7.2"
   }
 }

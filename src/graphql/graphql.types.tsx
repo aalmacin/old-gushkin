@@ -32,3 +32,11 @@ export interface Activity {
   readonly positive: boolean,
   readonly userId: string
 }
+
+export interface ActivityToday {
+  readonly activityId: number,
+  readonly description: string,
+  readonly fundAmt: number,
+  readonly positive: boolean,
+  readonly timestamp: number
+}

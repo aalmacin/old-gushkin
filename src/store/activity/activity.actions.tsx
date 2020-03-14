@@ -1,8 +1,12 @@
-import { Activity } from "../../graphql/graphql.types";
+import { Activity, ActivityToday } from "../../graphql/graphql.types";
 
 export const GET_ACTIVITIES = '[Activity] Get Activities';
 export const GET_ACTIVITIES_SUCCESS = '[Activity] Get Activities Success';
 export const GET_ACTIVITIES_FAILURE = '[Activity] Get Activities Failure';
+
+export const GET_TODAYS_ACTIVITIES = '[Activity] Get Todays Activities';
+export const GET_TODAYS_ACTIVITIES_SUCCESS = '[Activity] Get Todays Activities Success';
+export const GET_TODAYS_ACTIVITIES_FAILURE = '[Activity] Get Todays Activities Failure';
 
 export const CREATE_ACTIVITY = '[Activity] Create Activity';
 export const CREATE_ACTIVITY_SUCCESS = '[Activity] Create Activity Success';
@@ -24,6 +28,21 @@ export const getActivitiesSuccess = (activities: Activity[]) => ({
 
 export const getActivitiesFailure = (error: string) => ({
   type: GET_ACTIVITIES_FAILURE,
+  payload: error
+})
+
+export const getTodaysActivities = (accessToken: string) => ({
+  type: GET_TODAYS_ACTIVITIES,
+  payload: accessToken
+})
+
+export const getTodaysActivitiesSuccess = (activities: ActivityToday[]) => ({
+  type: GET_TODAYS_ACTIVITIES_SUCCESS,
+  payload: activities
+})
+
+export const getTodaysActivitiesFailure = (error: string) => ({
+  type: GET_TODAYS_ACTIVITIES_FAILURE,
   payload: error
 })
 

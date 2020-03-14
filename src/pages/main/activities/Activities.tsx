@@ -33,6 +33,7 @@ import { Redirect } from "react-router-dom";
 import Loading from "../../../component-lib/Loading/Loading";
 import Modal from "../../../component-lib/Modal/Modal";
 import HeaderIcon from "../shared/HeaderIcon";
+import TodaysActivities from "./TodaysActivities/TodaysActivities";
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
@@ -136,42 +137,7 @@ function Activity() {
               <Loading isLoading />
             )}
         </div>
-        <div className={classes.TodaysActivities}>
-          <h2>
-            <span className={classes.Icon}>
-              <FontAwesomeIcon icon={faListAlt} />
-            </span>{" "}
-            Today's Activities
-          </h2>
-          <ul className={classes.ActivityHistoryList}>
-            <li className={classes.ActivityHistoryItem}>
-              <span>Activity 1</span>
-              <span>Mar 6, 2020</span>
-              <span>+ $3.00</span>
-            </li>
-            <li className={classes.ActivityHistoryItem}>
-              <span>Activity 1</span>
-              <span>Mar 6, 2020</span>
-              <span>+ $3.00</span>
-            </li>
-            <li className={classes.ActivityHistoryItem}>
-              <span>Activity 1</span>
-              <span>Mar 6, 2020</span>
-              <span>+ $3.00</span>
-            </li>
-            <li className={classes.ActivityHistoryItem}>
-              <span>Activity 2</span>
-              <span>Mar 6, 2020</span>
-              <span>+ $3.00</span>
-            </li>
-            <li className={classes.ActivityHistoryItem}>
-              <span>Activity 4</span>
-              <span>Mar 6, 2020</span>
-              <span>- $30.00</span>
-            </li>
-          </ul>
-          <div className={classes.FundChange}>Fund Change: + $20.00</div>
-        </div>
+        <TodaysActivities />
       </div>
     </div>
   );
