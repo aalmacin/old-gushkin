@@ -18,7 +18,9 @@ import {
   faPlus,
   faMinus,
   faRunning,
-  faListAlt
+  faListAlt,
+  faCoins,
+  faDollarSign
 } from "@fortawesome/free-solid-svg-icons";
 import Button, { ButtonType } from "../../../component-lib/Button/Button";
 import Funds from "../shared/Funds";
@@ -30,6 +32,7 @@ import { getWishItems } from "../../../store/wish-item/wish-item.actions";
 import { Redirect } from "react-router-dom";
 import Loading from "../../../component-lib/Loading/Loading";
 import Modal from "../../../component-lib/Modal/Modal";
+import HeaderIcon from "../shared/HeaderIcon";
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
@@ -78,9 +81,7 @@ function Activity() {
           </Modal>
         )}
         <div className={classes.Heading}>
-          <h2>
-            <FontAwesomeIcon icon={faRunning} /> Activities
-          </h2>
+          <HeaderIcon icon={faRunning} text="Activities" />
           <div>
             <Button
               clickHandler={showActivityForm}
@@ -115,11 +116,11 @@ function Activity() {
       </div>
       <div className={classes.ActivityDetailsSection}>
         <div className={classes.Funds}>
-          <h2>Current Funds</h2>
+          <HeaderIcon icon={faCoins} text="Current Funds" />
           <Funds />
         </div>
         <div className={classes.TotalPrice}>
-          <h2>Total Funds Needed</h2>
+          <HeaderIcon icon={faDollarSign} text="Total Funds Needed" />
 
           {isWishItemsLoaded ? (
             <>
