@@ -157,25 +157,27 @@ function Store() {
             <Loading isLoading />
           )}
       </div>
-      <div className={classes.Cart}>
-        <HeaderIcon text="Cart" icon={faShoppingCart} />
-        {cartItems.map(item => (
-          <div key={item.id} className={classes.CartItem}>
-            {item.description} {item.id}
-            <span className={classes.Dot}></span> $
-            {displayNormalMoney(item.price)}
-          </div>
-        ))}
-        <p>Cart Total: ${displayNormalMoney(cartTotal)}</p>
-        <div>
+      <div className={classes.SideBar}>
+        <div className={classes.Cart}>
+          <HeaderIcon text="Cart" icon={faShoppingCart} />
+          {cartItems.map(item => (
+            <div key={item.id} className={classes.CartItem}>
+              <span className={classes.Description}>{item.description}</span>
+              <span className={classes.Dot}></span> $
+              <span className={classes.Price}>{displayNormalMoney(item.price)}</span>
+            </div>
+          ))}
+        </div>
+        <div className={classes.CartTotal}>
+          <p>Cart Total: ${displayNormalMoney(cartTotal)}</p>
           <Button buttonType={ButtonType.primary} clickHandler={checkout}>
             Checkout
           </Button>
         </div>
-        <HeaderIcon text="Your Funds" icon={faCoins} />
-        <p>
+        <div className={classes.CurrentFunds}>
+          <HeaderIcon text="Your Funds" icon={faCoins} />
           <Funds />
-        </p>
+        </div>
       </div>
     </div>
   );

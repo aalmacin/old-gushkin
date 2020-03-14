@@ -1,5 +1,7 @@
 @import "../../../component-lib/variables.scss";
 
+$borderColor: getColor(gray, shade-3);
+
 .Store {
   display: flex;
   flex-direction: row;
@@ -24,7 +26,7 @@
       .WishItem {
         flex-basis: 20%;
         min-width: 20%;
-        border: 1px solid getColor(tertiary, shade-8);
+        border: 1px solid $borderColor;
         padding-bottom: 0;
         margin: 2rem;
         cursor: pointer;
@@ -86,26 +88,73 @@
     }
   }
 
-  .Cart {
+  .SideBar {
     display: flex;
     flex-direction: column;
-    border-left: 1px solid getColor(secondary, tint-7);
+    padding: 0 1rem 2rem 4rem;
+    border-left: 1px solid $borderColor;
+    min-width: 300px;
 
-    flex: 2;
+    .Cart {
 
-    background-color: getColor(white, light);
-    min-height: 75vh;
+      flex: 2;
 
-    padding: 2rem 1rem 0 4rem;
+      background-color: getColor(white, light);
+      min-height: 75vh;
+      border: 1px solid $borderColor;
+      padding: 2rem;
 
-    h2 {
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid getColor(tertiary, tint-7);
+
+      h2 {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px dotted $borderColor;
+      }
+
+      h3 {
+        margin-bottom: 1rem;
+      }
+
+      .CartItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2rem 0;
+
+        .Description {
+          flex: 4;
+        }
+
+        .Dot {
+          // border-bottom: 1px dotted $borderColor;
+          flex-basis: 100%;
+        }
+
+        .Price {
+          flex: 2;
+        }
+      }
     }
 
-    h3 {
-      margin-bottom: 1rem;
+    .CartTotal {
+      margin-bottom: 2rem;
+      font-weight: bold;
+      padding: 2rem;
+      border: 1px solid $borderColor;
+      display: flex;
+      flex-direction: column;
+
+      p {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    .CurrentFunds {
+      &>* {
+        margin: 2rem 0;
+      }
     }
   }
+
 }
