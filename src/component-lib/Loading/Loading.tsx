@@ -4,10 +4,10 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import classes from "./Loading.module.scss";
 
 interface LoadingProps {
-  isLoading: boolean
+  isLoading?: boolean
 }
 
-const Loading: React.FC<LoadingProps> = ({ isLoading }) => {
+const Loading: React.FC<LoadingProps> = ({ isLoading = true }) => {
   if (!isLoading) {
     return null;
   }

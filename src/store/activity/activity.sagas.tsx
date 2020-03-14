@@ -1,7 +1,7 @@
 import { put, takeLatest, select, all } from 'redux-saga/effects'
-import { getAllActivities } from '../../graphql/queries.functions';
+import { getAllActivities, getTodaysActivities } from '../../graphql/queries.functions';
 import { selectUserId } from '../auth/auth.selectors';
-import { getActivitiesSuccess, getActivitiesFailure, GET_ACTIVITIES, CREATE_ACTIVITY, createActivityFailure, createActivitySuccess, performActivityFailure, PERFORM_ACTIVITY, performActivitySuccess } from './activity.actions';
+import { getActivitiesSuccess, getActivitiesFailure, GET_ACTIVITIES, CREATE_ACTIVITY, createActivityFailure, createActivitySuccess, performActivityFailure, PERFORM_ACTIVITY, performActivitySuccess, getTodaysActivities as todaysActivities, getTodaysActivitiesSuccess, getTodaysActivitiesFailure, GET_TODAYS_ACTIVITIES } from './activity.actions';
 import { createActivity, performActivity } from '../../graphql/mutations.functions';
 import { getCurrentFunds } from '../funds/funds.actions';
 
@@ -16,6 +16,23 @@ function* getActivitiesSaga(action: any) {
       yield put(getActivitiesSuccess(activityResult.data))
     } else {
       yield put(getActivitiesFailure(activityResult.error))
+    }
+  } catch (e) {
+    yield put(getActivitiesFailure("Something went wrong while getting activities"))
+  }
+}
+
+function* getTodaysActivitiesSaga(action: any) {
+  try {
+    const userId = yield select(selectUserId);
+    const activityResult = yield getTodaysActivities(
+      action.payload,
+      userId
+    )
+    if (activityResult.success) {
+      yield put(getTodaysActivitiesSuccess(activityResult.data))
+    } else {
+      yield put(getTodaysActivitiesFailure(activityResult.error))
     }
   } catch (e) {
     yield put(getActivitiesFailure("Something went wrong while getting activities"))
@@ -53,6 +70,7 @@ function* performActivitySaga(action: any) {
       )
       yield put(performActivitySuccess())
       yield put(getCurrentFunds(action.payload.accessToken))
+      yield put(todaysActivities(action.payload.accessToken))
     } else {
       yield put(performActivityFailure('Something went wrong while performing activity'))
     }
@@ -66,7 +84,8 @@ function* watchActivities() {
   yield all([
     takeLatest(GET_ACTIVITIES, getActivitiesSaga),
     takeLatest(CREATE_ACTIVITY, createActivitySaga),
-    takeLatest(PERFORM_ACTIVITY, performActivitySaga)
+    takeLatest(PERFORM_ACTIVITY, performActivitySaga),
+    takeLatest(GET_TODAYS_ACTIVITIES, getTodaysActivitiesSaga),
   ])
 }
 

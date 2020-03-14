@@ -58,15 +58,6 @@
       margin-bottom: 5rem;
     }
 
-    .ActivityHistoryList {
-      .ActivityHistoryItem {
-        list-style-type: none;
-
-        &:not(:last-child) {
-          margin-bottom: 1rem;
-        }
-      }
-    }
 
     .FundChange {
       margin-top: 1rem;

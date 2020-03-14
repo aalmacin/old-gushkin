@@ -1,0 +1,58 @@
+@import "../../../../component-lib/variables.scss";
+
+.TodaysActivities {
+  display: flex;
+  flex-direction: column;
+}
+
+.ActivityHistoryList {
+  padding: 2rem 0;
+  border-bottom: 1px dotted getColor(gray);
+
+  .ActivityHistoryItem {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      flex: 1;
+
+      &.Time {
+        font-weight: bold;
+      }
+
+      &.Value {
+        text-align: right;
+        font-weight: bold;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .ActivityHistoryHeading {
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.FundChange {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+
+  span {
+    font-weight: bold;
+  }
+}
+
+.PositiveVal {
+  color: getColor(primary, shade-3);
+}
+
+.NegativeVal {
+  color: getColor(red);
+}

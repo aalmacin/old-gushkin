@@ -16,22 +16,21 @@ export default function useAccessToken() {
     if (cookies && cookies.gushkinTokens) {
       const currTimestamp = getCurrentTimestamp();
       if (cookies.gushkinTokens.expireTime <= currTimestamp) {
-        // const refreshToken = cookies.gushkinTokens.refreshToken;
-        // getAccessTokenUsingRefreshToken(refreshToken)
-        //   .pipe(first())
-        //   .subscribe(tokenData => {
-        //     if (isToken(tokenData)) {
-        //       setCookie("gushkinTokens", {
-        //         ...tokenData,
-        //         refreshToken,
-        //         expireTime: currTimestamp + 3600
-        //       });
-        //       setAccessToken(cookies.gushkinTokens.expireTime);
-        //     } else {
-        //       setAccessToken(null);
-        //     }
-        //   });
-        console.log("Expired");
+        const refreshToken = cookies.gushkinTokens.refreshToken;
+        getAccessTokenUsingRefreshToken(refreshToken)
+          .pipe(first())
+          .subscribe(tokenData => {
+            if (isToken(tokenData)) {
+              setCookie("gushkinTokens", {
+                ...tokenData,
+                refreshToken,
+                expireTime: currTimestamp + 3600
+              });
+              setAccessToken(cookies.gushkinTokens.expireTime);
+            } else {
+              setAccessToken(null);
+            }
+          });
       } else {
         if (cookies.gushkinTokens.accessToken !== accessToken) {
           setAccessToken(cookies.gushkinTokens.accessToken);

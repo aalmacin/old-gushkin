@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { of, from } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { ApiResult, WishItem } from './graphql.types';
+import { ApiResult, WishItem, ActivityToday } from './graphql.types';
 
 const appSyncUrl: any = process.env.REACT_APP_APP_SYNC_URL;
 
@@ -33,6 +33,22 @@ const GetActivities = `
         description
         positive
         fundAmt
+      }
+    }
+  }
+`
+
+const GetTodaysActivities = `
+  query TodaysActivities($accessToken: String!, $userId: String!) {
+    getTodaysActivities(accessToken: $accessToken, userId: $userId) {
+      success
+      error
+      data {
+        activityId
+        description
+        positive
+        fundAmt
+        timestamp
       }
     }
   }
@@ -83,6 +99,12 @@ export const getAllActivities = (accessToken: string, userId: string): Promise<A
   let data: any = { accessToken, userId }
 
   return query(data, GetActivities, 'getActivitiesForUser')
+}
+
+export const getTodaysActivities = (accessToken: string, userId: string): Promise<ApiResult<ActivityToday[]>> => {
+  let data: any = { accessToken, userId }
+
+  return query(data, GetTodaysActivities, 'getTodaysActivities')
 }
 
 export const getCurrentFunds = (accessToken: string, userId: string): Promise<ApiResult<number>> => {
