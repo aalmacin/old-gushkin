@@ -1,8 +1,9 @@
-import { put, takeLatest, all } from 'redux-saga/effects'
+import { put, takeLatest, all, select } from 'redux-saga/effects'
 import { GET_USER_DATA, getUserDataSuccess, getUserDataFailure, GET_ACCESS_TOKEN, getAccessTokenFailure, getAccessTokenSuccess, REFRESH_ACCESS_TOKEN, refreshAccessToken, refreshAccessTokenSuccess, refreshAccessTokenFailure } from './auth.actions';
 import { getUserDataFromAccessToken, getAccessTokenUsingRefreshToken } from '../../functions/cognito.functions';
 import { Cookies } from 'react-cookie';
 import { getCurrentTimestamp } from '../../functions/utils.functions';
+import { selectAccessToken } from './auth.selectors';
 
 function* getAccessTokenSaga() {
   try {
@@ -53,10 +54,16 @@ function* refreshAccessTokenSaga() {
   }
 }
 
-function* getUserDataSaga(action: any) {
+function* getUserDataSaga() {
   try {
-    const userData = yield getUserDataFromAccessToken(action.payload)
-    yield put(getUserDataSuccess(userData))
+    const accessToken = yield select(selectAccessToken);
+    const userData = yield getUserDataFromAccessToken(accessToken)
+
+    if (userData && userData.error) {
+      yield put(getUserDataFailure("API return error"))
+    } else {
+      yield put(getUserDataSuccess(userData))
+    }
   } catch (e) {
     yield put(getUserDataFailure("Something went wrong"))
   }

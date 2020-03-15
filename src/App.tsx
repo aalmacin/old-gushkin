@@ -15,7 +15,7 @@ import useAccessTokenRefresh from './hooks/useAccessTokenRefresh';
 
 function App() {
   const isLoadedToken = useSelector(selectIsLoadedToken)
-  const isUserLoaded = useSelector(selectIsLoadedUser)
+  const isLoadedUser = useSelector(selectIsLoadedUser)
   const accessToken = useSelector(selectAccessToken);
 
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function App() {
     dispatch(getAccessToken())
   }
 
-  if (!isUserLoaded && accessToken) {
+  if (!isLoadedUser && accessToken) {
     dispatch(getUserData())
   }
 

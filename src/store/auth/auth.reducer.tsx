@@ -36,6 +36,7 @@ export const authReducer = (state = initialUserState, action: any): AuthState =>
       return { ...state, user: { loaded: true, data: action.payload } }
     case GET_USER_DATA_FAILURE:
       return { ...state, user: { loaded: false } }
+
     case GET_ACCESS_TOKEN:
       return { ...state, token: { loaded: false } }
     case REFRESH_ACCESS_TOKEN_SUCCESS:
