@@ -8,18 +8,23 @@ import Home from './pages/home/Home';
 import Callback from './pages/callback/Callback';
 import MainNav from './MainNav/MainNav';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccessToken } from './store/auth/auth.actions';
-import { selectIsLoadedToken } from './store/auth/auth.selectors';
+import { getAccessToken, getUserData } from './store/auth/auth.actions';
+import { selectIsLoadedToken, selectAccessToken } from './store/auth/auth.selectors';
 
 
 function App() {
 
   const isLoadedToken = useSelector(selectIsLoadedToken)
+  const accessToken = useSelector(selectAccessToken);
 
   const dispatch = useDispatch();
 
   if (!isLoadedToken) {
     dispatch(getAccessToken())
+  }
+
+  if (isLoadedToken && accessToken) {
+    dispatch(getUserData(accessToken))
   }
 
   return (

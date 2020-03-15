@@ -15,6 +15,8 @@ export const selectUserId = createSelector(selectUser, user => user?.id)
 
 export const selectIsLoggedIn = createSelector(selectUser, (user): boolean => !!user)
 
-export const selectAccessToken = createSelector(selectTokenState, tokenState => tokenState?.data)
+export const selectTokenInfo = createSelector(selectTokenState, tokenState => tokenState?.data)
+
+export const selectAccessToken = createSelector(selectTokenInfo, tokenState => tokenState?.accessToken)
 
 export const selectIsLoadedToken = createSelector(selectTokenState, (tokenState): boolean => !!tokenState?.loaded)
