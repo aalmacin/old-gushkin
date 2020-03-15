@@ -13,6 +13,21 @@
     flex: 9;
     padding-right: 3rem;
 
+    .ShowStreakToggle {
+      display: flex;
+      justify-content: flex-end;
+      margin: 1rem;
+      cursor: pointer;
+
+      .StreakToggler {
+        text-decoration: underline;
+      }
+
+      .Close {
+        color: getColor(red);
+      }
+    }
+
     .ActivityList {
       display: flex;
       flex-direction: column;

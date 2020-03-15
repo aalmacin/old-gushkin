@@ -2,90 +2,37 @@
 
 .ActivityStreak {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
 
   .StreakMsg {
     display: flex;
     align-items: center;
+    margin-bottom: 2rem;
 
-    .Icon {
-      margin-right: 1rem;
-
-      .Left {
-        display: inline-block;
-      }
-
-      .Right {
-        display: none;
-      }
-
-    }
-  }
-
-  .Heading {
-    display: none;
-  }
-
-  .DayCount {
-    width: 0;
-    height: inherit;
-
-    .Count {
-      display: none;
-    }
-
-    &.Positive {
-      background-color: getColor(primary);
-    }
-
-    &.Negative {
-      background-color: getColor(red);
-    }
-
-    &.Today {
-      display: block;
-      text-align: center;
-      padding: .5rem;
-      width: inherit;
-      height: 100%;
-
-      .Count {
-        display: inline;
-      }
-    }
-  }
-
-  &:hover {
     .Heading {
-      display: inline;
       font-size: 2rem;
-      margin-right: 2rem;
     }
+  }
+
+  .StreakList {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 2rem;
 
     .DayCount {
-      width: inherit;
-      height: inherit;
       margin-left: 2rem;
       padding: .5rem;
-      display: block;
-      transition: all 1s;
-    }
 
-    .Count {
-      display: inline;
-    }
-
-    .Icon {
-      .Left {
-        display: none;
+      &.Positive {
+        background-color: getColor(primary);
       }
 
-      .Right {
-        display: inline-block;
+      &.Negative {
+        background-color: getColor(red);
       }
-
     }
   }
 }

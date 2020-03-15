@@ -19,7 +19,8 @@ import {
   faRunning,
   faCoins,
   faDollarSign,
-  faChevronLeft
+  faChevronLeft,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import Button, { ButtonType } from "../../../component-lib/Button/Button";
 import Funds from "../shared/Funds";
@@ -43,6 +44,7 @@ function Activity() {
   const activities = useSelector(selectActivities);
   const [isShowActivityForm, setShowActivityForm] = useState(false);
   const totalPrice = useSelector(selectTotalWishItemPrice);
+  const [isShowStreak, setIsShowStreak] = useState(false);
 
   if (!isActivitiesLoaded && cookies.gushkinTokens) {
     dispatch(getActivities());
@@ -68,6 +70,10 @@ function Activity() {
     setShowActivityForm(false);
   };
 
+  const toggleIsShowStreaks = () => {
+    setIsShowStreak(!isShowStreak);
+  }
+
   return (
     <div className={classes.ActivityPage}>
       <div className={classes.ActivitiesSection}>
@@ -85,6 +91,9 @@ function Activity() {
               icon={faPlus}
             />
           </div>
+        </div>
+        <div className={classes.ShowStreakToggle}>
+          <div className={classes.StreakToggler} onClick={toggleIsShowStreaks}>Show Streaks {isShowStreak && <span className={classes.Close}><FontAwesomeIcon icon={faTimes} /></span>}</div>
         </div>
         {isActivitiesLoaded ? (
           <ul className={classes.ActivityList}>
@@ -105,7 +114,7 @@ function Activity() {
                     {activity.description}
                   </span>
                 </div>
-                <Streaks activity={activity} />
+                {isShowStreak && <Streaks activity={activity} />}
               </li>
             ))}
           </ul>

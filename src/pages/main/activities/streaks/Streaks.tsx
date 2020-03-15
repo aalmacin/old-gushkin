@@ -21,22 +21,17 @@ const Streaks: React.FC<StreaksProps> = ({ activity }) => {
     <div className={classes.ActivityStreak}>
       <div className={classes.StreakMsg}>
         <h3 className={classes.Heading}>Streak</h3>
-        <div className={classes.Icon}>
-          <span className={classes.Left}><FontAwesomeIcon icon={faChevronLeft} /></span>
-          <span className={classes.Right}><FontAwesomeIcon icon={faChevronRight} /></span>
-        </div>
       </div>
-      <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-      <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
-      <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-      <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-      <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-      <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
-      <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
-      <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-      <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
-      <div className={`${classes.DayCount} ${classes.Today} ${getActivityClass(5, activity.positive)}`}>
-        <span className={classes.Count}>5</span>
+      <div className={classes.StreakList}>
+        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
+        <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
+        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
+        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
+        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
+        <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
+        <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
+        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
+        <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
       </div>
     </div>
   )
