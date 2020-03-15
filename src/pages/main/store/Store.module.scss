@@ -91,9 +91,10 @@ $borderColor: getColor(gray, shade-3);
   .SideBar {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 0 1rem 2rem 4rem;
     border-left: 1px solid $borderColor;
-    min-width: 300px;
+    min-width: 25vw;
 
     .Cart {
 
@@ -132,6 +133,7 @@ $borderColor: getColor(gray, shade-3);
 
         .Price {
           flex: 2;
+          text-align: right;
         }
       }
     }

@@ -134,8 +134,7 @@ function Store() {
           {cartItems.map(item => (
             <div key={item.id} className={classes.CartItem}>
               <span className={classes.Description}>{item.description}</span>
-              <span className={classes.Dot}></span> $
-              <span className={classes.Price}>{displayNormalMoney(item.price)}</span>
+              <span className={classes.Price}>$ {displayNormalMoney(item.price)}</span>
             </div>
           ))}
         </div>
