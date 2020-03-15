@@ -27,7 +27,6 @@ import {
   selectIsWishItemsLoaded
 } from "../../../store/wish-item/wish-item.selectors";
 import { getWishItems } from "../../../store/wish-item/wish-item.actions";
-import { Redirect } from "react-router-dom";
 import Loading from "../../../component-lib/Loading/Loading";
 import Modal from "../../../component-lib/Modal/Modal";
 import HeaderIcon from "../shared/HeaderIcon";
@@ -42,22 +41,17 @@ function Activity() {
   const [isShowActivityForm, setShowActivityForm] = useState(false);
   const totalPrice = useSelector(selectTotalWishItemPrice);
 
-  if (!cookies.gushkinTokens) {
-    return <Redirect to="/" />;
-  }
-
   if (!isActivitiesLoaded && cookies.gushkinTokens) {
-    dispatch(getActivities(cookies.gushkinTokens.accessToken));
+    dispatch(getActivities());
   }
 
   if (!isWishItemsLoaded && cookies.gushkinTokens) {
-    dispatch(getWishItems(cookies.gushkinTokens.accessToken));
+    dispatch(getWishItems());
   }
 
   const addActivity = (activityId: string) => () => {
     dispatch(
       performActivity({
-        accessToken: cookies.gushkinTokens.accessToken,
         activityId: parseInt(`${activityId}`)
       })
     );
@@ -93,19 +87,21 @@ function Activity() {
           <ul className={classes.ActivityList}>
             {activities.map((activity: ActivityType) => (
               <li key={activity.id} className={classes.Activity}>
-                <Button
-                  isSquare
-                  buttonType={activity.positive ? ButtonType.secondary : ButtonType.red}
-                  clickHandler={addActivity(activity.id)}
-                  icon={activity.positive ? faPlus : faMinus}
-                >
-                  <span className={classes.ActivityAmt}>
-                    $ {displayNormalMoney(activity.fundAmt)}
+                <div className={classes.ActivityAction}>
+                  <Button
+                    isSquare
+                    buttonType={activity.positive ? ButtonType.secondary : ButtonType.red}
+                    clickHandler={addActivity(activity.id)}
+                    icon={activity.positive ? faPlus : faMinus}
+                  >
+                    <span className={classes.ActivityAmt}>
+                      $ {displayNormalMoney(activity.fundAmt)}
+                    </span>
+                  </Button>
+                  <span className={classes.ActivityText}>
+                    {activity.description}
                   </span>
-                </Button>
-                <span className={classes.ActivityText}>
-                  {activity.description}
-                </span>
+                </div>
               </li>
             ))}
           </ul>

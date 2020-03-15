@@ -4,7 +4,6 @@ import { Priority, Status } from "../../../../graphql/graphql.types";
 import ErrorList from "../../../error/ErrorList";
 import { useDispatch } from "react-redux";
 import { createWishItem } from "../../../../store/wish-item/wish-item.actions";
-import { useCookies } from "react-cookie";
 import { MICRO_AMOUNT } from "../../../../functions/global.constants";
 import TextField from "../../../../component-lib/TextField/TextField";
 import NumberField from "../../../../component-lib/NumberField/NumberField";
@@ -27,7 +26,6 @@ function WishItemForm() {
   });
 
   const [errors, setErrors] = useState<string[]>([]);
-  const [cookies] = useCookies();
 
   const dispatch = useDispatch();
 
@@ -72,8 +70,7 @@ function WishItemForm() {
       dispatch(
         createWishItem({
           ...wishItem,
-          price,
-          accessToken: cookies.gushkinTokens.accessToken
+          price
         })
       );
     }

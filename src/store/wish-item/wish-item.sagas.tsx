@@ -1,17 +1,18 @@
 import { put, takeLatest, select, all } from 'redux-saga/effects'
 import { getAllWishItems } from '../../graphql/queries.functions';
-import { selectUserId } from '../auth/auth.selectors';
+import { selectUserId, selectAccessToken } from '../auth/auth.selectors';
 import { getWishItemsSuccess, getWishItemsFailure, GET_WISH_ITEMS, CREATE_WISH_ITEM, createWishItemFailure, createWishItemSuccess, purchaseWishItemSuccess, purchaseWishItemFailure, PURCHASE_WISH_ITEM, purchaseWishItem } from './wish-item.actions';
 import { createWishItem, updateWishItem } from '../../graphql/mutations.functions';
 import { Status, WishItem } from '../../graphql/graphql.types';
 import { selectCart } from '../cart/cart.selectors';
 import { CHECKOUT_CART } from '../cart/cart.actions';
 
-function* getWishItemsSaga(action: any) {
+function* getWishItemsSaga() {
   try {
+    const accessToken = yield select(selectAccessToken);
     const userId = yield select(selectUserId);
     const wishItemResult = yield getAllWishItems(
-      action.payload,
+      accessToken,
       userId
     )
     if (wishItemResult.success) {
@@ -26,12 +27,13 @@ function* getWishItemsSaga(action: any) {
 
 function* createWishItemSaga(action: any) {
   try {
+    const accessToken = yield select(selectAccessToken);
     const userId = yield select(selectUserId);
     const result = yield createWishItem({ ...action.payload, userId })
 
     if (result.success) {
       const wishItemResult = yield getAllWishItems(
-        action.payload.accessToken,
+        accessToken,
         userId
       )
       yield put(createWishItemSuccess(wishItemResult.data))
@@ -43,10 +45,10 @@ function* createWishItemSaga(action: any) {
   }
 }
 
-function* checkoutCartSaga(action: any) {
+function* checkoutCartSaga() {
   const cartItems = yield select(selectCart);
   const nextActions = cartItems.map((cartItem: WishItem) => {
-    return put(purchaseWishItem({ accessToken: action.payload, id: cartItem.id }))
+    return put(purchaseWishItem({ id: cartItem.id }))
   })
   yield all(nextActions)
 }
@@ -54,7 +56,9 @@ function* checkoutCartSaga(action: any) {
 function* purchaseWishItemSaga(action: any) {
   try {
     const userId = yield select(selectUserId);
-    const { id, accessToken } = action.payload;
+    const { id } = action.payload;
+
+    const accessToken = yield select(selectAccessToken);
     const result = yield updateWishItem({
       id,
       accessToken,
@@ -64,7 +68,7 @@ function* purchaseWishItemSaga(action: any) {
 
     if (result.success) {
       const wishItemResult = yield getAllWishItems(
-        action.payload.accessToken,
+        accessToken,
         userId
       )
       yield put(purchaseWishItemSuccess(wishItemResult.data))

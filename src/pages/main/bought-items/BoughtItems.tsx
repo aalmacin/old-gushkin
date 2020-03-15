@@ -7,19 +7,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectStoreArchiveItems, selectIsWishItemsLoaded } from "../../../store/wish-item/wish-item.selectors";
 import HeaderIcon from "../shared/HeaderIcon";
 import { displayNormalMoney } from "../../../functions/utils.functions";
-import { selectAccessToken } from "../../../store/auth/auth.selectors";
 import { getWishItems } from "../../../store/wish-item/wish-item.actions";
 import Loading from "../../../component-lib/Loading/Loading";
 
 function BoughtItems() {
   const storeArchiveItems = useSelector(selectStoreArchiveItems);
 
-  const accessToken = useSelector(selectAccessToken);
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
   const dispatch = useDispatch();
 
-  if (!isWishItemsLoaded && accessToken) {
-    dispatch(getWishItems(accessToken));
+  if (!isWishItemsLoaded) {
+    dispatch(getWishItems());
   }
 
   return (

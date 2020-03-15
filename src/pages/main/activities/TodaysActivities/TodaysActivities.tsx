@@ -20,7 +20,7 @@ function TodaysActivities() {
   const [cookies] = useCookies(["gushkinTokens"]);
 
   if (!isTodaysActivitiesLoaded && cookies.gushkinTokens) {
-    dispatch(getTodaysActivities(cookies.gushkinTokens.accessToken));
+    dispatch(getTodaysActivities());
   }
 
   if (!isTodaysActivitiesLoaded) {

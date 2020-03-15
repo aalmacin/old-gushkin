@@ -5,7 +5,6 @@ import {
   selectIsWishItemsLoaded,
   selectStoreItems
 } from "../../../store/wish-item/wish-item.selectors";
-import { useCookies } from "react-cookie";
 import { getWishItems } from "../../../store/wish-item/wish-item.actions";
 import { displayNormalMoney } from "../../../functions/utils.functions";
 import WishItemForm from "./wish-item-form/WishItemForm";
@@ -38,20 +37,17 @@ import {
 import Modal from "../../../component-lib/Modal/Modal";
 import FormClose from "../shared/FormClose/FormClose";
 import HeaderIcon from "../shared/HeaderIcon";
-import { selectAccessToken } from "../../../store/auth/auth.selectors";
 
 function Store() {
   const [isShowForm, setIsShowForm] = useState(false);
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
-  const [cookies] = useCookies(["gushkinTokens"]);
   const dispatch = useDispatch();
   const storeItems = useSelector(selectStoreItems);
   const cartItems = useSelector(selectCart);
   const cartTotal = useSelector(selectGetCartTotal);
-  const accessToken = useSelector(selectAccessToken);
 
-  if (!isWishItemsLoaded && cookies.gushkinTokens) {
-    dispatch(getWishItems(cookies.gushkinTokens.accessToken));
+  if (!isWishItemsLoaded) {
+    dispatch(getWishItems());
   }
 
   const isItemInCart = (item: WishItem) =>
@@ -70,9 +66,7 @@ function Store() {
   };
 
   const checkout = () => {
-    if (accessToken) {
-      dispatch(checkoutCart(accessToken));
-    }
+    dispatch(checkoutCart());
   };
 
   const closeHandler = () => {

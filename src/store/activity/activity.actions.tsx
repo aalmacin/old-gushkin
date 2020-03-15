@@ -16,9 +16,8 @@ export const PERFORM_ACTIVITY = '[Activity] Perform Activity';
 export const PERFORM_ACTIVITY_SUCCESS = '[Activity] Perform Activity Success';
 export const PERFORM_ACTIVITY_FAILURE = '[Activity] Perform Activity Failure';
 
-export const getActivities = (accessToken: string) => ({
+export const getActivities = () => ({
   type: GET_ACTIVITIES,
-  payload: accessToken
 })
 
 export const getActivitiesSuccess = (activities: Activity[]) => ({
@@ -31,9 +30,8 @@ export const getActivitiesFailure = (error: string) => ({
   payload: error
 })
 
-export const getTodaysActivities = (accessToken: string) => ({
+export const getTodaysActivities = () => ({
   type: GET_TODAYS_ACTIVITIES,
-  payload: accessToken
 })
 
 export const getTodaysActivitiesSuccess = (activities: ActivityToday[]) => ({
@@ -47,14 +45,12 @@ export const getTodaysActivitiesFailure = (error: string) => ({
 })
 
 interface CreateActivityPayload {
-  accessToken: any,
   description: string,
   fundAmt: number,
   positive: boolean
 }
 
 interface PerformActivityPayload {
-  accessToken: any,
   activityId: number
 }
 

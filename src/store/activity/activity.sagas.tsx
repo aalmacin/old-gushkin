@@ -1,15 +1,16 @@
 import { put, takeLatest, select, all } from 'redux-saga/effects'
 import { getAllActivities, getTodaysActivities } from '../../graphql/queries.functions';
-import { selectUserId } from '../auth/auth.selectors';
+import { selectUserId, selectAccessToken } from '../auth/auth.selectors';
 import { getActivitiesSuccess, getActivitiesFailure, GET_ACTIVITIES, CREATE_ACTIVITY, createActivityFailure, createActivitySuccess, performActivityFailure, PERFORM_ACTIVITY, performActivitySuccess, getTodaysActivities as todaysActivities, getTodaysActivitiesSuccess, getTodaysActivitiesFailure, GET_TODAYS_ACTIVITIES } from './activity.actions';
 import { createActivity, performActivity } from '../../graphql/mutations.functions';
 import { getCurrentFunds } from '../funds/funds.actions';
 
-function* getActivitiesSaga(action: any) {
+function* getActivitiesSaga() {
   try {
     const userId = yield select(selectUserId);
+    const accessToken = yield select(selectAccessToken);
     const activityResult = yield getAllActivities(
-      action.payload,
+      accessToken,
       userId
     )
     if (activityResult.success) {
@@ -22,11 +23,12 @@ function* getActivitiesSaga(action: any) {
   }
 }
 
-function* getTodaysActivitiesSaga(action: any) {
+function* getTodaysActivitiesSaga() {
   try {
     const userId = yield select(selectUserId);
+    const accessToken = yield select(selectAccessToken);
     const activityResult = yield getTodaysActivities(
-      action.payload,
+      accessToken,
       userId
     )
     if (activityResult.success) {
@@ -42,11 +44,12 @@ function* getTodaysActivitiesSaga(action: any) {
 function* createActivitySaga(action: any) {
   try {
     const userId = yield select(selectUserId);
+    const accessToken = yield select(selectAccessToken);
     const result = yield createActivity({ ...action.payload, userId })
 
     if (result.success) {
       const activityResult = yield getAllActivities(
-        action.payload.accessToken,
+        accessToken,
         userId
       )
       yield put(createActivitySuccess(activityResult.data))
@@ -62,15 +65,16 @@ function* performActivitySaga(action: any) {
   try {
     const userId = yield select(selectUserId);
     const result = yield performActivity({ ...action.payload, userId })
+    const accessToken = yield select(selectAccessToken);
 
     if (result.success) {
       yield getAllActivities(
-        action.payload.accessToken,
+        accessToken,
         userId
       )
       yield put(performActivitySuccess())
-      yield put(getCurrentFunds(action.payload.accessToken))
-      yield put(todaysActivities(action.payload.accessToken))
+      yield put(getCurrentFunds())
+      yield put(todaysActivities())
     } else {
       yield put(performActivityFailure('Something went wrong while performing activity'))
     }

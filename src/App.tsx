@@ -9,13 +9,13 @@ import Callback from './pages/callback/Callback';
 import MainNav from './MainNav/MainNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken, getUserData } from './store/auth/auth.actions';
-import { selectIsLoadedToken, selectAccessToken } from './store/auth/auth.selectors';
+import { selectIsLoadedToken, selectAccessToken, selectIsLoadedUser } from './store/auth/auth.selectors';
 import useAccessTokenRefresh from './hooks/useAccessTokenRefresh';
 
 
 function App() {
-
   const isLoadedToken = useSelector(selectIsLoadedToken)
+  const isUserLoaded = useSelector(selectIsLoadedUser)
   const accessToken = useSelector(selectAccessToken);
 
   const dispatch = useDispatch();
@@ -26,8 +26,8 @@ function App() {
     dispatch(getAccessToken())
   }
 
-  if (isLoadedToken && accessToken) {
-    dispatch(getUserData(accessToken))
+  if (!isUserLoaded && accessToken) {
+    dispatch(getUserData())
   }
 
   return (

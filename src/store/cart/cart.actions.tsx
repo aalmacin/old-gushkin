@@ -14,7 +14,6 @@ export const removeItemFromCart = (id: string) => ({
   payload: id
 })
 
-export const checkoutCart = (accessToken: string) => ({
-  type: CHECKOUT_CART,
-  payload: accessToken
+export const checkoutCart = () => ({
+  type: CHECKOUT_CART
 })

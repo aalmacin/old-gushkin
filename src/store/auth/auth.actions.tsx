@@ -41,9 +41,8 @@ export const refreshAccessTokenFailure = (error: string) => ({
   payload: error
 })
 
-export const getUserData = (accessToken: string) => ({
-  type: GET_USER_DATA,
-  payload: accessToken
+export const getUserData = () => ({
+  type: GET_USER_DATA
 })
 
 export const getUserDataSuccess = (userData: User) => ({

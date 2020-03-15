@@ -1,13 +1,14 @@
 import { put, takeLatest, select, all } from 'redux-saga/effects'
-import { selectUserId } from '../auth/auth.selectors';
+import { selectUserId, selectAccessToken } from '../auth/auth.selectors';
 import { getCurrentFundsFailure, getCurrentFundsSuccess, GET_CURRENT_FUNDS } from './funds.actions';
 import { getCurrentFunds } from '../../graphql/queries.functions'
 
-function* getCurrentFundsSaga(action: any) {
+function* getCurrentFundsSaga() {
   try {
+    const accessToken = yield select(selectAccessToken);
     const userId = yield select(selectUserId);
     const fundResult = yield getCurrentFunds(
-      action.payload,
+      accessToken,
       userId
     )
     if (fundResult.success) {

@@ -3,7 +3,6 @@ import classes from "./ActivityForm.module.scss";
 import ErrorList from "../../../error/ErrorList";
 import { useDispatch } from "react-redux";
 import { createActivity } from "../../../../store/activity/activity.actions";
-import { useCookies } from "react-cookie";
 import { MICRO_AMOUNT } from "../../../../functions/global.constants";
 import Button, { ButtonType } from "../../../../component-lib/Button/Button";
 import TextField from "../../../../component-lib/TextField/TextField";
@@ -28,7 +27,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
   });
 
   const [errors, setErrors] = useState<string[]>([]);
-  const [cookies] = useCookies();
 
   const dispatch = useDispatch();
 
@@ -73,8 +71,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
       dispatch(
         createActivity({
           ...activity,
-          fundAmt,
-          accessToken: cookies.gushkinTokens.accessToken
+          fundAmt
         })
       );
     }

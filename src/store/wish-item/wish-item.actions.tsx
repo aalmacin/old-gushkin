@@ -12,9 +12,8 @@ export const PURCHASE_WISH_ITEM = '[Wish Item] Purchase Wish Item'
 export const PURCHASE_WISH_ITEM_SUCCESS = '[Wish Item] Purchase Wish Item Success';
 export const PURCHASE_WISH_ITEM_FAILURE = '[Wish Item] Purchase Wish Item Failure';
 
-export const getWishItems = (accessToken: string) => ({
+export const getWishItems = () => ({
   type: GET_WISH_ITEMS,
-  payload: accessToken
 })
 
 export const getWishItemsSuccess = (wishItems: WishItem[]) => ({
@@ -28,7 +27,6 @@ export const getWishItemsFailure = (error: string) => ({
 })
 
 interface CreateWishItemPayload {
-  accessToken: any,
   description: string,
   price: number,
   source?: string,
@@ -37,7 +35,6 @@ interface CreateWishItemPayload {
 }
 
 interface PurchaseWishItemPayload {
-  accessToken: any,
   id: any,
 }
 
