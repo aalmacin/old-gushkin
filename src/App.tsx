@@ -6,23 +6,22 @@ import {
 import Main from './pages/main/Main';
 import Home from './pages/home/Home';
 import Callback from './pages/callback/Callback';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectAuth, selectIsLoading } from './store/auth/auth.selectors';
-import { getUserData } from './store/auth/auth.actions';
 import MainNav from './MainNav/MainNav';
-import useAccessToken from './hooks/useAccessToken';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAccessToken } from './store/auth/auth.actions';
+import { selectIsLoadedToken } from './store/auth/auth.selectors';
 
 
 function App() {
-  const authState = useSelector(selectAuth);
-  const dispatch = useDispatch()
-  const isLoading = useSelector(selectIsLoading);
 
-  const accessToken = useAccessToken();
+  const isLoadedToken = useSelector(selectIsLoadedToken)
 
-  if (!authState.isLoggedIn && accessToken && !isLoading) {
-    dispatch(getUserData(accessToken))
+  const dispatch = useDispatch();
+
+  if (!isLoadedToken) {
+    dispatch(getAccessToken())
   }
+
   return (
     <div className={classes.App}>
       <Router>

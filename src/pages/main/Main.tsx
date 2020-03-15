@@ -3,16 +3,18 @@ import classes from './Main.module.scss';
 import Store from './store/Store';
 import Activities from './activities/Activities';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
-import useAccessToken from '../../hooks/useAccessToken';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn, selectIsLoadedToken } from '../../store/auth/auth.selectors';
 
 function Main() {
   const match = useRouteMatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const isLoadedToken = useSelector(selectIsLoadedToken)
 
-  const accessToken = useAccessToken();
-
-  if (!accessToken) {
-    return <Redirect to='/' />
+  if (isLoadedToken && !isLoggedIn) {
+    return <Redirect to="/" />
   }
+
   return (
     <div className={classes.Main}>
       <Switch>

@@ -8,6 +8,8 @@ import {
 } from "../functions/cognito.functions";
 import { first } from "rxjs/operators";
 
+// TODO: Transform this to just refresh
+
 export default function useAccessToken() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [cookies, setCookie] = useCookies(["gushkinTokens"]);

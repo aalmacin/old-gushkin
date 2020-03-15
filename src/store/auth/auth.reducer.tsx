@@ -1,4 +1,4 @@
-import { GET_USER_DATA_SUCCESS, LOGOUT_USER, GET_USER_DATA, GET_USER_DATA_FAILURE } from "./auth.actions";
+import { GET_USER_DATA_SUCCESS, LOGOUT_USER, GET_USER_DATA, GET_USER_DATA_FAILURE, GET_ACCESS_TOKEN, GET_ACCESS_TOKEN_SUCCESS, GET_ACCESS_TOKEN_FAILURE, REFRESH_ACCESS_TOKEN_SUCCESS } from "./auth.actions";
 
 export interface User {
   id: string,
@@ -6,22 +6,43 @@ export interface User {
   email: string
 }
 
-export interface AuthState {
-  loading: boolean,
-  isLoggedIn: boolean,
-  user?: User
+export interface UserState {
+  loaded: boolean,
+  data?: User
 }
 
-export const initialUserState: AuthState = { loading: false, isLoggedIn: false };
+export interface Token {
+  accessToken?: string,
+  expireTime?: number,
+}
 
-export const authReducer = (state = initialUserState, action: any) => {
+export interface TokenState {
+  data?: Token
+  loaded: boolean
+}
+
+export interface AuthState {
+  token?: TokenState,
+  user?: UserState
+}
+
+export const initialUserState: AuthState = {};
+
+export const authReducer = (state = initialUserState, action: any): AuthState => {
   switch (action.type) {
     case GET_USER_DATA:
-      return { ...state, loading: true }
+      return { ...state, user: { loaded: false } }
     case GET_USER_DATA_SUCCESS:
-      return { ...state, loading: false, isLoggedIn: true, user: action.payload }
+      return { ...state, user: { loaded: true, data: action.payload } }
     case GET_USER_DATA_FAILURE:
-      return { ...state, loading: false }
+      return { ...state, user: { loaded: false } }
+    case GET_ACCESS_TOKEN:
+      return { ...state, token: { loaded: false } }
+    case REFRESH_ACCESS_TOKEN_SUCCESS:
+    case GET_ACCESS_TOKEN_SUCCESS:
+      return { ...state, token: { loaded: true, data: action.payload } }
+    case GET_ACCESS_TOKEN_FAILURE:
+      return { ...state, token: { loaded: false } }
     case LOGOUT_USER:
       return { ...initialUserState }
     default:
