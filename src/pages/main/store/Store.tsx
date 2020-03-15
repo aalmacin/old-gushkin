@@ -146,11 +146,23 @@ function Store() {
                 </div>
               ))}
             </div>
-            <div>
-              <HeaderIcon text="Your Funds" icon={faShoppingBag} />
-              {storeArchiveItems.map(wishItem => (
-                <p key={wishItem.id}>{wishItem.description}</p>
-              ))}
+            <div className={classes.BoughtItems}>
+              <HeaderIcon text="Bought Items" icon={faShoppingBag} />
+              <div className={classes.ArchiveItemList}>
+                <div className={`${classes.ArchiveItem} ${classes.ArchiveItemHeading}`}>
+                  <p>Description</p>
+                  <p>Priority</p>
+                  <p>Price</p>
+                </div>
+
+                {storeArchiveItems.map(wishItem => (
+                  <div key={wishItem.id} className={classes.ArchiveItem}>
+                    <p>{wishItem.description}</p>
+                    <p>{wishItem.priority}</p>
+                    <p>${displayNormalMoney(wishItem.price)}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         ) : (

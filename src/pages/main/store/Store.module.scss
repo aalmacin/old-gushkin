@@ -158,3 +158,33 @@ $borderColor: getColor(gray, shade-3);
   }
 
 }
+
+.BoughtItems {
+  padding: 2rem;
+
+  .ArchiveItemList {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+
+    .ArchiveItem,
+    .ArchiveItemHeading {
+      display: flex;
+      justify-content: space-evenly;
+
+      p {
+        flex: 1;
+      }
+
+      &:not(:last-child) {
+        padding-bottom: 2rem;
+      }
+    }
+
+    .ArchiveItemHeading {
+      p {
+        font-weight: bold;
+      }
+    }
+  }
+}
