@@ -6,6 +6,7 @@ import { faRunning, faHome, faStore } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../store/auth/auth.selectors';
 import IconLink from '../component-lib/IconLink/IconLink';
+import Logo from './Logo.png'
 
 function MainNav() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -14,7 +15,7 @@ function MainNav() {
     <div className={classes.MainNav}>
       <div className={classes.LogoSection}>
         <div className={classes.Logo}>
-
+          <img src={Logo} alt="Main Gushkin Logo" />
         </div>
       </div>
       <ul className={classes.LinkList}>
