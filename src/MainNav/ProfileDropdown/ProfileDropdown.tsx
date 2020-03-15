@@ -44,7 +44,7 @@ function ProfileDropdown() {
               isShowList &&
               <ul className={classes.LinkList}>
                 <li className={classes.LinkListItem}>
-                  <IconLink to="/history" icon={faHistory}>History</IconLink>
+                  <IconLink to="/main/history" icon={faHistory}>History</IconLink>
                 </li>
                 <li className={classes.LinkListItem}>
                   <IconLink icon={faSignOutAlt} to="/logout" onClick={logout}>
