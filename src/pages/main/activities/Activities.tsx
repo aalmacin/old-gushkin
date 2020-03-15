@@ -93,7 +93,7 @@ function Activity() {
           </div>
         </div>
         <div className={classes.ShowStreakToggle}>
-          <div className={classes.StreakToggler} onClick={toggleIsShowStreaks}>Show Streaks {isShowStreak && <span className={classes.Close}><FontAwesomeIcon icon={faTimes} /></span>}</div>
+          <div className={classes.StreakToggler} onClick={toggleIsShowStreaks}>{!isShowStreak ? 'Show' : 'Hide'} Streaks {isShowStreak && <span className={classes.Close}><FontAwesomeIcon icon={faTimes} /></span>}</div>
         </div>
         {isActivitiesLoaded ? (
           <ul className={classes.ActivityList}>
