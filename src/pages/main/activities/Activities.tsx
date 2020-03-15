@@ -18,7 +18,8 @@ import {
   faMinus,
   faRunning,
   faCoins,
-  faDollarSign
+  faDollarSign,
+  faChevronLeft
 } from "@fortawesome/free-solid-svg-icons";
 import Button, { ButtonType } from "../../../component-lib/Button/Button";
 import Funds from "../shared/Funds";
@@ -31,6 +32,8 @@ import Loading from "../../../component-lib/Loading/Loading";
 import Modal from "../../../component-lib/Modal/Modal";
 import HeaderIcon from "../shared/HeaderIcon";
 import TodaysActivities from "./TodaysActivities/TodaysActivities";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Streaks from "./streaks/Streaks";
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
@@ -102,6 +105,7 @@ function Activity() {
                     {activity.description}
                   </span>
                 </div>
+                <Streaks activity={activity} />
               </li>
             ))}
           </ul>
