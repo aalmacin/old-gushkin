@@ -64,8 +64,8 @@ function* createActivitySaga(action: any) {
 function* performActivitySaga(action: any) {
   try {
     const userId = yield select(selectUserId);
-    const result = yield performActivity({ ...action.payload, userId })
     const accessToken = yield select(selectAccessToken);
+    const result = yield performActivity({ ...action.payload, accessToken, userId })
 
     if (result.success) {
       yield getAllActivities(
