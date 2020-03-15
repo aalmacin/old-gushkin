@@ -1,13 +1,22 @@
 import { createSelector } from 'reselect'
+import { AuthState } from './auth.reducer';
 
-export const selectAuth = (state: any) => state.auth;
+export const selectAuth = (state: any): AuthState => state.auth;
 
-export const selectUser = createSelector(selectAuth, auth => auth.user)
+export const selectUserState = createSelector(selectAuth, state => state.user)
 
-export const selectIsLoading = createSelector(selectAuth, auth => auth.loading)
+export const selectTokenState = createSelector(selectAuth, state => state.token)
 
-export const selectUserId = createSelector(selectUser, user => user && user.id)
+export const selectUser = createSelector(selectUserState, userState => userState?.data)
 
-export const selectIsLoggedIn = createSelector(selectAuth, auth => auth.isLoggedIn)
+export const selectIsLoaded = createSelector(selectTokenState, (userState): boolean => !!userState?.loaded)
 
-export const selectUserData = createSelector(selectAuth, auth => auth.isLoggedIn && auth.user)
+export const selectUserId = createSelector(selectUser, user => user?.id)
+
+export const selectIsLoggedIn = createSelector(selectUser, (user): boolean => !!user)
+
+export const selectTokenInfo = createSelector(selectTokenState, tokenState => tokenState?.data)
+
+export const selectAccessToken = createSelector(selectTokenInfo, tokenState => tokenState?.accessToken)
+
+export const selectIsLoadedToken = createSelector(selectTokenState, (tokenState): boolean => !!tokenState?.loaded)

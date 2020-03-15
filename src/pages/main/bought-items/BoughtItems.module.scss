@@ -1,0 +1,31 @@
+@import "../../../component-lib/variables.scss";
+
+$borderColor: getColor(gray, shade-3);
+
+.BoughtItems {
+  padding: 2rem;
+
+  .ArchiveItemList {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+
+    .ArchiveItem,
+    .ArchiveItemHeading {
+      display: flex;
+      justify-content: space-evenly;
+      border-bottom: 1px solid $borderColor;
+      padding: 2rem 0;
+
+      p {
+        flex: 1;
+      }
+    }
+
+    .ArchiveItemHeading {
+      p {
+        font-weight: bold;
+      }
+    }
+  }
+}

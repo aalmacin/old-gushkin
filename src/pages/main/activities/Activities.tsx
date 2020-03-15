@@ -13,12 +13,10 @@ import {
 import { displayNormalMoney } from "../../../functions/utils.functions";
 import ActivityForm from "./activity-form/ActivityForm";
 import { Activity as ActivityType } from "../../../graphql/graphql.types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
   faMinus,
   faRunning,
-  faListAlt,
   faCoins,
   faDollarSign
 } from "@fortawesome/free-solid-svg-icons";

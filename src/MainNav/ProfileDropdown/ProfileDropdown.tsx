@@ -3,14 +3,15 @@ import classes from './ProfileDropdown.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp, faHistory, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import { selectAuth } from '../../store/auth/auth.selectors';
 import { useCookies } from 'react-cookie';
 import { logoutUser } from '../../store/auth/auth.actions';
 import IconLink from '../../component-lib/IconLink/IconLink';
+import { selectIsLoggedIn, selectUser } from '../../store/auth/auth.selectors';
 
 function ProfileDropdown() {
   const [isShowList, setIsShowList] = useState(false);
-  const authState = useSelector(selectAuth);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch()
   const [, , removeCookie] = useCookies(['gushkinTokens']);
 
@@ -27,7 +28,7 @@ function ProfileDropdown() {
   return (
     <div className={classes.Profile} >
       {
-        !authState.isLoggedIn ?
+        !isLoggedIn ?
           <IconLink icon={faSignInAlt} isExternal to={process.env.REACT_APP_LOGIN_URL as string}>
             Login
           </IconLink>
@@ -35,7 +36,7 @@ function ProfileDropdown() {
           <>
             <div className={`${classes.CurrentUser}  ${isShowList && classes.IsShowList}`} onClick={toggleIsShowList}>
               <span className={classes.Email}>
-                {<p>{authState.user ? authState.user?.email : 'Not logged in'}</p>}
+                {<p>{user ? user?.email : 'Not logged in'}</p>}
               </span>
               <FontAwesomeIcon icon={isShowList ? faAngleUp : faAngleDown} />
             </div>
@@ -43,7 +44,7 @@ function ProfileDropdown() {
               isShowList &&
               <ul className={classes.LinkList}>
                 <li className={classes.LinkListItem}>
-                  <IconLink to="/history" icon={faHistory}>History</IconLink>
+                  <IconLink to="/main/history" icon={faHistory}>History</IconLink>
                 </li>
                 <li className={classes.LinkListItem}>
                   <IconLink icon={faSignOutAlt} to="/logout" onClick={logout}>

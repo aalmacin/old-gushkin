@@ -3,8 +3,7 @@ import classes from "./Store.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectIsWishItemsLoaded,
-  selectStoreItems,
-  selectStoreArchiveItems
+  selectStoreItems
 } from "../../../store/wish-item/wish-item.selectors";
 import { useCookies } from "react-cookie";
 import { getWishItems } from "../../../store/wish-item/wish-item.actions";
@@ -21,8 +20,7 @@ import {
   faCartPlus,
   faMinus,
   faStore,
-  faCoins,
-  faShoppingBag
+  faCoins
 } from "@fortawesome/free-solid-svg-icons";
 import Funds from "../shared/Funds";
 import { Redirect } from "react-router-dom";
@@ -49,14 +47,9 @@ function Store() {
   const [cookies] = useCookies(["gushkinTokens"]);
   const dispatch = useDispatch();
   const storeItems = useSelector(selectStoreItems);
-  const storeArchiveItems = useSelector(selectStoreArchiveItems);
   const cartItems = useSelector(selectCart);
   const cartTotal = useSelector(selectGetCartTotal);
   const accessToken = useAccessToken();
-
-  if (!cookies.gushkinTokens) {
-    return <Redirect to="/" />;
-  }
 
   if (!isWishItemsLoaded && cookies.gushkinTokens) {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken));
@@ -122,15 +115,6 @@ function Store() {
                   <div className={classes.Description}>
                     {wishItem.description}
                   </div>
-                  {/* <div className={classes.Source}>
-                  {wishItem.source}
-                </div> */}
-                  {/* <div className={classes.Priority}>
-                  {wishItem.priority}
-                </div>
-                <div className={classes.Status}>
-                  {wishItem.status}
-                </div> */}
                   <div className={classes.Price}>
                     $ {displayNormalMoney(wishItem.price)}
                     {!isItemInCart(wishItem) ? (
@@ -144,12 +128,6 @@ function Store() {
                       )}
                   </div>
                 </div>
-              ))}
-            </div>
-            <div>
-              <HeaderIcon text="Your Funds" icon={faShoppingBag} />
-              {storeArchiveItems.map(wishItem => (
-                <p key={wishItem.id}>{wishItem.description}</p>
               ))}
             </div>
           </>
