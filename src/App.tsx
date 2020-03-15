@@ -10,6 +10,7 @@ import MainNav from './MainNav/MainNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken, getUserData } from './store/auth/auth.actions';
 import { selectIsLoadedToken, selectAccessToken } from './store/auth/auth.selectors';
+import useAccessTokenRefresh from './hooks/useAccessTokenRefresh';
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
   const accessToken = useSelector(selectAccessToken);
 
   const dispatch = useDispatch();
+
+  useAccessTokenRefresh();
 
   if (!isLoadedToken) {
     dispatch(getAccessToken())

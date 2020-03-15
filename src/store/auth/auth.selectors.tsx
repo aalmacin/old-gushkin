@@ -19,4 +19,6 @@ export const selectTokenInfo = createSelector(selectTokenState, tokenState => to
 
 export const selectAccessToken = createSelector(selectTokenInfo, tokenState => tokenState?.accessToken)
 
+export const selectExpireTime = createSelector(selectTokenInfo, tokenState => tokenState?.expireTime)
+
 export const selectIsLoadedToken = createSelector(selectTokenState, (tokenState): boolean => !!tokenState?.loaded)

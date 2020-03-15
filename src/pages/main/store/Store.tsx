@@ -23,7 +23,6 @@ import {
   faCoins
 } from "@fortawesome/free-solid-svg-icons";
 import Funds from "../shared/Funds";
-import { Redirect } from "react-router-dom";
 import Loading from "../../../component-lib/Loading/Loading";
 import Button, { ButtonType } from "../../../component-lib/Button/Button";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -36,10 +35,10 @@ import {
   selectCart,
   selectGetCartTotal
 } from "../../../store/cart/cart.selectors";
-import useAccessToken from "../../../hooks/useAccessToken";
 import Modal from "../../../component-lib/Modal/Modal";
 import FormClose from "../shared/FormClose/FormClose";
 import HeaderIcon from "../shared/HeaderIcon";
+import { selectAccessToken } from "../../../store/auth/auth.selectors";
 
 function Store() {
   const [isShowForm, setIsShowForm] = useState(false);
@@ -49,7 +48,7 @@ function Store() {
   const storeItems = useSelector(selectStoreItems);
   const cartItems = useSelector(selectCart);
   const cartTotal = useSelector(selectGetCartTotal);
-  const accessToken = useAccessToken();
+  const accessToken = useSelector(selectAccessToken);
 
   if (!isWishItemsLoaded && cookies.gushkinTokens) {
     dispatch(getWishItems(cookies.gushkinTokens.accessToken));
