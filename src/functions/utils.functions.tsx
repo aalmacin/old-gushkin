@@ -18,12 +18,12 @@ export function displayNormalMoney(amt: number) {
 }
 
 export function getDateFromEpoch(epoch: number) {
-  return moment.unix(epoch).format('D-M-YYYY')
+  return moment.unix(epoch).tz('gmt').format('D-M-YYYY')
 }
 
 export function getLast14Days() {
   const currentTime = getCurrentTimestamp();
   return (new Array(13)).fill(null)
-    .reduce((acc, _, i) => [...acc, moment.unix(currentTime).subtract(i + 1, 'day').format('D-M-YYYY')], [moment.unix(currentTime).format('D-M-YYYY')])
+    .reduce((acc, _, i) => [...acc, moment.unix(currentTime).tz('gmt').subtract(i + 1, 'day').format('D-M-YYYY')], [moment.unix(currentTime).format('D-M-YYYY')])
 
 }
