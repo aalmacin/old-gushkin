@@ -64,6 +64,20 @@ const GetCurrentFunds = `
   }
 `
 
+const GetActivityActionCount = `
+  query ActivityActionCount($accessToken: String!, $userId: String!) {
+    getActivityActionCount(accessToken: $accessToken, userId: $userId) {
+      success
+      error
+      data {
+        activityId
+        count
+        day
+      }
+    }
+  }
+`
+
 const query = (data: any, queryInstance: string, queryTypeName: string) => {
   return from(axios.post(appSyncUrl, {
     query: queryInstance,
@@ -111,4 +125,10 @@ export const getCurrentFunds = (accessToken: string, userId: string): Promise<Ap
   let data: any = { accessToken, userId }
 
   return query(data, GetCurrentFunds, 'getCurrentFunds')
+}
+
+export const getActivityActionCount = (accessToken: string, userId: string): Promise<ApiResult<number>> => {
+  let data: any = { accessToken, userId }
+
+  return query(data, GetActivityActionCount, 'getActivityActionCount')
 }

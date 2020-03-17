@@ -17,13 +17,21 @@
 
   .StreakList {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 2rem;
 
-    .DayCount {
+    .StreakListItem {
+      font-size: 1rem;
+      display: flex;
+      flex-direction: column;
       margin-left: 2rem;
+      align-items: center;
+    }
+
+    .DayCount {
+      margin-top: 1rem;
       padding: 1rem;
 
       &.Positive {

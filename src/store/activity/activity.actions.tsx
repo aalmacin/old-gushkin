@@ -8,6 +8,10 @@ export const GET_TODAYS_ACTIVITIES = '[Activity] Get Todays Activities';
 export const GET_TODAYS_ACTIVITIES_SUCCESS = '[Activity] Get Todays Activities Success';
 export const GET_TODAYS_ACTIVITIES_FAILURE = '[Activity] Get Todays Activities Failure';
 
+export const GET_ACTIVITY_ACTION_COUNT = '[Activity] Get Activity Action Count';
+export const GET_ACTIVITY_ACTION_COUNT_SUCCESS = '[Activity] Get Activity Action Count Success';
+export const GET_ACTIVITY_ACTION_COUNT_FAILURE = '[Activity] Get Activity Action Count Failure';
+
 export const CREATE_ACTIVITY = '[Activity] Create Activity';
 export const CREATE_ACTIVITY_SUCCESS = '[Activity] Create Activity Success';
 export const CREATE_ACTIVITY_FAILURE = '[Activity] Create Activity Failure';
@@ -41,6 +45,20 @@ export const getTodaysActivitiesSuccess = (activities: ActivityToday[]) => ({
 
 export const getTodaysActivitiesFailure = (error: string) => ({
   type: GET_TODAYS_ACTIVITIES_FAILURE,
+  payload: error
+})
+
+export const getActivityActionCount = () => ({
+  type: GET_ACTIVITY_ACTION_COUNT,
+})
+
+export const getActivityActionCountSuccess = (activities: ActivityToday[]) => ({
+  type: GET_ACTIVITY_ACTION_COUNT_SUCCESS,
+  payload: activities
+})
+
+export const getActivityActionCountFailure = (error: string) => ({
+  type: GET_ACTIVITY_ACTION_COUNT_FAILURE,
   payload: error
 })
 

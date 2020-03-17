@@ -1,7 +1,7 @@
 import { put, takeLatest, all, select } from 'redux-saga/effects'
 import { GET_USER_DATA, getUserDataSuccess, getUserDataFailure, GET_ACCESS_TOKEN, getAccessTokenFailure, getAccessTokenSuccess, REFRESH_ACCESS_TOKEN, refreshAccessToken, refreshAccessTokenSuccess, refreshAccessTokenFailure } from './auth.actions';
 import { getUserDataFromAccessToken, getAccessTokenUsingRefreshToken } from '../../functions/cognito.functions';
-import { Cookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
 import { getCurrentTimestamp } from '../../functions/utils.functions';
 import { selectAccessToken } from './auth.selectors';
 
@@ -42,11 +42,14 @@ function* refreshAccessTokenSaga() {
 
       const tokenData = yield getAccessTokenUsingRefreshToken(refreshToken).toPromise()
       const newExpireTime = currTimestamp + 1800;
-      cookies.set('gushkinTokens', {
-        ...tokenData,
+
+      const newTokenData = {
+        accessToken: tokenData.accessToken,
+        idToken: tokenData.idToken,
         refreshToken,
         expireTime: newExpireTime
-      })
+      }
+      cookies.set('gushkinTokens', newTokenData, { path: '/' })
       yield put(refreshAccessTokenSuccess({ accessToken: tokenData.accessToken, expireTime: newExpireTime }))
     }
   } catch (e) {

@@ -3,12 +3,15 @@ import classes from "./Activities.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectIsActivitiesLoaded,
-  selectActivities
+  selectActivities,
+  selectActivityActionCount,
+  selectIsActivityActionCountLoaded
 } from "../../../store/activity/activity.selectors";
 import { useCookies } from "react-cookie";
 import {
   getActivities,
-  performActivity
+  performActivity,
+  getActivityActionCount
 } from "../../../store/activity/activity.actions";
 import { displayNormalMoney } from "../../../functions/utils.functions";
 import ActivityForm from "./activity-form/ActivityForm";
@@ -19,7 +22,6 @@ import {
   faRunning,
   faCoins,
   faDollarSign,
-  faChevronLeft,
   faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import Button, { ButtonType } from "../../../component-lib/Button/Button";
@@ -45,6 +47,13 @@ function Activity() {
   const [isShowActivityForm, setShowActivityForm] = useState(false);
   const totalPrice = useSelector(selectTotalWishItemPrice);
   const [isShowStreak, setIsShowStreak] = useState(false);
+
+  const activityStreaks = useSelector(selectActivityActionCount)
+  const isLoadedActivityStreaks = useSelector(selectIsActivityActionCountLoaded)
+
+  if (!isLoadedActivityStreaks) {
+    dispatch(getActivityActionCount())
+  }
 
   if (!isActivitiesLoaded && cookies.gushkinTokens) {
     dispatch(getActivities());
@@ -72,6 +81,10 @@ function Activity() {
 
   const toggleIsShowStreaks = () => {
     setIsShowStreak(!isShowStreak);
+  }
+
+  const getActivityStreaks = (id: any) => {
+    return activityStreaks.find(t => `${t.activityId}` === `${id}`)?.days || []
   }
 
   return (
@@ -114,7 +127,7 @@ function Activity() {
                     {activity.description}
                   </span>
                 </div>
-                {isShowStreak && <Streaks activity={activity} />}
+                {isShowStreak && <Streaks activityStreaks={getActivityStreaks(activity.id)} positive={activity.positive} />}
               </li>
             ))}
           </ul>

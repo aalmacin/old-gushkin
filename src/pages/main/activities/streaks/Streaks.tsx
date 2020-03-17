@@ -1,14 +1,14 @@
 import React from "react";
 import classes from "./Streaks.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { ActivityActionCount } from "../../../../graphql/graphql.types";
+
 
 interface StreaksProps {
-  activity: { positive: boolean }
+  readonly positive: boolean,
+  activityStreaks: ActivityActionCount[]
 }
 
-const Streaks: React.FC<StreaksProps> = ({ activity }) => {
-
+const Streaks: React.FC<StreaksProps> = ({ positive, activityStreaks }) => {
   const getActivityClass = (count: number, positive: boolean) => {
     if (positive) {
       return count > 0 ? classes.Positive : classes.Negative;
@@ -23,15 +23,16 @@ const Streaks: React.FC<StreaksProps> = ({ activity }) => {
         <h3 className={classes.Heading}>Streak</h3>
       </div>
       <div className={classes.StreakList}>
-        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-        <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
-        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-        <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
-        <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
-        <div className={`${classes.DayCount} ${getActivityClass(5, activity.positive)}`}><span className={classes.Count}>5</span></div>
-        <div className={`${classes.DayCount} ${getActivityClass(0, activity.positive)}`}><span className={classes.Count}>0</span></div>
+        {
+          activityStreaks.map(activityStreak =>
+            <div className={classes.StreakListItem} key={activityStreak.day} >
+              <span className={classes.Day}>{activityStreak.day}</span>
+              <div className={`${classes.DayCount} ${getActivityClass(activityStreak.count, positive)}`}>
+                <span className={classes.Count}>{activityStreak.count}</span>
+              </div>
+            </div>
+          )
+        }
       </div>
     </div>
   )

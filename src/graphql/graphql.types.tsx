@@ -33,6 +33,12 @@ export interface Activity {
   readonly userId: string
 }
 
+export interface ActivityActionCount {
+  readonly activityId: number,
+  readonly count: number,
+  readonly day: string,
+}
+
 export interface ActivityToday {
   readonly activityId: number,
   readonly description: string,
