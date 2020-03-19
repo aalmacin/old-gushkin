@@ -3,7 +3,6 @@ import classes from './ProfileDropdown.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp, faHistory, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import { useCookies } from 'react-cookie';
 import { logoutUser } from '../../store/auth/auth.actions';
 import IconLink from '../../component-lib/IconLink/IconLink';
 import { selectIsLoggedIn, selectUser } from '../../store/auth/auth.selectors';
@@ -13,10 +12,9 @@ function ProfileDropdown() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const user = useSelector(selectUser);
   const dispatch = useDispatch()
-  const [, , removeCookie] = useCookies(['gushkinTokens']);
 
   const logout = (e: any) => {
-    removeCookie('gushkinTokens')
+    localStorage.removeItem('gushkinTokens')
     dispatch(logoutUser())
     e.preventDefault();
   }

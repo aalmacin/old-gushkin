@@ -2,6 +2,7 @@ import { User, Token } from "./auth.reducer";
 
 export const GET_ACCESS_TOKEN = '[Auth] Get Access Token';
 export const GET_ACCESS_TOKEN_SUCCESS = '[Auth] Get Access Token Success';
+export const SET_USER_NOT_LOGGED_IN = '[Auth] Set User Not Logged In';
 export const GET_ACCESS_TOKEN_FAILURE = '[Auth] Get Access Token Failure';
 
 export const REFRESH_ACCESS_TOKEN = '[Auth] Refresh Access Token';
@@ -20,6 +21,10 @@ export const getAccessToken = () => ({
 export const getAccessTokenSuccess = (token: Token) => ({
   type: GET_ACCESS_TOKEN_SUCCESS,
   payload: token
+})
+
+export const setUserNotLoggedIn = () => ({
+  type: SET_USER_NOT_LOGGED_IN,
 })
 
 export const getAccessTokenFailure = (error: string) => ({

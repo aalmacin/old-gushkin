@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import classes from './Callback.module.scss';
-import { useLocation, Redirect } from 'react-router-dom';
-import { getTokenUsingCode, isToken, getAccessTokenUsingRefreshToken } from '../../functions/cognito.functions';
-import { useCookies } from 'react-cookie'
+import { useLocation, useHistory } from 'react-router-dom';
+import { getTokenUsingCode, isToken } from '../../functions/cognito.functions';
 import { first } from 'rxjs/operators';
 import { getCurrentTimestamp } from '../../functions/utils.functions';
+import { addToken } from '../../functions/token-management.functions';
+import { useDispatch } from 'react-redux';
+import { getAccessToken } from '../../store/auth/auth.actions';
+import Loading from '../../component-lib/Loading/Loading';
 
 export const Callback = () => {
-  const [cookies, setCookie] = useCookies(['gushkinTokens']);
   const [error, setError] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
   let query = new URLSearchParams(useLocation().search);
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   const code = query.get('code');
   if (!code) {
@@ -18,30 +22,26 @@ export const Callback = () => {
 
   const currTimestamp = getCurrentTimestamp();
 
-  if (cookies && cookies.gushkinTokens) {
-    if (cookies.gushkinTokens.expireTime <= currTimestamp) {
-      const refreshToken = cookies.gushkinTokens.refreshToken;
-      getAccessTokenUsingRefreshToken(refreshToken).pipe(first()).subscribe(tokenData => {
-        if (isToken(tokenData)) {
-          setCookie('gushkinTokens', { ...tokenData, refreshToken, expireTime: currTimestamp + 3600 })
-        } else {
-          setError(true);
-        }
-      });
+  const tokenSubscription = getTokenUsingCode(code).pipe(first()).subscribe(tokenData => {
+    if (isToken(tokenData)) {
+      addToken({ ...tokenData, expireTime: currTimestamp + 3600 })
+    } else {
+      setError(true)
     }
-  } else {
-    getTokenUsingCode(code).pipe(first()).subscribe(tokenData => {
-      if (isToken(tokenData)) {
-        setCookie('gushkinTokens', { ...tokenData, expireTime: currTimestamp + 3600 })
-      }
-    });
+    setLoaded(true);
+  });
+
+  if (error) {
+    return <p>Log in error</p>
   }
 
-  return !error ? (
-    <div className={classes.Callback}>
-      <Redirect to="/" />
-    </div>
-  ) : <p>Error logging in.</p>;
+  if (loaded && !error) {
+    tokenSubscription.unsubscribe();
+    dispatch(getAccessToken())
+    history.replace('/')
+  }
+
+  return <Loading />
 }
 
 export default Callback;

@@ -4,22 +4,22 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   selectIsTodaysActivitiesLoaded, selectTodaysActivities, selectTodaysActivitiesFundChange
 } from "../../../../store/activity/activity.selectors";
-import { useCookies } from "react-cookie";
 import HeaderIcon from "../../shared/HeaderIcon";
 import { faListAlt } from "@fortawesome/free-solid-svg-icons";
 import { getTodaysActivities } from "../../../../store/activity/activity.actions";
 import { displayNormalMoney, convertEpochToHour, getNumberFromMicroAmount } from "../../../../functions/utils.functions";
 import Loading from "../../../../component-lib/Loading/Loading";
+import { selectIsLoggedIn } from "../../../../store/auth/auth.selectors";
 
 function TodaysActivities() {
   const isTodaysActivitiesLoaded = useSelector(selectIsTodaysActivitiesLoaded);
   const totalFundChanges = useSelector(selectTodaysActivitiesFundChange);
   const todaysActivities = useSelector(selectTodaysActivities);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const dispatch = useDispatch();
-  const [cookies] = useCookies(["gushkinTokens"]);
 
-  if (!isTodaysActivitiesLoaded && cookies.gushkinTokens) {
+  if (!isTodaysActivitiesLoaded && isLoggedIn) {
     dispatch(getTodaysActivities());
   }
 
