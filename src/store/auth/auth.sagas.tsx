@@ -1,21 +1,20 @@
 import { put, takeLatest, all, select } from 'redux-saga/effects'
-import { GET_USER_DATA, getUserDataSuccess, getUserDataFailure, GET_ACCESS_TOKEN, getAccessTokenFailure, getAccessTokenSuccess, REFRESH_ACCESS_TOKEN, refreshAccessToken, refreshAccessTokenSuccess, refreshAccessTokenFailure } from './auth.actions';
+import { GET_USER_DATA, getUserDataSuccess, getUserDataFailure, GET_ACCESS_TOKEN, getAccessTokenFailure, getAccessTokenSuccess, REFRESH_ACCESS_TOKEN, refreshAccessToken, refreshAccessTokenSuccess, refreshAccessTokenFailure, setUserNotLoggedIn } from './auth.actions';
 import { getUserDataFromAccessToken, getAccessTokenUsingRefreshToken } from '../../functions/cognito.functions';
-import Cookies from 'universal-cookie';
 import { getCurrentTimestamp } from '../../functions/utils.functions';
 import { selectAccessToken } from './auth.selectors';
+import { getTokens, removeTokens, addToken } from '../../functions/token-management.functions';
 
 function* getAccessTokenSaga() {
   try {
-    const cookies = new Cookies();
-    const gushkinTokens = cookies.get('gushkinTokens');
+    const gushkinTokens = getTokens();
     if (gushkinTokens) {
       const accessToken: any = gushkinTokens.accessToken;
       const expireTime: any = gushkinTokens.expireTime;
       const refreshToken: any = gushkinTokens.refreshToken;
 
       if (!refreshToken) {
-        cookies.remove('gushkinTokens')
+        removeTokens()
       }
 
       const currTimestamp = getCurrentTimestamp();
@@ -23,16 +22,18 @@ function* getAccessTokenSaga() {
         yield put(refreshAccessToken())
       }
       yield put(getAccessTokenSuccess({ accessToken, expireTime }))
+    } else {
+      yield put(setUserNotLoggedIn())
     }
   } catch (e) {
+    console.log('e', e)
     yield put(getAccessTokenFailure("Something went wrong"))
   }
 }
 
 function* refreshAccessTokenSaga() {
   try {
-    const cookies = new Cookies();
-    const gushkinTokens = cookies.get('gushkinTokens');
+    const gushkinTokens = getTokens();
 
     const expireTime: any = gushkinTokens.expireTime;
     const currTimestamp = getCurrentTimestamp();
@@ -49,7 +50,7 @@ function* refreshAccessTokenSaga() {
         refreshToken,
         expireTime: newExpireTime
       }
-      cookies.set('gushkinTokens', newTokenData, { path: '/' })
+      addToken(newTokenData)
       yield put(refreshAccessTokenSuccess({ accessToken: tokenData.accessToken, expireTime: newExpireTime }))
     }
   } catch (e) {

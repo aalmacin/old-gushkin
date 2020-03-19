@@ -7,7 +7,6 @@ import {
   selectActivityActionCount,
   selectIsActivityActionCountLoaded
 } from "../../../store/activity/activity.selectors";
-import { useCookies } from "react-cookie";
 import {
   getActivities,
   performActivity,
@@ -37,29 +36,31 @@ import HeaderIcon from "../shared/HeaderIcon";
 import TodaysActivities from "./TodaysActivities/TodaysActivities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Streaks from "./streaks/Streaks";
+import { selectIsLoggedIn } from "../../../store/auth/auth.selectors";
 
 function Activity() {
   const isActivitiesLoaded = useSelector(selectIsActivitiesLoaded);
   const isWishItemsLoaded = useSelector(selectIsWishItemsLoaded);
-  const [cookies] = useCookies(["gushkinTokens"]);
   const dispatch = useDispatch();
   const activities = useSelector(selectActivities);
   const [isShowActivityForm, setShowActivityForm] = useState(false);
   const totalPrice = useSelector(selectTotalWishItemPrice);
   const [isShowStreak, setIsShowStreak] = useState(false);
 
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const activityStreaks = useSelector(selectActivityActionCount)
   const isLoadedActivityStreaks = useSelector(selectIsActivityActionCountLoaded)
 
-  if (!isLoadedActivityStreaks) {
+  if (!isLoadedActivityStreaks && isLoggedIn) {
     dispatch(getActivityActionCount())
   }
 
-  if (!isActivitiesLoaded && cookies.gushkinTokens) {
+  if (!isActivitiesLoaded && isLoggedIn) {
     dispatch(getActivities());
   }
 
-  if (!isWishItemsLoaded && cookies.gushkinTokens) {
+  if (!isWishItemsLoaded && isLoggedIn) {
     dispatch(getWishItems());
   }
 

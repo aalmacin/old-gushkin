@@ -1,4 +1,4 @@
-import { GET_USER_DATA_SUCCESS, LOGOUT_USER, GET_USER_DATA, GET_USER_DATA_FAILURE, GET_ACCESS_TOKEN, GET_ACCESS_TOKEN_SUCCESS, GET_ACCESS_TOKEN_FAILURE, REFRESH_ACCESS_TOKEN_SUCCESS } from "./auth.actions";
+import { GET_USER_DATA_SUCCESS, LOGOUT_USER, GET_USER_DATA, GET_USER_DATA_FAILURE, GET_ACCESS_TOKEN, GET_ACCESS_TOKEN_SUCCESS, GET_ACCESS_TOKEN_FAILURE, REFRESH_ACCESS_TOKEN_SUCCESS, SET_USER_NOT_LOGGED_IN } from "./auth.actions";
 
 export interface User {
   id: string,
@@ -43,7 +43,8 @@ export const authReducer = (state = initialUserState, action: any): AuthState =>
     case GET_ACCESS_TOKEN_SUCCESS:
       return { ...state, token: { loaded: true, data: action.payload } }
     case GET_ACCESS_TOKEN_FAILURE:
-      return { ...state, token: { loaded: false } }
+    case SET_USER_NOT_LOGGED_IN:
+      return { ...state, token: { loaded: true } }
     case LOGOUT_USER:
       return { ...initialUserState }
     default:
