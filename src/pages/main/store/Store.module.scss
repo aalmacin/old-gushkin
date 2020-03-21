@@ -6,6 +6,10 @@ $borderColor: getColor(gray, shade-3);
   display: flex;
   flex-direction: row;
 
+  @media (max-width: 43rem) {
+    flex-direction: column;
+  }
+
   .Head {
     display: flex;
     justify-content: space-between;
@@ -27,6 +31,11 @@ $borderColor: getColor(gray, shade-3);
         flex-basis: 20%;
         min-width: 20%;
         border: 1px solid $borderColor;
+
+        @media (max-width: 43rem) {
+          flex-basis: 100%;
+        }
+
         padding-bottom: 0;
         margin: 2rem;
         cursor: pointer;
@@ -95,6 +104,12 @@ $borderColor: getColor(gray, shade-3);
     padding: 0 1rem 2rem 4rem;
     border-left: 1px solid $borderColor;
     min-width: 25vw;
+
+    @media (max-width: 43rem) {
+      flex-direction: column;
+      border: none;
+      padding: 2rem;
+    }
 
     .Cart {
 
