@@ -53,7 +53,7 @@ function ProfileDropdown() {
             }
           </>
       }
-    </ div>
+    </div>
   );
 }
 

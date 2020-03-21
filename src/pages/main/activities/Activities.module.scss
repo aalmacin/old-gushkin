@@ -5,6 +5,10 @@
   margin: 3rem auto;
   flex-direction: row;
 
+  @media (max-width: 43rem) {
+    flex-direction: column;
+  }
+
   h2 {
     margin-bottom: 1rem;
   }
@@ -67,6 +71,10 @@
     flex-direction: column;
 
     border-left: 1px solid getColor(secondary, tint-7);
+
+    @media (max-width: 43rem) {
+      margin-top: 4rem;
+    }
 
     h2 {
       margin-bottom: 1rem;

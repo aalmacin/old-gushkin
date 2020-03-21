@@ -8,6 +8,10 @@
   cursor: pointer;
   position: relative;
 
+  @media (max-width: 43rem) {
+    display: none;
+  }
+
   .Email {
     margin-right: 1rem;
   }
