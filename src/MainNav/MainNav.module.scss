@@ -1,5 +1,16 @@
 @import '../component-lib/variables.scss';
 
+.Toggle {
+  display: none;
+
+  @media (max-width: 43rem) {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2rem;
+    flex-basis: 20%;
+  }
+}
+
 .MainNav {
   display: flex;
   align-items: center;
@@ -7,6 +18,10 @@
   padding: 1rem;
   background-color: getColor(white, light);
   box-shadow: 1.2rem 1rem 5rem -.1rem getColor(secondary, shade-4);
+
+  @media (max-width: 43rem) {
+    flex-wrap: wrap;
+  }
 
   .LogoSection {
     flex: 1;
@@ -24,10 +39,6 @@
         display: inline-block;
       }
     }
-
-    @media (max-width: 43rem) {
-      flex-wrap: wrap;
-    }
   }
 
   .LinkList {
@@ -35,7 +46,23 @@
     flex: 10;
 
     @media (max-width: 43rem) {
-      &.IsShow {}
+      &.IsShow {
+        justify-content: center;
+        align-items: flex-end;
+        flex-direction: column;
+        transition: all 1s;
+        flex-basis: 100%;
+        padding: 1rem;
+
+        .LinkListItem {
+          &:not(:last-child) {
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 1rem;
+          }
+        }
+      }
 
       &.IsNotShow {
         display: none;

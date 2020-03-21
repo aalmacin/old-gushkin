@@ -24,7 +24,9 @@ function MainNav() {
           <img src={Logo} alt="Main Gushkin Logo" />
         </div>
       </div>
-      <Button buttonType={ButtonType.icon} clickHandler={toggleShow} icon={faList} />
+      <div className={classes.Toggle}>
+        <Button buttonType={ButtonType.icon} clickHandler={toggleShow} icon={faList} />
+      </div>
       <ul className={`${classes.LinkList} ${isShow ? classes.IsShow : classes.IsNotShow}`}>
         <li className={classes.LinkListItem}>
           <IconLink icon={faHome} to="/home">Home</IconLink>
