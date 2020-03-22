@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import classes from "./ActivityForm.module.scss";
 import ErrorList from "../../../error/ErrorList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createActivity } from "../../../../store/activity/activity.actions";
 import { MICRO_AMOUNT } from "../../../../functions/global.constants";
 import Button, { ButtonType } from "../../../../component-lib/Button/Button";
 import TextField from "../../../../component-lib/TextField/TextField";
 import NumberField from "../../../../component-lib/NumberField/NumberField";
 import FormClose from "../../shared/FormClose/FormClose";
+import { selectIsActivitiesActionLoading } from "../../../../store/activity/activity.selectors";
+import Loading from "../../../../component-lib/Loading/Loading";
 
 interface ActivityFormState {
   description: string;
@@ -28,6 +30,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
   const [activity, setActivity] = useState<ActivityFormState>(initialFormState);
 
   const [errors, setErrors] = useState<string[]>([]);
+
+  const isActivitesActionLoading = useSelector(selectIsActivitiesActionLoading);
 
   const dispatch = useDispatch();
 
@@ -85,7 +89,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
       <ErrorList errors={errors} />
       <div className={classes.FormContainer}>
         <FormClose onClose={closeHandler} />
-        <form
+        {isActivitesActionLoading ? <Loading /> : <form
           onSubmit={e => {
             e.preventDefault();
           }}
@@ -121,6 +125,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
             </Button>
           </div>
         </form>
+        }
       </div>
     </div>
   );
