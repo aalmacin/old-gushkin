@@ -29,6 +29,11 @@
     border-right: 1px solid getColor(secondary, tint-7);
     text-align: center;
 
+    @media (max-width: 43rem) {
+      flex: 0;
+      flex-shrink: 2;
+    }
+
 
     .Logo {
       padding: 1rem;
@@ -45,29 +50,6 @@
     display: flex;
     flex: 10;
 
-    @media (max-width: 43rem) {
-      &.IsShow {
-        justify-content: center;
-        align-items: flex-end;
-        flex-direction: column;
-        transition: all 1s;
-        flex-basis: 100%;
-        padding: 1rem;
-
-        .LinkListItem {
-          &:not(:last-child) {
-            text-align: right;
-            margin: 0;
-            padding: 0;
-            margin-bottom: 1rem;
-          }
-        }
-      }
-
-      &.IsNotShow {
-        display: none;
-      }
-    }
 
 
     .LinkListItem {
@@ -77,6 +59,38 @@
 
       &:not(:last-child) {
         margin-right: 2rem;
+      }
+    }
+
+    @media (max-width: 43rem) {
+      justify-content: center;
+      align-items: flex-end;
+      flex-direction: column;
+      flex-basis: 100%;
+      padding: 1rem 0;
+
+
+      &.IsShow {
+        transition: all 500ms;
+        height: 100%;
+      }
+
+      &.IsNotShow {
+        height: 0;
+        overflow: hidden;
+        padding: 0;
+      }
+
+      .LinkListItem {
+        margin: 0;
+        padding: 0;
+        margin-right: 1rem;
+        text-align: right;
+
+        &:not(:last-child) {
+          margin-right: 1rem;
+          margin-bottom: 2rem;
+        }
       }
     }
   }

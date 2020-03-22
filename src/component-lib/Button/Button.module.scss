@@ -11,6 +11,10 @@
   justify-content: center;
   cursor: pointer;
 
+  @media (max-width: 43rem) {
+    font-size: 1.5rem;
+  }
+
   &.Square {
     border-radius: 0;
   }
@@ -81,5 +85,16 @@
       color: getColor(tertiary, shade-9);
       border: 1px solid getColor(red, tint-4);
     }
+  }
+
+  &.Icon {
+    background-color: transparent;
+    color: getColor(black);
+    border: none;
+
+    &:hover {
+      color: getColor(tertiary, shade-9);
+    }
+
   }
 }

@@ -20,11 +20,12 @@ interface ActivityFormProps {
 }
 
 const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
-  const [activity, setActivity] = useState<ActivityFormState>({
+  const initialFormState = {
     description: "",
     fundAmt: 0,
     positive: true
-  });
+  }
+  const [activity, setActivity] = useState<ActivityFormState>(initialFormState);
 
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -74,6 +75,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ closeHandler }) => {
           fundAmt
         })
       );
+
+      setActivity({ ...initialFormState });
     }
   };
 
