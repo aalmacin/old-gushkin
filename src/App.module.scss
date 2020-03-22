@@ -17,6 +17,10 @@ h4,
 h5,
 h6 {
   font-size: 3rem;
+
+  @media (max-width: 43rem) {
+    font-size: 2rem;
+  }
 }
 
 div,

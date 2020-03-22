@@ -10,6 +10,8 @@ export const selectActivities = createSelector(selectActivitiesInfo, activities 
 
 export const selectIsActivitiesLoaded = createSelector(selectActivitiesInfo, activities => activities.loaded)
 
+export const selectIsActivitiesActionLoading = createSelector(selectActivitiesInfo, activities => activities.actionLoading)
+
 export const selectTodaysActivitiesInfo = createSelector(selectActivityState, activityState => activityState.todaysActivities)
 
 export const selectTodaysActivities = createSelector(selectTodaysActivitiesInfo, activities => activities.data)
