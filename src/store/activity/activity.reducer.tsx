@@ -1,5 +1,5 @@
 import { Activity, ActivityToday, ActivityActionCount } from "../../graphql/graphql.types";
-import { GET_ACTIVITIES_SUCCESS, CREATE_ACTIVITY_SUCCESS, GET_TODAYS_ACTIVITIES_SUCCESS, GET_ACTIVITY_ACTION_COUNT_SUCCESS, CREATE_ACTIVITY } from "./activity.actions";
+import { GET_ACTIVITIES_SUCCESS, CREATE_ACTIVITY_SUCCESS, GET_TODAYS_ACTIVITIES_SUCCESS, GET_ACTIVITY_ACTION_COUNT_SUCCESS, CREATE_ACTIVITY, PERFORM_ACTIVITY, PERFORM_ACTIVITY_SUCCESS } from "./activity.actions";
 import { LOGOUT_USER } from "../auth/auth.actions";
 
 export interface ActivityState {
@@ -20,6 +20,11 @@ export const activitiesReducer = (state = initialActivities, action: any): Activ
       return { ...state, activities: { ...state.activities, loaded: true, data: [...action.payload] } }
     case CREATE_ACTIVITY:
       return { ...state, activities: { ...state.activities, actionLoading: true } }
+
+    case PERFORM_ACTIVITY:
+      return { ...state, activities: { ...state.activities, actionLoading: true } }
+    case PERFORM_ACTIVITY_SUCCESS:
+      return { ...state, activities: { ...state.activities, actionLoading: false } }
 
     case CREATE_ACTIVITY_SUCCESS:
       return { ...state, activities: { ...state.activities, actionLoading: false, loaded: true, data: [...action.payload] } }

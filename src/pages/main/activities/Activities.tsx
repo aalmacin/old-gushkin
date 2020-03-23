@@ -5,7 +5,8 @@ import {
   selectIsActivitiesLoaded,
   selectActivities,
   selectActivityActionCount,
-  selectIsActivityActionCountLoaded
+  selectIsActivityActionCountLoaded,
+  selectIsActivitiesActionLoading
 } from "../../../store/activity/activity.selectors";
 import {
   getActivities,
@@ -46,6 +47,8 @@ function Activity() {
   const [isShowActivityForm, setShowActivityForm] = useState(false);
   const totalPrice = useSelector(selectTotalWishItemPrice);
   const [isShowStreak, setIsShowStreak] = useState(false);
+
+  const isActivitiesActionLoading = useSelector(selectIsActivitiesActionLoading)
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -114,7 +117,7 @@ function Activity() {
             {activities.map((activity: ActivityType) => (
               <li key={activity.id} className={classes.Activity}>
                 <div className={classes.ActivityAction}>
-                  <Button
+                  {isActivitiesActionLoading ? <Loading /> : <Button
                     isSquare
                     buttonType={activity.positive ? ButtonType.secondary : ButtonType.red}
                     clickHandler={addActivity(activity.id)}
@@ -124,6 +127,7 @@ function Activity() {
                       $ {displayNormalMoney(activity.fundAmt)}
                     </span>
                   </Button>
+                  }
                   <span className={classes.ActivityText}>
                     {activity.description}
                   </span>
