@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import classes from './Main.module.scss';
-import Store from './store/Store';
-import Activities from './activities/Activities';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn, selectIsLoadedToken } from '../../store/auth/auth.selectors';
-import BoughtItems from './bought-items/BoughtItems';
+import Loading from '../../component-lib/Loading/Loading';
+
+const Store = React.lazy(() => import('./store/Store'));
+const BoughtItems = React.lazy(() => import('./bought-items/BoughtItems'));
+const Activities = React.lazy(() => import('./activities/Activities'));
 
 function Main() {
   const match = useRouteMatch();
@@ -20,13 +22,19 @@ function Main() {
     <div className={classes.Main}>
       <Switch>
         <Route path={`${match.path}/store`}>
-          <Store />
+          <Suspense fallback={<Loading />}>
+            <Store />
+          </Suspense>
         </Route>
         <Route path={`${match.path}/history`}>
-          <BoughtItems />
+          <Suspense fallback={<Loading />}>
+            <BoughtItems />
+          </Suspense>
         </Route>
         <Route path={`${match.path}`}>
-          <Activities />
+          <Suspense fallback={<Loading />}>
+            <Activities />
+          </Suspense>
         </Route>
       </Switch>
     </div>
