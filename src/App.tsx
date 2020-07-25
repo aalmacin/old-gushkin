@@ -10,6 +10,7 @@ import { getAccessToken, getUserData } from './store/auth/auth.actions';
 import { selectIsLoadedToken, selectAccessToken, selectIsLoadedUser } from './store/auth/auth.selectors';
 import useAccessTokenRefresh from './hooks/useAccessTokenRefresh';
 import Loading from './component-lib/Loading/Loading';
+import Helmet from 'react-helmet'
 
 const Main = React.lazy(() => import('./pages/main/Main'));
 const Home = React.lazy(() => import('./pages/home/Home'));
@@ -33,6 +34,9 @@ function App() {
 
   return (
     <div className={classes.App}>
+      <Helmet>
+        <title>Welcome to Gushkin</title>
+      </Helmet>
       <Router>
         <MainNav />
         <Switch>
