@@ -74,7 +74,7 @@
     "@types/redux-saga": "^0.10.5",
     "@types/reselect": "^2.2.0",
     "@types/storybook__addon-knobs": "^5.2.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "redux-devtools-extension": "^2.13.8",
     "storybook-cartesian": "^2.1.1",
     "typescript": "~3.7.2"
